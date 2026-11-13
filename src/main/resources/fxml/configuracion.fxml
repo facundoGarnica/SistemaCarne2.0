@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="693.0" prefWidth="1200.0" styleClass="mainFxmlClass" stylesheets="@../styles/theme.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ConfiguracionController">
-</AnchorPane>
+<!-- Configuración: Estilo, Mercado Pago y Actualizaciones, cada pestaña con su propia pantalla -->
+<TabPane fx:id="pestanas" prefHeight="650.0" prefWidth="1000.0" styleClass="ps-tabs" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ConfiguracionController">
+    <stylesheets>
+        <URL value="@../styles/personal.css" />
+    </stylesheets>
+    <tabs>
+        <Tab fx:id="tabEstilo" closable="false" text="Estilo del sistema">
+            <fx:include fx:id="estilo" source="estilo.fxml" />
+        </Tab>
+        <Tab fx:id="tabMercadoPago" closable="false" text="Mercado Pago">
+            <fx:include fx:id="mercadoPago" source="TokenMercadoPago.fxml" />
+        </Tab>
+        <Tab fx:id="tabActualizaciones" closable="false" text="Actualizaciones">
+            <fx:include fx:id="actualizaciones" source="actualizaciones.fxml" />
+        </Tab>
+    </tabs>
+</TabPane>

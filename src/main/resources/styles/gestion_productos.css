@@ -67,8 +67,8 @@
 }
 
 .pm-search-field:focused {
-    -fx-border-color: #2563eb;
-    -fx-effect: dropshadow(gaussian, rgba(37,99,235,0.18), 6, 0, 0, 0);
+    -fx-border-color: -c-primario;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.18), 6, 0, 0, 0);
 }
 
 .pm-search-icon {
@@ -100,7 +100,7 @@
 
 /* Primario (azul) */
 .pm-btn {
-    -fx-background-color: #2563eb;
+    -fx-background-color: -c-primario;
     -fx-text-fill: #ffffff;
 }
 
@@ -109,11 +109,11 @@
 }
 
 .pm-btn:hover {
-    -fx-background-color: #1d4ed8;
+    -fx-background-color: -c-primario-hover;
 }
 
 .pm-btn:pressed {
-    -fx-background-color: #1e40af;
+    -fx-background-color: -c-primario-press;
 }
 
 /* Secundario / contorno */
@@ -215,8 +215,8 @@
 }
 
 .pm-table .table-row-cell:filled:selected {
-    -fx-background-color: #e8f0fe;
-    -fx-border-color: transparent transparent #eef0f3 #2563eb;
+    -fx-background-color: -c-suave;
+    -fx-border-color: transparent transparent #eef0f3 -c-primario;
     -fx-border-width: 0 0 1 3;
 }
 
@@ -302,9 +302,9 @@
 }
 
 .pm-form-field:focused {
-    -fx-border-color: #2563eb;
+    -fx-border-color: -c-primario;
     -fx-background-color: #ffffff;
-    -fx-effect: dropshadow(gaussian, rgba(37,99,235,0.18), 5, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.18), 5, 0, 0, 0);
 }
 
 .pm-form-field .list-cell {
@@ -329,15 +329,15 @@
 
 /* ==============================================================
    PALETA AZUL (misma identidad que Nueva Venta / theme.css)
-   Azul #3498db · Marino #2c3e50 / #34495e · Celeste #d6eaf8 / #ebf5fb
+   Colores de paleta (-c-*): ver paleta-base.css y styles/paletas/ (se elige en Configuración > Estilo)
    Sobrescribe los colores neutros de arriba.
    ============================================================== */
 
 .pm-root {
-    -fx-background-color: #e3eaf2;
+    -fx-background-color: -c-fondo;
 }
 .pm-title {
-    -fx-text-fill: #2c3e50;
+    -fx-text-fill: -c-oscuro;
 }
 .pm-subtitle,
 .pm-counter-label {
@@ -346,13 +346,13 @@
 
 /* Tarjetas de estadísticas: marino con números blancos */
 .pm-stat-card {
-    -fx-background-color: linear-gradient(to bottom right, #2c3e50, #34495e);
-    -fx-border-color: #3498db;
+    -fx-background-color: linear-gradient(to bottom right, -c-oscuro, -c-oscuro-2);
+    -fx-border-color: -c-primario;
     -fx-border-width: 0 0 0 5;
     -fx-effect: dropshadow(gaussian, rgba(44, 62, 80, 0.25), 10, 0, 0, 3);
 }
 .pm-stat-label {
-    -fx-text-fill: #aed6f1;
+    -fx-text-fill: -c-sobre-oscuro;
     -fx-font-weight: bold;
 }
 .pm-stat-value {
@@ -361,10 +361,10 @@
 
 /* Buscador */
 .pm-search-field {
-    -fx-border-color: #aec6dd;
+    -fx-border-color: -c-borde;
 }
 .pm-search-field:focused {
-    -fx-border-color: #3498db;
+    -fx-border-color: -c-primario;
 }
 .pm-search-icon {
     -fx-fill: #5d6d7e;
@@ -379,26 +379,26 @@
     -fx-padding: 0 16px;
 }
 .pm-btn {
-    -fx-background-color: #3498db;
+    -fx-background-color: -c-primario;
 }
 .pm-btn:hover {
-    -fx-background-color: #2980b9;
+    -fx-background-color: -c-primario-hover;
 }
 .pm-btn:pressed {
-    -fx-background-color: #2471a3;
+    -fx-background-color: -c-primario-press;
 }
 .pm-btn-secondary,
 .pm-btn-outline {
-    -fx-background-color: #ebf5fb;
-    -fx-border-color: #3498db;
-    -fx-text-fill: #21618c;
+    -fx-background-color: -c-suave-2;
+    -fx-border-color: -c-primario;
+    -fx-text-fill: -c-acento;
 }
 .pm-btn-outline .pm-icon {
-    -fx-fill: #21618c;
+    -fx-fill: -c-acento;
 }
 .pm-btn-secondary:hover,
 .pm-btn-outline:hover {
-    -fx-background-color: #d6eaf8;
+    -fx-background-color: -c-suave;
 }
 .pm-btn-outline-danger {
     -fx-background-color: #fdedec;
@@ -416,45 +416,45 @@
 /* Tabla: encabezado marino, filas alternadas, selección celeste */
 .pm-table,
 .pm-table:focused {
-    -fx-border-color: #aec6dd;
+    -fx-border-color: -c-borde;
 }
 .pm-table {
     -fx-effect: dropshadow(gaussian, rgba(44, 62, 80, 0.12), 8, 0, 0, 2);
 }
 .pm-table .column-header-background {
-    -fx-background-color: #34495e;
-    -fx-border-color: transparent transparent #3498db transparent;
+    -fx-background-color: -c-oscuro-2;
+    -fx-border-color: transparent transparent -c-primario transparent;
     -fx-border-width: 0 0 2 0;
 }
 .pm-table .column-header .label {
     -fx-text-fill: #ffffff;
 }
 .pm-table .table-row-cell:filled:odd {
-    -fx-background-color: #f4f8fc;
+    -fx-background-color: -c-fila;
 }
 .pm-table .table-row-cell:filled:hover {
-    -fx-background-color: #ebf5fb;
+    -fx-background-color: -c-suave-2;
 }
 .pm-table .table-row-cell:filled:selected {
-    -fx-background-color: #d6eaf8;
-    -fx-border-color: transparent transparent #eef0f3 #3498db;
+    -fx-background-color: -c-suave;
+    -fx-border-color: transparent transparent #eef0f3 -c-primario;
 }
 
 /* Modal agregar / editar producto */
 .pm-modal {
-    -fx-border-color: #3498db #aec6dd #aec6dd #aec6dd;
+    -fx-border-color: -c-primario -c-borde -c-borde -c-borde;
     -fx-border-width: 6 1 1 1;
 }
 .pm-modal-title {
-    -fx-text-fill: #1b4f72;
+    -fx-text-fill: -c-titulo;
 }
 .pm-form-label {
-    -fx-text-fill: #2c3e50;
+    -fx-text-fill: -c-oscuro;
 }
 .pm-form-field {
-    -fx-background-color: #f4f8fc;
-    -fx-border-color: #aec6dd;
+    -fx-background-color: -c-fila;
+    -fx-border-color: -c-borde;
 }
 .pm-form-field:focused {
-    -fx-border-color: #3498db;
+    -fx-border-color: -c-primario;
 }

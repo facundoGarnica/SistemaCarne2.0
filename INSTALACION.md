@@ -42,7 +42,7 @@ mysql -u root -p carnedb < "C:\SistemaCarne\backups\carnedb_FECHA.sql"
 3. Andá a GitHub → tu repositorio **sistemaCarne2.0** → **Releases** → **Draft a new release**:
    - **Tag:** `v1.1.0` (la misma versión del pom, con una `v` adelante)
    - **Título:** lo que quieras, por ejemplo `Versión 1.1.0`
-   - **Descripción:** qué cambió. Se muestra en la pestaña Actualizaciones de la otra PC.
+   - **Descripción:** qué cambió. Se muestra en Configuración → Actualizaciones de la otra PC.
    - **Adjuntá** el archivo `dist\SistemaCarne.jar`. Arrastralo a la zona de archivos.
    - **Publish release**.
 
@@ -52,16 +52,16 @@ mysql -u root -p carnedb < "C:\SistemaCarne\backups\carnedb_FECHA.sql"
 
 ## 4. Actualizar la otra PC
 
-En el sistema, el botón **Actualizaciones** (arriba a la derecha, tecla **F9**) se pinta de **verde** cuando hay una versión nueva.
+En el sistema, el botón **Configuración** (arriba a la derecha, tecla **F8**) se pinta de **verde** cuando hay una versión nueva, y al tocarlo abre directo en la pestaña **Actualizaciones**.
 
 1. Salí de Nueva Venta y asegurate de que no haya ventas en curso.
-2. Entrá a **Actualizaciones** → **Descargar e instalar**.
+2. Entrá a **Configuración → Actualizaciones** → **Descargar e instalar**.
 3. El sistema:
    - hace una copia de la base en `C:\SistemaCarne\backups\`,
    - descarga la versión nueva,
    - se cierra y **se vuelve a abrir solo** con la versión nueva (tarda unos segundos).
 
-**Si la versión nueva trae un problema:** Actualizaciones → **Volver a la versión anterior**. Vuelve al `.jar` que había antes de la última actualización, sin tocar los datos.
+**Si la versión nueva trae un problema:** Configuración → Actualizaciones → **Volver a la versión anterior**. Vuelve al `.jar` que había antes de la última actualización, sin tocar los datos.
 
 Desde esa misma pantalla también se puede hacer una copia de la base cuando quieras (**Hacer copia ahora**).
 

@@ -5,6 +5,7 @@ module carniceria.sistemacarne {
     requires java.naming;
     requires java.sql;
     requires java.desktop;
+    requires java.prefs;
     requires jakarta.persistence;
     requires org.hibernate.orm.core;
 

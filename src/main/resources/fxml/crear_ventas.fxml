@@ -42,7 +42,7 @@
                <children>
                   <HBox alignment="CENTER_LEFT" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
                      <children>
-                        <Label styleClass="textoBarra" text="Codigo de barra" />
+                        <Label minWidth="-Infinity" styleClass="textoBarra" text="Código de barra" />
                         <TextField fx:id="txtCodigoDeBarra" prefHeight="38.0" prefWidth="230.0" styleClass="codigoBarra" />
                         <!-- Recuadros de las 3 cajas: ocupan el espacio libre de la barra -->
                         <HBox alignment="CENTER_RIGHT" spacing="20.0" HBox.hgrow="ALWAYS">

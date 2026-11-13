@@ -1,26 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 
 /**
- * FXML Controller class
- *
- * @author facun
+ * Configuración: contenedor de las pestañas Estilo del sistema, Mercado Pago
+ * y Actualizaciones (cada una con su propio FXML y controlador).
  */
 public class ConfiguracionController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+    @FXML
+    private TabPane pestanas;
+    @FXML
+    private Tab tabEstilo;
+    @FXML
+    private Tab tabMercadoPago;
+    @FXML
+    private Tab tabActualizaciones;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+        // Nada: cada pestaña se inicializa con su propio controlador
+    }
+
+    /** Abre directamente la pestaña Actualizaciones (cuando hay una versión nueva). */
+    public void mostrarActualizaciones() {
+        pestanas.getSelectionModel().select(tabActualizaciones);
+    }
 }

@@ -50,15 +50,15 @@
             <Button fx:id="btnVisualizarTarjeta" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleVisualizarTarjeta" styleClass="nav-btn" text="Tarjetas">
                <tooltip><Tooltip text="Tarjetas (F7)" /></tooltip>
             </Button>
-            <Button fx:id="btnMercadoPago" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleMercadoPago" styleClass="nav-btn" text="Mercado Pago">
-               <tooltip><Tooltip text="Token y cajas de Mercado Pago (F8)" /></tooltip>
-            </Button>
-
             <Region HBox.hgrow="ALWAYS" />
 
-            <!-- Se pinta de verde cuando hay una versión nueva publicada -->
-            <Button fx:id="btnActualizaciones" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleActualizaciones" styleClass="nav-btn" text="Actualizaciones">
-               <tooltip><Tooltip text="Buscar e instalar actualizaciones (F9)" /></tooltip>
+            <!-- Estilo, Mercado Pago y Actualizaciones. Se pinta de verde cuando
+                 hay una versión nueva publicada -->
+            <Button fx:id="btnConfiguracion" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleConfiguracion" styleClass="nav-btn" text="Configuración">
+               <graphic>
+                  <SVGPath content="M19.14 12.94a7.07 7.07 0 0 0 0-1.88l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.61-.22l-2.39.96a7.03 7.03 0 0 0-1.62-.94l-.36-2.54A.5.5 0 0 0 13.9 2h-3.84a.5.5 0 0 0-.49.42l-.36 2.54c-.59.24-1.13.56-1.62.94l-2.39-.96a.5.5 0 0 0-.61.22L2.67 8.48a.5.5 0 0 0 .12.64l2.03 1.58a7.07 7.07 0 0 0 0 1.88l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32c.13.22.39.3.61.22l2.39-.96c.49.38 1.03.7 1.62.94l.36 2.54c.05.24.25.42.49.42h3.84c.24 0 .44-.18.49-.42l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.48 0 .61-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58zM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7z" scaleX="0.75" scaleY="0.75" styleClass="nav-icono-gris" />
+               </graphic>
+               <tooltip><Tooltip text="Estilo, Mercado Pago y actualizaciones (F8)" /></tooltip>
             </Button>
             <Label fx:id="lblVersion" minWidth="-Infinity" styleClass="nav-version" text="" />
          </children>

@@ -1,0 +1,18 @@
+/* Bordó */
+.root {
+    -c-primario: #9e3a4f;
+    -c-primario-hover: #873143;
+    -c-primario-press: #702838;
+    -c-oscuro: #3a1f29;
+    -c-oscuro-2: #4d2a37;
+    -c-oscuro-3: #2d1720;
+    -c-titulo: #6b2236;
+    -c-acento: #7d2a3e;
+    -c-suave: #f2dde2;
+    -c-suave-2: #faeff2;
+    -c-borde: #dab1bc;
+    -c-sobre-oscuro: #efc9d3;
+    -c-fondo: #eee5e8;
+    -c-fila: #fbf6f7;
+    -c-papel: #e9d8dd;
+}

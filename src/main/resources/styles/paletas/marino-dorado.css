@@ -1,0 +1,18 @@
+/* Marino y dorado (combinada) */
+.root {
+    -c-primario: #b0812a;
+    -c-primario-hover: #986e22;
+    -c-primario-press: #805c1c;
+    -c-oscuro: #1f2a44;
+    -c-oscuro-2: #2c3a5a;
+    -c-oscuro-3: #172036;
+    -c-titulo: #1f2a44;
+    -c-acento: #7a5a16;
+    -c-suave: #f2e9d5;
+    -c-suave-2: #faf6ec;
+    -c-borde: #d9c79c;
+    -c-sobre-oscuro: #e6d29b;
+    -c-fondo: #e8e5de;
+    -c-fila: #fbf9f4;
+    -c-papel: #e5ddcc;
+}

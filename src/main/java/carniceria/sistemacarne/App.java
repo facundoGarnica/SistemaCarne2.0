@@ -1,5 +1,6 @@
 package carniceria.sistemacarne;
 
+import Util.EstiloApp;
 import controller.Crear_ventasController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +27,8 @@ public class App extends Application {
         // pasar por F12/ESC ni por "Regresar"), cancelarla para que el QR
         // físico no quede cobrando un monto con la app ya cerrada.
         stage.setOnCloseRequest(event -> Crear_ventasController.cancelarOrdenQRPendienteAlCerrarApp());
+        // Paleta de colores elegida en Configuración > Estilo, en todas las ventanas
+        EstiloApp.instalar();
         stage.show();
     }
 
@@ -39,6 +42,8 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+        // El zoom (Configuración > Estilo) se fija antes de arrancar JavaFX
+        EstiloApp.aplicarZoomAntesDeArrancar();
         launch();
     }
 

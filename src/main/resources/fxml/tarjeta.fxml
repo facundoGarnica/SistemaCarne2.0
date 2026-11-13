@@ -43,7 +43,7 @@
             <TextField fx:id="txtDescuento" prefWidth="150.0" promptText="Ej: 10" styleClass="ps-input" />
         </VBox>
         <VBox spacing="6.0">
-            <Label styleClass="ps-field-label" text="Tope de descuento (\$)" />
+            <Label styleClass="ps-field-label" text="Tope de descuento ($)" />
             <TextField fx:id="txtTope" prefWidth="190.0" promptText="Ej: 9000" styleClass="ps-input" />
         </VBox>
         <Label styleClass="ps-item-sub" text="Se aplican a las tarjetas que generes" wrapText="true" HBox.hgrow="ALWAYS" maxWidth="Infinity">

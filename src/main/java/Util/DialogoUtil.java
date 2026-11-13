@@ -19,5 +19,7 @@ public class DialogoUtil {
     public static void aplicarEstilo(Dialog<?> dialogo) {
         dialogo.getDialogPane().getStylesheets().add(HOJA_DE_ESTILOS);
         dialogo.getDialogPane().getStyleClass().add("dialogo-app");
+        // Paleta elegida en Configuración > Estilo (va última para ganar)
+        EstiloApp.aplicar(dialogo.getDialogPane());
     }
 }

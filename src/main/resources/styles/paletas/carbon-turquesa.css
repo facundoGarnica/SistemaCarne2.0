@@ -1,0 +1,18 @@
+/* Carbón y turquesa (combinada) */
+.root {
+    -c-primario: #16a085;
+    -c-primario-hover: #138d75;
+    -c-primario-press: #107a65;
+    -c-oscuro: #2d3436;
+    -c-oscuro-2: #3d4547;
+    -c-oscuro-3: #222829;
+    -c-titulo: #1e5249;
+    -c-acento: #0e6655;
+    -c-suave: #d1f0e9;
+    -c-suave-2: #e8f8f4;
+    -c-borde: #a3d6cb;
+    -c-sobre-oscuro: #a3e4d7;
+    -c-fondo: #e4e9e8;
+    -c-fila: #f4f8f7;
+    -c-papel: #d5e2df;
+}

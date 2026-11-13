@@ -265,7 +265,7 @@
                             <HBox alignment="CENTER_LEFT">
                                 <Label fx:id="lblEmpleadoAdelanto" styleClass="ps-detail-title" text="Empleado" />
                                 <Region HBox.hgrow="ALWAYS" />
-                                <Label fx:id="lblLeQuedanAdelanto" styleClass="ps-detail-sub" text="Le quedan \$0" />
+                                <Label fx:id="lblLeQuedanAdelanto" styleClass="ps-detail-sub" text="Le quedan $0" />
                             </HBox>
 
                             <Label styleClass="ps-section-label" text="Adelantos del período" />

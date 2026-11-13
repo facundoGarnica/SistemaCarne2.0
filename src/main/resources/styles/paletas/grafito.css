@@ -1,0 +1,18 @@
+/* Gris grafito */
+.root {
+    -c-primario: #546e7a;
+    -c-primario-hover: #455a64;
+    -c-primario-press: #37474f;
+    -c-oscuro: #263238;
+    -c-oscuro-2: #37474f;
+    -c-oscuro-3: #1c2529;
+    -c-titulo: #263238;
+    -c-acento: #37474f;
+    -c-suave: #dfe6e9;
+    -c-suave-2: #eff3f5;
+    -c-borde: #b0bec5;
+    -c-sobre-oscuro: #cfd8dc;
+    -c-fondo: #e4e8eb;
+    -c-fila: #f5f7f8;
+    -c-papel: #d9e0e3;
+}

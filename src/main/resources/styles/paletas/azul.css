@@ -1,0 +1,18 @@
+/* Azul clásico (predeterminada) */
+.root {
+    -c-primario: #3498db;
+    -c-primario-hover: #2980b9;
+    -c-primario-press: #2471a3;
+    -c-oscuro: #2c3e50;
+    -c-oscuro-2: #34495e;
+    -c-oscuro-3: #22313f;
+    -c-titulo: #1b4f72;
+    -c-acento: #21618c;
+    -c-suave: #d6eaf8;
+    -c-suave-2: #ebf5fb;
+    -c-borde: #aec6dd;
+    -c-sobre-oscuro: #aed6f1;
+    -c-fondo: #e3eaf2;
+    -c-fila: #f4f8fc;
+    -c-papel: #d6e4f0;
+}

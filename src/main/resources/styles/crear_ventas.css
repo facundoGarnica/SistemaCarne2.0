@@ -287,14 +287,14 @@
 /* ==============================================================
    PALETA AZUL - NUEVA VENTA
    Misma identidad que Personal / Gastos / Historial / Productos:
-   Azul #3498db · Marino #2c3e50 / #34495e · Celeste #d6eaf8 / #ebf5fb
+   Colores de paleta (-c-*): ver paleta-base.css y styles/paletas/ (se elige en Configuración > Estilo)
    Todo va bajo .nv-root (raíz de crear_ventas.fxml) para no afectar
    a tarjeta.fxml, que también usa esta hoja de estilos.
    ============================================================== */
 
 /* Fondo de la pantalla */
 .mainFxmlClass.nv-root {
-    -fx-background-color: #e3eaf2;
+    -fx-background-color: -c-fondo;
     -fx-border-color: transparent;
 }
 
@@ -310,21 +310,21 @@
    (El titileo verde "caja-pagada" queda igual para que resalte.) */
 .nv-root .boton-caja {
     -fx-background-color: #ffffff;
-    -fx-border-color: #aec6dd;
+    -fx-border-color: -c-borde;
     -fx-background-radius: 10px;
     -fx-border-radius: 10px;
     -fx-pref-height: 48px;
 }
 .nv-root .boton-caja:hover {
-    -fx-background-color: #ebf5fb;
+    -fx-background-color: -c-suave-2;
 }
 .nv-root .boton-caja:selected {
-    -fx-background-color: #3498db;
-    -fx-border-color: #2980b9;
+    -fx-background-color: -c-primario;
+    -fx-border-color: -c-primario-hover;
     -fx-text-fill: #ffffff;
 }
 .nv-root .boton-caja:selected:hover {
-    -fx-background-color: #2980b9;
+    -fx-background-color: -c-primario-hover;
 }
 .nv-root .boton-caja.caja-pagada {
     -fx-background-color: #2ecc71;
@@ -334,22 +334,22 @@
 
 /* Barra del código de barra */
 .nv-root .anchoBarra {
-    -fx-background-color: linear-gradient(to right, #2c3e50, #34495e);
+    -fx-background-color: linear-gradient(to right, -c-oscuro, -c-oscuro-2);
     -fx-background-radius: 12px;
     -fx-border-radius: 12px;
     -fx-effect: dropshadow(gaussian, rgba(44, 62, 80, 0.25), 10, 0, 0, 3);
 }
 .nv-root .textoBarra {
-    -fx-text-fill: #aed6f1;
+    -fx-text-fill: -c-sobre-oscuro;
 }
 .nv-root .codigoBarra {
     -fx-background-radius: 8px;
     -fx-border-radius: 8px;
-    -fx-border-color: #aec6dd;
+    -fx-border-color: -c-borde;
     -fx-font-size: 16px;
 }
 .nv-root .codigoBarra:focused {
-    -fx-border-color: #3498db;
+    -fx-border-color: -c-primario;
     -fx-border-width: 2px;
 }
 .nv-root .aviso-pago {
@@ -360,7 +360,7 @@
 .nv-root .tablaCrearVenta {
     -fx-background-color: #ffffff;
     -fx-background-radius: 14px;
-    -fx-border-color: #aec6dd;
+    -fx-border-color: -c-borde;
     -fx-border-radius: 14px;
     -fx-padding: 0;
     -fx-table-cell-border-color: transparent;
@@ -368,12 +368,12 @@
 }
 .nv-root .tablaCrearVenta:focused {
     -fx-background-insets: 0;
-    -fx-border-color: #aec6dd;
+    -fx-border-color: -c-borde;
 }
 .nv-root .tablaCrearVenta .column-header-background {
-    -fx-background-color: #34495e;
+    -fx-background-color: -c-oscuro-2;
     -fx-background-radius: 14px 14px 0 0;
-    -fx-border-color: transparent transparent #3498db transparent;
+    -fx-border-color: transparent transparent -c-primario transparent;
     -fx-border-width: 0 0 3 0;
 }
 .nv-root .tablaCrearVenta .column-header,
@@ -393,14 +393,14 @@
     -fx-border-color: transparent;
 }
 .nv-root .tablaCrearVenta .table-row-cell:filled:odd {
-    -fx-background-color: #f4f8fc;
+    -fx-background-color: -c-fila;
 }
 .nv-root .tablaCrearVenta .table-row-cell:filled:hover {
-    -fx-background-color: #ebf5fb;
+    -fx-background-color: -c-suave-2;
 }
 .nv-root .tablaCrearVenta .table-row-cell:filled:selected {
-    -fx-background-color: #d6eaf8;
-    -fx-border-color: transparent transparent #eef0f3 #3498db;
+    -fx-background-color: -c-suave;
+    -fx-border-color: transparent transparent #eef0f3 -c-primario;
     -fx-border-width: 0 0 1 5;
 }
 .nv-root .tablaCrearVenta .table-row-cell .table-cell,
@@ -413,7 +413,7 @@
     -fx-background-color: transparent;
 }
 .nv-root .tablaCrearVenta .scroll-bar .thumb {
-    -fx-background-color: #aec6dd;
+    -fx-background-color: -c-borde;
     -fx-background-radius: 6px;
 }
 
@@ -425,13 +425,13 @@
 
 /* Medio de pago y Total a pagar: marino con el valor en verde brillante */
 .nv-root .nv-card-oscura {
-    -fx-background-color: linear-gradient(to bottom right, #2c3e50, #34495e);
-    -fx-border-color: #3498db transparent transparent transparent;
+    -fx-background-color: linear-gradient(to bottom right, -c-oscuro, -c-oscuro-2);
+    -fx-border-color: -c-primario transparent transparent transparent;
     -fx-border-width: 5 0 0 0;
     -fx-effect: dropshadow(gaussian, rgba(44, 62, 80, 0.3), 12, 0, 0, 4);
 }
 .nv-root .nv-card-oscura .titulo {
-    -fx-text-fill: #aed6f1;
+    -fx-text-fill: -c-sobre-oscuro;
     -fx-font-size: 30px;
 }
 .nv-root .nv-card-oscura .medioPago,
@@ -442,20 +442,20 @@
 /* Transferencias de Mercado Pago: blanco con acento azul */
 .nv-root .nv-panel-mp {
     -fx-background-color: #ffffff;
-    -fx-border-color: #3498db #aec6dd #aec6dd #aec6dd;
+    -fx-border-color: -c-primario -c-borde -c-borde -c-borde;
     -fx-border-width: 5 1 1 1;
     -fx-padding: 12px 16px 16px 16px;
     -fx-spacing: 8px;
     -fx-effect: dropshadow(gaussian, rgba(44, 62, 80, 0.12), 8, 0, 0, 2);
 }
 .nv-root .subtitulo {
-    -fx-text-fill: #1b4f72;
+    -fx-text-fill: -c-titulo;
     -fx-font-weight: bold;
     -fx-font-size: 22px;
 }
 .nv-root .anchor-pane-blanco {
-    -fx-background-color: #ebf5fb;
-    -fx-border-color: #aec6dd;
+    -fx-background-color: -c-suave-2;
+    -fx-border-color: -c-borde;
     -fx-border-width: 1;
     -fx-background-radius: 12px;
     -fx-border-radius: 12px;
@@ -485,10 +485,10 @@
 
 /* Flechas < > de las transferencias */
 .nv-root .botonDeslizante {
-    -fx-background-color: #3498db;
+    -fx-background-color: -c-primario;
     -fx-min-width: 40px;
     -fx-min-height: 40px;
 }
 .nv-root .botonDeslizante:hover {
-    -fx-background-color: #2980b9;
+    -fx-background-color: -c-primario-hover;
 }

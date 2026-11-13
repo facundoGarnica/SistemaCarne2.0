@@ -60,9 +60,7 @@ public class MenuController implements Initializable {
     @FXML
     private Button btnVisualizarTarjeta;
     @FXML
-    private Button btnMercadoPago;
-    @FXML
-    private Button btnActualizaciones;
+    private Button btnConfiguracion;
     @FXML
     private Label lblVersion;
 
@@ -88,7 +86,7 @@ public class MenuController implements Initializable {
 
     /**
      * Consulta GitHub en segundo plano (una sola vez por sesión) y pinta de
-     * verde el botón Actualizaciones si hay una versión nueva. Sin internet
+     * verde el botón Configuración si hay una versión nueva. Sin internet
      * no muestra nada.
      */
     private void avisarSiHayVersionNueva() {
@@ -110,12 +108,12 @@ public class MenuController implements Initializable {
     }
 
     private void marcarNovedad(boolean nueva) {
-        btnActualizaciones.getStyleClass().remove("nav-novedad");
+        btnConfiguracion.getStyleClass().remove("nav-novedad");
         if (nueva) {
-            btnActualizaciones.getStyleClass().add("nav-novedad");
-            btnActualizaciones.setText("● Hay una actualización");
+            btnConfiguracion.getStyleClass().add("nav-novedad");
+            btnConfiguracion.setText("Configuración ● Hay una actualización");
         } else {
-            btnActualizaciones.setText("Actualizaciones");
+            btnConfiguracion.setText("Configuración");
         }
     }
 
@@ -141,8 +139,7 @@ public class MenuController implements Initializable {
             case F5 -> handlePersonal();
             case F6 -> handleGastos();
             case F7 -> handleVisualizarTarjeta();
-            case F8 -> handleMercadoPago();
-            case F9 -> handleActualizaciones();
+            case F8 -> handleConfiguracion();
             default -> {
                 return;
             }
@@ -153,7 +150,7 @@ public class MenuController implements Initializable {
     /**
      * Carga un módulo en el área de contenido y marca su botón como activo.
      */
-    private void abrirModulo(String fxmlPath, String titulo, Button boton) {
+    private FXMLLoader abrirModulo(String fxmlPath, String titulo, Button boton) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent vista = loader.load();
@@ -176,17 +173,19 @@ public class MenuController implements Initializable {
             FadeTransition fade = new FadeTransition(Duration.millis(220), vista);
             fade.setToValue(1.0);
             fade.play();
+            return loader;
 
         } catch (IOException e) {
             System.err.println("Error cargando vista: " + fxmlPath);
             e.printStackTrace();
             showErrorAlert("Error", "No se pudo cargar la vista: " + titulo);
+            return null;
         }
     }
 
     private void marcarActivo(Button activo) {
         Button[] botones = {btnHistorialVentas, btnVisualizarProductos, btnIngresarIndividual,
-            btnPersonal, btnGastos, btnVisualizarTarjeta, btnMercadoPago, btnActualizaciones};
+            btnPersonal, btnGastos, btnVisualizarTarjeta, btnConfiguracion};
         for (Button b : botones) {
             b.getStyleClass().remove(CLASE_ACTIVO);
         }
@@ -223,14 +222,14 @@ public class MenuController implements Initializable {
         abrirModulo("/fxml/tarjeta.fxml", "Tarjetas", btnVisualizarTarjeta);
     }
 
+    /** Configuración (Estilo, Mercado Pago, Actualizaciones). Si hay versión nueva, abre en Actualizaciones. */
     @FXML
-    private void handleMercadoPago() {
-        abrirModulo("/fxml/TokenMercadoPago.fxml", "Mercado Pago", btnMercadoPago);
-    }
-
-    @FXML
-    private void handleActualizaciones() {
-        abrirModulo("/fxml/actualizaciones.fxml", "Actualizaciones", btnActualizaciones);
+    private void handleConfiguracion() {
+        FXMLLoader loader = abrirModulo("/fxml/configuracion.fxml", "Configuración", btnConfiguracion);
+        if (loader != null && Boolean.TRUE.equals(hayVersionNueva)
+                && loader.getController() instanceof ConfiguracionController config) {
+            config.mostrarActualizaciones();
+        }
     }
 
     @FXML

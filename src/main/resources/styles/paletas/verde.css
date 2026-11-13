@@ -1,0 +1,18 @@
+/* Verde esmeralda */
+.root {
+    -c-primario: #2e8b62;
+    -c-primario-hover: #267652;
+    -c-primario-press: #1f6144;
+    -c-oscuro: #1e3b30;
+    -c-oscuro-2: #2a4d3f;
+    -c-oscuro-3: #173027;
+    -c-titulo: #1d5940;
+    -c-acento: #226b4c;
+    -c-suave: #d5ede2;
+    -c-suave-2: #ebf6f0;
+    -c-borde: #a8cfbd;
+    -c-sobre-oscuro: #b3e0cb;
+    -c-fondo: #e2ece7;
+    -c-fila: #f3f9f6;
+    -c-papel: #d4e6dc;
+}
