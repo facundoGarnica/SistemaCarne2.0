@@ -1,0 +1,144 @@
+/* ====== RESET Y BASE ====== */
+.root {
+    -fx-background-color: #ECF0F1;
+    -fx-font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+}
+
+.container {
+    -fx-padding: 0;
+}
+
+/* ====== TÍTULOS ====== */
+.titulo-principal {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2C3E50;
+}
+
+.titulo-seccion {
+    -fx-font-size: 24px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #34495E;
+}
+
+/* ====== FILTROS ====== */
+.filtros {
+    -fx-padding: 0;
+}
+
+.filtros .text-field {
+    -fx-pref-height: 35px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-border-color: #34495E;
+    -fx-border-width: 1px;
+    -fx-font-size: 14px;
+    -fx-padding: 8 12 8 12;
+}
+
+/* ====== BOTONES ====== */
+.boton {
+    -fx-background-color: #1ABC9C;
+    -fx-text-fill: white;
+    -fx-background-radius: 6px;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
+    -fx-cursor: hand;
+}
+
+.boton:hover {
+    -fx-background-color: #16A085;
+}
+
+.boton-eliminar {
+    -fx-background-color: #E74C3C;
+    -fx-font-size: 12px;
+    -fx-padding: 5 10 5 10;
+}
+
+.boton-eliminar:hover {
+    -fx-background-color: #C0392B;
+}
+
+/* ====== TABLAS ====== */
+.tabla-scroll {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 2);
+}
+
+.table-view {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #34495E;
+}
+
+.table-view .column-header {
+    -fx-background-color: #34495E;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-alignment: center;
+    -fx-padding: 15 12 15 12;
+}
+
+.table-view .table-cell {
+    -fx-alignment: center;
+    -fx-padding: 15 12 15 12;
+    -fx-text-fill: #2C3E50;
+    -fx-border-color: #e0e0e0;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #f5f5f5;
+}
+
+.table-view .filler {
+    -fx-background-color: white;
+}
+
+/* ====== ESTILOS ESPECÍFICOS ====== */
+.precio-original {
+    -fx-strikethrough: true;
+    -fx-text-fill: #95A5A6;
+}
+
+.precio-oferta {
+    -fx-text-fill: #E74C3C;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.descuento-badge {
+    -fx-background-color: #E74C3C;
+    -fx-text-fill: white;
+    -fx-background-radius: 4px;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 4 8 4 8;
+}
+
+/* ====== SCROLL BAR ====== */
+.table-view .scroll-bar:vertical {
+    -fx-background-color: white;
+}
+
+.table-view .scroll-bar:vertical .track {
+    -fx-background-color: #f0f0f0;
+}
+
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: #BDC3C7;
+    -fx-background-radius: 4px;
+}
+
+.table-view .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #95A5A6;
+}

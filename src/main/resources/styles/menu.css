@@ -1,0 +1,105 @@
+/* ==============================================================
+   PANTALLA PRINCIPAL (menu.fxml)
+   Barra de navegación fina arriba con la misma paleta azul que el
+   resto de los módulos:
+   Azul #3498db · Marino #2c3e50 / #34495e · Celeste #aed6f1
+   ============================================================== */
+
+@import "theme.css";
+
+.menu-root {
+    -fx-background-color: #e3eaf2;
+}
+
+/* Barra superior */
+.nav-bar {
+    -fx-background-color: linear-gradient(to bottom, #22313f, #2c3e50);
+    -fx-border-color: transparent transparent #3498db transparent;
+    -fx-border-width: 0 0 3 0;
+    -fx-padding: 0 16px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 2);
+}
+
+.nav-marca {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 14px 0 4px;
+}
+
+.nav-separador {
+    -fx-background-color: rgba(255, 255, 255, 0.18);
+    -fx-max-height: 34px;
+    -fx-pref-width: 1px;
+    -fx-max-width: 1px;
+}
+
+/* Nueva Venta: botón azul destacado */
+.nav-btn-venta {
+    -fx-background-color: #3498db;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-pref-height: 42px;
+    -fx-padding: 0 18px;
+    -fx-background-radius: 10px;
+    -fx-graphic-text-gap: 6px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.45), 8, 0, 0, 2);
+}
+.nav-btn-venta:hover {
+    -fx-background-color: #2980b9;
+}
+.nav-btn-venta:pressed {
+    -fx-background-color: #2471a3;
+}
+.nav-icono {
+    -fx-fill: #ffffff;
+}
+
+/* Botones de módulos */
+.nav-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #bdc3c7;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-pref-height: 42px;
+    -fx-padding: 0 16px;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+}
+.nav-btn:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: #ffffff;
+}
+.nav-btn:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.18);
+}
+/* Módulo abierto */
+.nav-btn.nav-activo,
+.nav-btn.nav-activo:hover {
+    -fx-background-color: #34495e;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: transparent transparent #3498db transparent;
+    -fx-border-width: 0 0 3 0;
+    -fx-background-radius: 10px 10px 0 0;
+}
+
+/* Actualizaciones: verde cuando hay una versión nueva */
+.nav-btn.nav-novedad {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: #ffffff;
+}
+.nav-btn.nav-novedad:hover {
+    -fx-background-color: #229954;
+}
+.nav-version {
+    -fx-text-fill: #7f8c8d;
+    -fx-font-size: 13px;
+    -fx-padding: 0 4px 0 8px;
+}
+
+/* Área del módulo abierto */
+.content-area {
+    -fx-background-color: #e3eaf2;
+}

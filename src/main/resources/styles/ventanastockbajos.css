@@ -1,0 +1,190 @@
+/* Estilo para el globo de diálogo */
+.globo {
+    -fx-background-color: white;               /* Fondo blanco */
+    -fx-border-color: #00cfff;                 /* Borde azul celeste */
+    -fx-border-width: 2px;                     /* Grosor del borde */
+    -fx-border-radius: 12px;                   /* Bordes redondeados */
+    -fx-background-radius: 12px;               /* Redondeo del fondo */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0, 0, 2); /* Sombra suave */
+}
+
+/* Estilo para el triángulo (flecha) */
+.triangulo {
+    -fx-fill: white;                           /* Interior blanco */
+    -fx-stroke: #00cfff;                       /* Borde azul celeste */
+    -fx-stroke-width: 2px;                     /* Grosor del borde */
+}
+.tapar{
+    -fx-background-color: white; 
+    -fx-border-width: 2px;              /* Grosor del borde */
+    -fx-border-radius: 5px;            /* Radio del borde */
+    -fx-background-radius: 5px;
+}
+
+.mainFxmlClass {
+    -fx-background-color: transparent; /* Fondo invisible */
+    -fx-border-color: transparent;     /* Sin borde */
+}
+/* Estilo elegante y blanco para la tabla de stock */
+.table-stock {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 8, 0, 0, 2);
+    -fx-padding: 0;
+}
+
+/* Headers/títulos elegantes y sutiles */
+.table-stock .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #fafafa, #f0f0f0);
+    -fx-border-color: transparent transparent #e0e0e0 transparent;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.table-stock .column-header {
+    -fx-background-color: transparent;
+    -fx-alignment: CENTER;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #555555;
+    -fx-padding: 12px 8px;
+    -fx-border-color: transparent #e8e8e8 transparent transparent;
+    -fx-border-width: 0 1px 0 0;
+}
+
+.table-stock .column-header:last-child {
+    -fx-border-color: transparent;
+}
+
+.table-stock .column-header .label {
+    -fx-text-fill: #222222;
+    -fx-font-weight: 600;
+}
+
+.table-stock .filler {
+    -fx-background-color: linear-gradient(to bottom, #fafafa, #f0f0f0);
+    -fx-border-color: transparent transparent #e0e0e0 transparent;
+    -fx-border-width: 0 0 1px 0;
+}
+
+/* Estilo para las celdas */
+.table-stock .table-cell {
+    -fx-alignment: CENTER;
+    -fx-font-size: 16px;
+    -fx-font-weight: 500;
+    -fx-padding: 16px 12px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent #f0f0f0 #f5f5f5 transparent;
+    -fx-border-width: 0 1px 1px 0;
+    -fx-text-fill: #333333;
+}
+
+/* Última columna sin borde derecho */
+.table-stock .table-column:last-child .table-cell {
+    -fx-border-color: transparent transparent #f5f5f5 transparent;
+    -fx-border-width: 0 0 1px 0;
+}
+
+/* Filas alternadas muy sutiles */
+.table-stock .table-row-cell:odd {
+    -fx-background-color: #ffffff;
+}
+
+.table-stock .table-row-cell:even {
+    -fx-background-color: #fafafa;
+}
+
+/* Hover effect elegante */
+.table-stock .table-row-cell:hover {
+    -fx-background-color: #f0f8ff;
+    -fx-effect: dropshadow(three-pass-box, rgba(66, 133, 244, 0.1), 4, 0, 0, 1);
+}
+
+.table-stock .table-row-cell:hover .table-cell {
+    -fx-background-color: transparent;
+}
+
+/* Selección más suave */
+.table-stock .table-row-cell:selected {
+    -fx-background-color: #e8f0fe;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-stock .table-row-cell:selected .table-cell {
+    -fx-background-color: transparent;
+}
+
+/* Estilo específico para estados críticos */
+.table-stock .table-cell:contains("Crítico") {
+    -fx-text-fill: #dc3545;
+    -fx-font-weight: 700;
+    -fx-background-color: #fff5f5;
+}
+
+.table-stock .table-cell:contains("Bajo") {
+    -fx-text-fill: #fd7e14;
+    -fx-font-weight: 600;
+    -fx-background-color: #fff8f0;
+}
+
+/* Scroll bars minimalistas */
+.table-stock .scroll-bar {
+    -fx-background-color: transparent;
+    -fx-opacity: 0.7;
+}
+
+.table-stock .scroll-bar:hover {
+    -fx-opacity: 1.0;
+}
+
+.table-stock .scroll-bar .track {
+    -fx-background-color: #f8f9fa;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+.table-stock .scroll-bar .thumb {
+    -fx-background-color: #dee2e6;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+.table-stock .scroll-bar .thumb:hover {
+    -fx-background-color: #adb5bd;
+}
+
+/* Eliminar focus outline */
+.table-stock:focused {
+    -fx-background-insets: 0;
+}
+
+/* Primera y última fila con bordes redondeados */
+.table-stock .table-row-cell:first-child .table-cell {
+    -fx-background-radius: 0 0 0 0;
+}
+
+.table-stock .table-row-cell:last-child .table-cell {
+    -fx-background-radius: 0 0 0 0;
+}
+
+/* Placeholder cuando está vacía */
+.table-stock .placeholder .label {
+    -fx-text-fill: #6c757d;
+    -fx-font-size: 14px;
+    -fx-font-style: italic;
+}
+.labelTitulo {
+    -fx-font-size: 15px;                   /* Tamaño grande para destacar */
+    -fx-font-weight: 700;                  /* Negrita */
+    -fx-text-fill: #343a40;                /* Gris oscuro para buen contraste */
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #f8f9fa); /* Fondo sutil */
+    -fx-background-radius: 12px;           /* Bordes redondeados coherentes */
+    -fx-padding: 10px 16px;                /* Espaciado interno */
+    -fx-alignment: center;                 /* Centrado del texto */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 4, 0, 0, 2); /* Sombra suave */
+    -fx-border-color: #00cfff;             /* Borde azul celeste para resaltar */
+    -fx-border-width: 2px;
+    -fx-border-radius: 12px;               /* Bordes redondeados igual que fondo */
+}

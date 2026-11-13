@@ -1,0 +1,460 @@
+/* ==============================================================
+   GESTIÓN DE PRODUCTOS
+   Hoja de estilos dedicada a producto_menu.fxml y crear_producto.fxml.
+   No es compartida con otras pantallas: se puede modificar libremente
+   sin afectar historialVentas / aumentarPrecioProducto.
+   ============================================================== */
+
+@import "theme.css";
+
+.pm-root {
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color: #f5f7fa;
+}
+
+/* ==============================
+   ENCABEZADO
+   ============================== */
+
+.pm-title {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.pm-subtitle {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 15px;
+}
+
+/* ==============================
+   TARJETAS DE ESTADÍSTICAS
+   ============================== */
+
+.pm-stat-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 12px;
+    -fx-padding: 16px 20px;
+}
+
+.pm-stat-label {
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 14px;
+}
+
+.pm-stat-value {
+    -fx-text-fill: #111827;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+/* ==============================
+   BUSCADOR
+   ============================== */
+
+.pm-search-field {
+    -fx-font-size: 14px;
+    -fx-pref-height: 44px;
+    -fx-padding: 0 14px 0 40px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-prompt-text-fill: #9ca3af;
+}
+
+.pm-search-field:focused {
+    -fx-border-color: #2563eb;
+    -fx-effect: dropshadow(gaussian, rgba(37,99,235,0.18), 6, 0, 0, 0);
+}
+
+.pm-search-icon {
+    -fx-fill: #9ca3af;
+}
+
+.pm-counter-label {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 13px;
+}
+
+/* ==============================
+   BOTONES
+   ============================== */
+
+.pm-btn,
+.pm-btn-secondary,
+.pm-btn-outline,
+.pm-btn-outline-danger {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-pref-height: 44px;
+    -fx-padding: 0 20px;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-graphic-text-gap: 8px;
+    -fx-cursor: hand;
+}
+
+/* Primario (azul) */
+.pm-btn {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: #ffffff;
+}
+
+.pm-btn .pm-icon {
+    -fx-fill: #ffffff;
+}
+
+.pm-btn:hover {
+    -fx-background-color: #1d4ed8;
+}
+
+.pm-btn:pressed {
+    -fx-background-color: #1e40af;
+}
+
+/* Secundario / contorno */
+.pm-btn-secondary,
+.pm-btn-outline {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d5db;
+    -fx-text-fill: #1f2937;
+}
+
+.pm-btn-outline .pm-icon {
+    -fx-fill: #1f2937;
+}
+
+.pm-btn-secondary:hover,
+.pm-btn-outline:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+/* Peligro (contorno rojo) */
+.pm-btn-outline-danger {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d5db;
+    -fx-text-fill: #dc2626;
+}
+
+.pm-btn-outline-danger .pm-icon {
+    -fx-fill: #dc2626;
+}
+
+.pm-btn-outline-danger:hover {
+    -fx-background-color: #fef2f2;
+    -fx-border-color: #fca5a5;
+}
+
+.pm-btn:disabled,
+.pm-btn-secondary:disabled,
+.pm-btn-outline:disabled,
+.pm-btn-outline-danger:disabled {
+    -fx-opacity: 0.55;
+}
+
+/* ==============================
+   TABLA
+   ============================== */
+
+.pm-table {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 12px;
+    -fx-padding: 0;
+    -fx-table-cell-border-color: transparent;
+}
+
+.pm-table:focused {
+    -fx-background-insets: 0;
+    -fx-border-color: #e5e7eb;
+}
+
+.pm-table .column-header-background {
+    -fx-background-color: #f1f4f8;
+    -fx-background-radius: 12px 12px 0 0;
+    -fx-border-color: transparent transparent #e5e7eb transparent;
+}
+
+.pm-table .column-header,
+.pm-table .filler {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-size: 50px;
+}
+
+.pm-table .column-header .label {
+    -fx-text-fill: #4b5563;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 20px;
+}
+
+.pm-table .column-header.pm-col-right .label {
+    -fx-alignment: CENTER_RIGHT;
+}
+
+.pm-table .table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-cell-size: 56px;
+    -fx-border-color: transparent transparent #eef0f3 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.pm-table .table-row-cell:empty {
+    -fx-border-color: transparent;
+}
+
+.pm-table .table-row-cell:filled:hover {
+    -fx-background-color: #f8fafc;
+}
+
+.pm-table .table-row-cell:filled:selected {
+    -fx-background-color: #e8f0fe;
+    -fx-border-color: transparent transparent #eef0f3 #2563eb;
+    -fx-border-width: 0 0 1 3;
+}
+
+.pm-table .table-cell {
+    -fx-alignment: CENTER_LEFT;
+    -fx-font-size: 16px;
+    -fx-text-fill: #1f2937;
+    -fx-padding: 0 20px;
+}
+
+.pm-table .table-cell.pm-col-muted {
+    -fx-text-fill: #6b7280;
+}
+
+.pm-table .table-cell.pm-col-right {
+    -fx-alignment: CENTER_RIGHT;
+}
+
+.pm-table .table-row-cell:selected .table-cell {
+    -fx-text-fill: #1f2937;
+}
+
+.pm-table .table-row-cell:selected .table-cell.pm-col-muted {
+    -fx-text-fill: #6b7280;
+}
+
+.pm-table-placeholder {
+    -fx-text-fill: #9ca3af;
+    -fx-font-size: 14px;
+}
+
+.pm-table .scroll-bar:vertical,
+.pm-table .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.pm-table .scroll-bar .thumb {
+    -fx-background-color: #d1d5db;
+    -fx-background-radius: 6px;
+}
+
+/* ==============================
+   MODAL: AGREGAR / EDITAR PRODUCTO
+   ============================== */
+
+.pm-modal {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 20, 0, 0, 6);
+}
+
+.pm-modal-title {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.pm-modal-subtitle {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 12px;
+}
+
+.pm-form-grid {
+    -fx-hgap: 16px;
+    -fx-vgap: 14px;
+}
+
+.pm-form-label {
+    -fx-text-fill: #374151;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.pm-form-field {
+    -fx-font-size: 13px;
+    -fx-padding: 9px 12px;
+    -fx-background-color: #f9fafb;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+.pm-form-field:focused {
+    -fx-border-color: #2563eb;
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(37,99,235,0.18), 5, 0, 0, 0);
+}
+
+.pm-form-field .list-cell {
+    -fx-padding: 6px 10px;
+}
+
+.pm-form-hint {
+    -fx-text-fill: #9ca3af;
+    -fx-font-size: 11px;
+}
+
+/* Sin líneas verticales entre columnas al seleccionar una fila */
+.pm-table .table-row-cell:filled:selected,
+.pm-table .table-row-cell:filled:focused {
+    -fx-table-cell-border-color: transparent;
+}
+
+.pm-table .table-row-cell .table-cell,
+.pm-table .table-row-cell:selected .table-cell {
+    -fx-border-color: transparent;
+}
+
+/* ==============================================================
+   PALETA AZUL (misma identidad que Nueva Venta / theme.css)
+   Azul #3498db · Marino #2c3e50 / #34495e · Celeste #d6eaf8 / #ebf5fb
+   Sobrescribe los colores neutros de arriba.
+   ============================================================== */
+
+.pm-root {
+    -fx-background-color: #e3eaf2;
+}
+.pm-title {
+    -fx-text-fill: #2c3e50;
+}
+.pm-subtitle,
+.pm-counter-label {
+    -fx-text-fill: #5d6d7e;
+}
+
+/* Tarjetas de estadísticas: marino con números blancos */
+.pm-stat-card {
+    -fx-background-color: linear-gradient(to bottom right, #2c3e50, #34495e);
+    -fx-border-color: #3498db;
+    -fx-border-width: 0 0 0 5;
+    -fx-effect: dropshadow(gaussian, rgba(44, 62, 80, 0.25), 10, 0, 0, 3);
+}
+.pm-stat-label {
+    -fx-text-fill: #aed6f1;
+    -fx-font-weight: bold;
+}
+.pm-stat-value {
+    -fx-text-fill: #ffffff;
+}
+
+/* Buscador */
+.pm-search-field {
+    -fx-border-color: #aec6dd;
+}
+.pm-search-field:focused {
+    -fx-border-color: #3498db;
+}
+.pm-search-icon {
+    -fx-fill: #5d6d7e;
+}
+
+/* Botones: fuente un poco menor para que el texto entre siempre */
+.pm-btn,
+.pm-btn-secondary,
+.pm-btn-outline,
+.pm-btn-outline-danger {
+    -fx-font-size: 14px;
+    -fx-padding: 0 16px;
+}
+.pm-btn {
+    -fx-background-color: #3498db;
+}
+.pm-btn:hover {
+    -fx-background-color: #2980b9;
+}
+.pm-btn:pressed {
+    -fx-background-color: #2471a3;
+}
+.pm-btn-secondary,
+.pm-btn-outline {
+    -fx-background-color: #ebf5fb;
+    -fx-border-color: #3498db;
+    -fx-text-fill: #21618c;
+}
+.pm-btn-outline .pm-icon {
+    -fx-fill: #21618c;
+}
+.pm-btn-secondary:hover,
+.pm-btn-outline:hover {
+    -fx-background-color: #d6eaf8;
+}
+.pm-btn-outline-danger {
+    -fx-background-color: #fdedec;
+    -fx-border-color: #e6b0aa;
+    -fx-text-fill: #c0392b;
+}
+.pm-btn-outline-danger .pm-icon {
+    -fx-fill: #c0392b;
+}
+.pm-btn-outline-danger:hover {
+    -fx-background-color: #fadbd8;
+    -fx-border-color: #e74c3c;
+}
+
+/* Tabla: encabezado marino, filas alternadas, selección celeste */
+.pm-table,
+.pm-table:focused {
+    -fx-border-color: #aec6dd;
+}
+.pm-table {
+    -fx-effect: dropshadow(gaussian, rgba(44, 62, 80, 0.12), 8, 0, 0, 2);
+}
+.pm-table .column-header-background {
+    -fx-background-color: #34495e;
+    -fx-border-color: transparent transparent #3498db transparent;
+    -fx-border-width: 0 0 2 0;
+}
+.pm-table .column-header .label {
+    -fx-text-fill: #ffffff;
+}
+.pm-table .table-row-cell:filled:odd {
+    -fx-background-color: #f4f8fc;
+}
+.pm-table .table-row-cell:filled:hover {
+    -fx-background-color: #ebf5fb;
+}
+.pm-table .table-row-cell:filled:selected {
+    -fx-background-color: #d6eaf8;
+    -fx-border-color: transparent transparent #eef0f3 #3498db;
+}
+
+/* Modal agregar / editar producto */
+.pm-modal {
+    -fx-border-color: #3498db #aec6dd #aec6dd #aec6dd;
+    -fx-border-width: 6 1 1 1;
+}
+.pm-modal-title {
+    -fx-text-fill: #1b4f72;
+}
+.pm-form-label {
+    -fx-text-fill: #2c3e50;
+}
+.pm-form-field {
+    -fx-background-color: #f4f8fc;
+    -fx-border-color: #aec6dd;
+}
+.pm-form-field:focused {
+    -fx-border-color: #3498db;
+}

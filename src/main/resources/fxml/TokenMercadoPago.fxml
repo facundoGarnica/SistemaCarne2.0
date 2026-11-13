@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+
+<!--
+  Mercado Pago en una sola pantalla:
+   1. Cuenta (access token + user ID), protegida con contraseña.
+   2. Qué QR usa cada caja del sistema (solo lectura).
+   3. QR de la cuenta traídos de Mercado Pago: detalle y asignación a cada caja
+      (sección incluida, con su propio controlador MercadoPagoCajasController).
+-->
+<ScrollPane fitToWidth="true" styleClass="ps-items-scroll" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MercadoPagoTokenController">
+    <stylesheets>
+        <URL value="@../styles/personal.css" />
+    </stylesheets>
+
+    <VBox spacing="18.0" styleClass="ps-root">
+        <padding><Insets bottom="28.0" left="28.0" right="28.0" top="22.0" /></padding>
+
+        <!-- Encabezado -->
+        <HBox alignment="CENTER_LEFT" spacing="12.0">
+            <VBox spacing="2.0">
+                <Label styleClass="ps-title" text="Mercado Pago" />
+                <Label styleClass="ps-subtitle" text="Cuenta, QR de cada caja y cajas registradas en Mercado Pago" />
+            </VBox>
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="lblEstado" styleClass="mp-estado, mp-estado-inactivo" text="Sin configurar" />
+        </HBox>
+
+        <!-- 1. Cuenta -->
+        <VBox spacing="14.0" styleClass="ps-card">
+            <HBox alignment="CENTER_LEFT">
+                <Label styleClass="ps-section-title" text="Cuenta" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Label fx:id="lblBloqueo" styleClass="mp-aviso, mp-aviso-bloqueado" text="Protegido · hacé clic en un campo para editar" />
+            </HBox>
+
+            <HBox spacing="14.0">
+                <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                    <Label styleClass="ps-field-label" text="Access Token" />
+                    <TextField fx:id="txtToken" maxWidth="Infinity" promptText="APP_USR-..." styleClass="ps-input" />
+                </VBox>
+                <VBox prefWidth="260.0" spacing="6.0">
+                    <Label styleClass="ps-field-label" text="User ID" />
+                    <TextField fx:id="txtUserId" promptText="Ej: 123456789" styleClass="ps-input" />
+                </VBox>
+            </HBox>
+            <Label styleClass="ps-item-sub" text="Se obtienen en Mercado Pago Developers → Tus integraciones → Credenciales de producción." wrapText="true" />
+
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <Button minWidth="-Infinity" onAction="#eliminarToken" styleClass="ps-btn-outline-danger" text="Eliminar configuración">
+                    <graphic>
+                        <SVGPath content="M9 3v1H4v2h1v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1V4h-5V3H9zM7 6h10v13H7V6zm2 2v9h2V8H9zm4 0v9h2V8h-2z" scaleX="0.7" scaleY="0.7" styleClass="ps-icon" />
+                    </graphic>
+                </Button>
+                <Region HBox.hgrow="ALWAYS" />
+                <Button minWidth="-Infinity" fx:id="btnDescartar" disable="true" onAction="#descartarCambios" styleClass="ps-btn-outline" text="Descartar" />
+                <Button minWidth="-Infinity" fx:id="btnGuardar" disable="true" onAction="#guardarToken" styleClass="ps-btn" text="Guardar" />
+            </HBox>
+        </VBox>
+
+        <!-- 2. Qué QR usa cada caja del sistema -->
+        <VBox spacing="10.0">
+            <VBox spacing="2.0">
+                <Label styleClass="ps-section-title" text="Cajas del sistema" />
+                <Label styleClass="ps-item-sub" text="Para cambiar el QR de una caja, elegilo en la lista de abajo y tocá &quot;Usar en Caja N&quot;." />
+            </VBox>
+            <HBox spacing="14.0">
+                <VBox maxWidth="Infinity" spacing="4.0" styleClass="ps-card, mp-caja-card" HBox.hgrow="ALWAYS">
+                    <Label styleClass="ps-stat-label" text="Caja 1" />
+                    <Label fx:id="lblQrCaja1" styleClass="mp-caja-qr" text="Sin QR asignado" />
+                    <Label fx:id="lblIdCaja1" styleClass="ps-item-sub" text="" />
+                </VBox>
+                <VBox maxWidth="Infinity" spacing="4.0" styleClass="ps-card, mp-caja-card" HBox.hgrow="ALWAYS">
+                    <Label styleClass="ps-stat-label" text="Caja 2" />
+                    <Label fx:id="lblQrCaja2" styleClass="mp-caja-qr" text="Sin QR asignado" />
+                    <Label fx:id="lblIdCaja2" styleClass="ps-item-sub" text="" />
+                </VBox>
+                <VBox maxWidth="Infinity" spacing="4.0" styleClass="ps-card, mp-caja-card" HBox.hgrow="ALWAYS">
+                    <Label styleClass="ps-stat-label" text="Caja 3" />
+                    <Label fx:id="lblQrCaja3" styleClass="mp-caja-qr" text="Sin QR asignado" />
+                    <Label fx:id="lblIdCaja3" styleClass="ps-item-sub" text="" />
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- 3. QR de la cuenta (controlador MercadoPagoCajasController) -->
+        <fx:include fx:id="cajas" source="CajasMercadoPago.fxml" />
+    </VBox>
+</ScrollPane>

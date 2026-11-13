@@ -1,0 +1,494 @@
+/* ==============================================================
+   NUEVA VENTA (POS)
+   Usa el tema compartido (theme.css) para colores/botones base.
+   Acá solo queda lo específico de esta pantalla: la tabla de venta
+   con tipografía grande para leerse a distancia, y los paneles de
+   pago/QR/toast a pantalla completa.
+   ============================================================== */
+
+@import "theme.css";
+
+.anchor-pane-blanco {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 2;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-padding: 10;
+}
+.anchoBarra {
+    -fx-background-color: #2c3e50;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+.textoBarra {
+    -fx-text-fill: #ecf0f1;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.codigoBarra {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 4px 8px;
+}
+/* Selector de caja (mismo estilo que los botones de días de Gastos) */
+.boton-caja {
+    -fx-background-color: #ecf0f1;
+    -fx-text-fill: #2C3E50;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 0 10 0;
+    -fx-background-radius: 6;
+    -fx-border-color: #BDC3C7;
+    -fx-border-radius: 6;
+    -fx-cursor: hand;
+}
+.boton-caja:hover {
+    -fx-background-color: #dfe6e9;
+}
+.boton-caja:selected {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-border-color: #229954;
+}
+.boton-caja:selected:hover {
+    -fx-background-color: #229954;
+}
+.tablaVenta,
+.tablaVuelto {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dcdde1;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-table-cell-border-color: #ecf0f1;
+    -fx-selection-bar: #3498db;
+    -fx-selection-bar-non-focused: #bdc3c7;
+}
+.tablaCrearVenta {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dcdde1;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-table-cell-border-color: #ecf0f1;
+    -fx-selection-bar: #3498db;
+    -fx-selection-bar-non-focused: #bdc3c7;
+}
+.tablaCrearVenta .table-cell {
+    -fx-font-size: 42px;
+    -fx-alignment: CENTER;
+    -fx-font-weight: bold;
+}
+.tablaCrearVenta .column-header-background .table-column {
+    -fx-font-size: 30px !important;
+    -fx-alignment: CENTER;
+    -fx-font-weight: bold;
+}
+.tablaCrearVenta .column-header-background .filler {
+    -fx-font-size: 30px;
+}
+.tablaCrearVenta .column-header-background .label {
+    -fx-font-size: 30px !important;
+    -fx-alignment: CENTER;
+    -fx-font-weight: bold;
+}
+.tablaCrearVenta .column-header {
+    -fx-font-size: 30px !important;
+    -fx-alignment: CENTER;
+    -fx-font-weight: bold;
+}
+.tablaCrearVenta .table-column .label {
+    -fx-font-size: 35px !important;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+}
+.tablaCrearVenta .column-header-background .nested-column-header .table-column .label,
+.tablaCrearVenta .column-header-background .table-column .label {
+    -fx-font-size: 30px !important;
+    -fx-font-weight: bold !important;
+    -fx-alignment: CENTER !important;
+}
+.tablaCrearVenta .label {
+    -fx-font-size: 30px !important;
+    -fx-font-weight: bold !important;
+}
+.tablaVenta .table-cell,
+.tablaVuelto .table-cell {
+    -fx-alignment: CENTER;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold
+}
+.tablaVenta .column-header,
+.tablaVuelto .column-header {
+    -fx-font-size: 18px;
+    -fx-alignment: CENTER;
+    -fx-font-weight: bold;
+}
+.titulo {
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+    -fx-font-size: 38px;
+}
+.subtitulo {
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: normal;
+    -fx-font-size: 24px;
+}
+.texto-MP {
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+    -fx-font-size: 35px;
+}
+.medioPago,
+.numeroTotal {
+    -fx-text-fill: #27ae60;
+    -fx-font-weight: bold;
+    -fx-font-size: 50px;
+    -fx-alignment: center;
+}
+.fondoTitulo {
+    -fx-background-color: #34495e;
+    -fx-background-radius: 5;
+}
+.toast-exito {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-padding: 20 40;
+    -fx-background-radius: 25px;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 12, 0, 0, 3);
+}
+.toast-error {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-padding: 20 40;
+    -fx-background-radius: 25px;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 12, 0, 0, 3);
+}
+.panelPagoExitoso {
+    -fx-background-color: #27ae60;
+    -fx-background-radius: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 30, 0, 0, 8);
+}
+.iconoPagoExitoso {
+    -fx-text-fill: white;
+    -fx-font-size: 140px;
+    -fx-font-weight: bold;
+}
+.textoPagoExitoso {
+    -fx-text-fill: white;
+    -fx-font-size: 56px;
+    -fx-font-weight: bold;
+}
+.subtextoPagoExitoso {
+    -fx-text-fill: #eafaf1;
+    -fx-font-size: 32px;
+}
+.montoPagoExitoso {
+    -fx-text-fill: white;
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+}
+/* Cartel "QR GENERADO": azul mientras espera el pago (el verde queda solo
+   para el pago recibido) */
+.panelQRListo {
+    -fx-background-color: #2980b9;
+    -fx-background-radius: 16px;
+    -fx-padding: 22px 30px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 20, 0, 0, 6);
+}
+.panelQRListo.qr-rojo {
+    -fx-background-color: #c0392b;
+}
+.textoQRListo {
+    -fx-text-fill: white;
+    -fx-font-size: 34px;
+    -fx-font-weight: bold;
+}
+/* Recuadro de cada caja en la barra del código (cada caja tiene su lugar
+   fijo), para las cajas que no están en pantalla: "QR Caja n" con su barra
+   de tiempo mientras espera el pago, o "Caja n ✓ $monto" cuando pagó */
+.aviso-pago {
+    -fx-background-color: #27ae60;
+    -fx-background-radius: 6px;
+    -fx-padding: 4 12 4 12;
+    -fx-pref-height: 38px;
+    -fx-cursor: hand;
+}
+.aviso-pago:hover {
+    -fx-background-color: #229954;
+}
+/* QR esperando pago: azul (el verde queda para el pago recibido) */
+.aviso-pago.aviso-qr-pendiente {
+    -fx-background-color: #2980b9;
+}
+.aviso-pago.aviso-qr-pendiente:hover {
+    -fx-background-color: #2471a3;
+}
+/* Venta en curso sin cobro pendiente: gris neutro, solo informativo */
+.aviso-pago.aviso-venta-en-curso {
+    -fx-background-color: #7f8c8d;
+}
+.aviso-pago.aviso-venta-en-curso:hover {
+    -fx-background-color: #6c7a7d;
+}
+.aviso-pago-texto {
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+.barra-aviso {
+    -fx-pref-height: 7px;
+    -fx-max-height: 7px;
+}
+.barra-aviso > .track {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-background-insets: 0;
+    -fx-background-radius: 4px;
+}
+.barra-aviso > .bar {
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+    -fx-background-radius: 4px;
+    -fx-padding: 3px;
+}
+/* El monto acreditado no coincide con el esperado: verificar */
+.aviso-pago.aviso-pago-distinto {
+    -fx-background-color: #f39c12;
+}
+/* Botón de la caja que pagó: alterna con este estilo (titila) hasta que se entra */
+.boton-caja.caja-pagada {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+    -fx-border-color: #27ae60;
+}
+
+/* Barra de tiempo restante del QR: blanca sobre el cartel verde */
+.barraQR {
+    -fx-pref-height: 16px;
+}
+.barraQR > .track {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-background-insets: 0;
+    -fx-background-radius: 8px;
+}
+.barraQR > .bar {
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+    -fx-background-radius: 8px;
+    -fx-padding: 8px;
+}
+
+/* ==============================================================
+   PALETA AZUL - NUEVA VENTA
+   Misma identidad que Personal / Gastos / Historial / Productos:
+   Azul #3498db · Marino #2c3e50 / #34495e · Celeste #d6eaf8 / #ebf5fb
+   Todo va bajo .nv-root (raíz de crear_ventas.fxml) para no afectar
+   a tarjeta.fxml, que también usa esta hoja de estilos.
+   ============================================================== */
+
+/* Fondo de la pantalla */
+.mainFxmlClass.nv-root {
+    -fx-background-color: #e3eaf2;
+    -fx-border-color: transparent;
+}
+
+/* Botón Regresar */
+.nv-root .boton {
+    -fx-background-radius: 10px;
+    -fx-font-size: 15px;
+    -fx-padding: 0 18px;
+    -fx-pref-height: 48px;
+}
+
+/* Selector de caja: blanco, la caja activa en azul.
+   (El titileo verde "caja-pagada" queda igual para que resalte.) */
+.nv-root .boton-caja {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #aec6dd;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-pref-height: 48px;
+}
+.nv-root .boton-caja:hover {
+    -fx-background-color: #ebf5fb;
+}
+.nv-root .boton-caja:selected {
+    -fx-background-color: #3498db;
+    -fx-border-color: #2980b9;
+    -fx-text-fill: #ffffff;
+}
+.nv-root .boton-caja:selected:hover {
+    -fx-background-color: #2980b9;
+}
+.nv-root .boton-caja.caja-pagada {
+    -fx-background-color: #2ecc71;
+    -fx-border-color: #27ae60;
+    -fx-text-fill: #ffffff;
+}
+
+/* Barra del código de barra */
+.nv-root .anchoBarra {
+    -fx-background-color: linear-gradient(to right, #2c3e50, #34495e);
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(44, 62, 80, 0.25), 10, 0, 0, 3);
+}
+.nv-root .textoBarra {
+    -fx-text-fill: #aed6f1;
+}
+.nv-root .codigoBarra {
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #aec6dd;
+    -fx-font-size: 16px;
+}
+.nv-root .codigoBarra:focused {
+    -fx-border-color: #3498db;
+    -fx-border-width: 2px;
+}
+.nv-root .aviso-pago {
+    -fx-background-radius: 8px;
+}
+
+/* Tablas de venta y vuelto: tarjetas redondeadas con encabezado marino */
+.nv-root .tablaCrearVenta {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 14px;
+    -fx-border-color: #aec6dd;
+    -fx-border-radius: 14px;
+    -fx-padding: 0;
+    -fx-table-cell-border-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(44, 62, 80, 0.12), 8, 0, 0, 2);
+}
+.nv-root .tablaCrearVenta:focused {
+    -fx-background-insets: 0;
+    -fx-border-color: #aec6dd;
+}
+.nv-root .tablaCrearVenta .column-header-background {
+    -fx-background-color: #34495e;
+    -fx-background-radius: 14px 14px 0 0;
+    -fx-border-color: transparent transparent #3498db transparent;
+    -fx-border-width: 0 0 3 0;
+}
+.nv-root .tablaCrearVenta .column-header,
+.nv-root .tablaCrearVenta .filler {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.nv-root .tablaCrearVenta .column-header .label {
+    -fx-text-fill: #ffffff;
+}
+.nv-root .tablaCrearVenta .table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent transparent #eef0f3 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+.nv-root .tablaCrearVenta .table-row-cell:empty {
+    -fx-border-color: transparent;
+}
+.nv-root .tablaCrearVenta .table-row-cell:filled:odd {
+    -fx-background-color: #f4f8fc;
+}
+.nv-root .tablaCrearVenta .table-row-cell:filled:hover {
+    -fx-background-color: #ebf5fb;
+}
+.nv-root .tablaCrearVenta .table-row-cell:filled:selected {
+    -fx-background-color: #d6eaf8;
+    -fx-border-color: transparent transparent #eef0f3 #3498db;
+    -fx-border-width: 0 0 1 5;
+}
+.nv-root .tablaCrearVenta .table-row-cell .table-cell,
+.nv-root .tablaCrearVenta .table-row-cell:selected .table-cell {
+    -fx-text-fill: #1b2631;
+    -fx-border-color: transparent;
+}
+.nv-root .tablaCrearVenta .scroll-bar:vertical,
+.nv-root .tablaCrearVenta .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+.nv-root .tablaCrearVenta .scroll-bar .thumb {
+    -fx-background-color: #aec6dd;
+    -fx-background-radius: 6px;
+}
+
+/* Paneles inferiores: todos redondeados */
+.nv-root .contenedor {
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+}
+
+/* Medio de pago y Total a pagar: marino con el valor en verde brillante */
+.nv-root .nv-card-oscura {
+    -fx-background-color: linear-gradient(to bottom right, #2c3e50, #34495e);
+    -fx-border-color: #3498db transparent transparent transparent;
+    -fx-border-width: 5 0 0 0;
+    -fx-effect: dropshadow(gaussian, rgba(44, 62, 80, 0.3), 12, 0, 0, 4);
+}
+.nv-root .nv-card-oscura .titulo {
+    -fx-text-fill: #aed6f1;
+    -fx-font-size: 30px;
+}
+.nv-root .nv-card-oscura .medioPago,
+.nv-root .nv-card-oscura .numeroTotal {
+    -fx-text-fill: #2ecc71;
+}
+
+/* Transferencias de Mercado Pago: blanco con acento azul */
+.nv-root .nv-panel-mp {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #3498db #aec6dd #aec6dd #aec6dd;
+    -fx-border-width: 5 1 1 1;
+    -fx-padding: 12px 16px 16px 16px;
+    -fx-spacing: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(44, 62, 80, 0.12), 8, 0, 0, 2);
+}
+.nv-root .subtitulo {
+    -fx-text-fill: #1b4f72;
+    -fx-font-weight: bold;
+    -fx-font-size: 22px;
+}
+.nv-root .anchor-pane-blanco {
+    -fx-background-color: #ebf5fb;
+    -fx-border-color: #aec6dd;
+    -fx-border-width: 1;
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+}
+.nv-root .anchor-pane-blanco .subtitulo {
+    -fx-text-fill: #5d6d7e;
+    -fx-font-size: 18px;
+}
+.nv-root .texto-MP {
+    -fx-text-fill: #1b2631;
+}
+/* Estado de la transferencia (lo pone el controlador) */
+.nv-root .anchor-pane-blanco.mp-aprobado {
+    -fx-background-color: #58d68d;
+    -fx-border-color: #27ae60;
+}
+.nv-root .anchor-pane-blanco.mp-rechazado {
+    -fx-background-color: #ec7063;
+    -fx-border-color: #c0392b;
+}
+.nv-root .anchor-pane-blanco.mp-aprobado .subtitulo,
+.nv-root .anchor-pane-blanco.mp-aprobado .texto-MP,
+.nv-root .anchor-pane-blanco.mp-rechazado .subtitulo,
+.nv-root .anchor-pane-blanco.mp-rechazado .texto-MP {
+    -fx-text-fill: #ffffff;
+}
+
+/* Flechas < > de las transferencias */
+.nv-root .botonDeslizante {
+    -fx-background-color: #3498db;
+    -fx-min-width: 40px;
+    -fx-min-height: 40px;
+}
+.nv-root .botonDeslizante:hover {
+    -fx-background-color: #2980b9;
+}

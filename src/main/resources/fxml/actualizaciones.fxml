@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+
+<!-- Actualizaciones del sistema (desde GitHub Releases) y copias de la base -->
+<ScrollPane fitToWidth="true" styleClass="ps-items-scroll" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ActualizacionesController">
+    <stylesheets>
+        <URL value="@../styles/personal.css" />
+    </stylesheets>
+
+    <VBox spacing="18.0" styleClass="ps-root">
+        <padding><Insets bottom="28.0" left="28.0" right="28.0" top="22.0" /></padding>
+
+        <!-- Encabezado -->
+        <HBox alignment="CENTER_LEFT" spacing="10.0">
+            <VBox spacing="2.0">
+                <Label styleClass="ps-title" text="Actualizaciones" />
+                <Label styleClass="ps-subtitle" text="Bajá la última versión del sistema. Tus datos no se tocan: antes de instalar se hace una copia de la base." />
+            </VBox>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="btnBuscar" minWidth="-Infinity" onAction="#buscarActualizaciones" styleClass="ps-btn-outline, ps-btn-tall" text="Buscar actualizaciones">
+                <graphic>
+                    <SVGPath content="M12 4a8 8 0 0 1 7.75 6h-2.08A6 6 0 1 0 12 18a5.96 5.96 0 0 0 4.24-1.76L13 13h7v7l-2.35-2.35A8 8 0 1 1 12 4z" scaleX="0.68" scaleY="0.68" styleClass="ps-icon" />
+                </graphic>
+            </Button>
+        </HBox>
+
+        <!-- Versiones -->
+        <HBox styleClass="ps-stats">
+            <VBox maxWidth="Infinity" spacing="2.0" styleClass="ps-stat" HBox.hgrow="ALWAYS">
+                <Label styleClass="ps-stat-label" text="Versión instalada" />
+                <Label fx:id="lblVersionInstalada" styleClass="ps-stat-value-lg" text="—" />
+            </VBox>
+            <VBox maxWidth="Infinity" spacing="2.0" styleClass="ps-stat, ps-stat-divider" HBox.hgrow="ALWAYS">
+                <Label styleClass="ps-stat-label" text="Última versión publicada" />
+                <Label fx:id="lblVersionDisponible" styleClass="ps-stat-value-lg" text="—" />
+            </VBox>
+            <VBox maxWidth="Infinity" spacing="2.0" styleClass="ps-stat, ps-stat-divider" HBox.hgrow="ALWAYS">
+                <Label styleClass="ps-stat-label" text="Estado" />
+                <Label fx:id="lblEstado" styleClass="ps-stat-value" text="Buscando…" wrapText="true" />
+            </VBox>
+        </HBox>
+
+        <!-- Novedades de la versión publicada -->
+        <VBox spacing="12.0" styleClass="ps-detail-card">
+            <HBox alignment="CENTER_LEFT">
+                <Label fx:id="lblTituloNovedades" styleClass="ps-section-title" text="Novedades" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Label fx:id="lblFechaPublicacion" styleClass="ps-detail-sub" text="" />
+            </HBox>
+            <Label fx:id="lblNotas" maxWidth="Infinity" styleClass="ps-item-name" text="—" wrapText="true" />
+
+            <VBox fx:id="boxProgreso" managed="false" spacing="6.0" visible="false">
+                <Label fx:id="lblProgreso" styleClass="ps-detail-sub" text="" />
+                <ProgressBar fx:id="barraProgreso" maxWidth="Infinity" progress="0.0" styleClass="ps-progreso" />
+            </VBox>
+
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <Label fx:id="lblAvisoInstalacion" styleClass="ps-item-sub" text="" wrapText="true" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+                <Button fx:id="btnInstalar" disable="true" minWidth="-Infinity" onAction="#instalar" styleClass="ps-btn" text="Descargar e instalar">
+                    <graphic>
+                        <SVGPath content="M11 4h2v8.17l3.59-3.58L18 10l-6 6-6-6 1.41-1.41L11 12.17V4zM5 18h14v2H5z" scaleX="0.8" scaleY="0.8" styleClass="ps-icon" />
+                    </graphic>
+                </Button>
+            </HBox>
+        </VBox>
+
+        <!-- Copias de seguridad y volver atrás -->
+        <HBox spacing="18.0">
+            <VBox spacing="10.0" styleClass="ps-card" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                <Label styleClass="ps-section-title" text="Copia de seguridad de la base" />
+                <Label styleClass="ps-item-sub" text="Se guarda en la carpeta backups del sistema. Se hace sola antes de cada actualización." wrapText="true" />
+                <Label fx:id="lblUltimoBackup" styleClass="ps-detail-sub" text="" wrapText="true" />
+                <HBox spacing="10.0">
+                    <Button fx:id="btnBackup" minWidth="-Infinity" onAction="#hacerBackup" styleClass="ps-btn-dark, ps-btn-tall" text="Hacer copia ahora" />
+                    <Button minWidth="-Infinity" onAction="#abrirCarpetaBackups" styleClass="ps-btn-outline, ps-btn-tall" text="Abrir carpeta" />
+                </HBox>
+            </VBox>
+
+            <VBox fx:id="boxVolverAtras" spacing="10.0" styleClass="ps-card" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                <Label styleClass="ps-section-title" text="Volver a la versión anterior" />
+                <Label styleClass="ps-item-sub" text="Si la última actualización trajo un problema, podés volver a la versión que tenías antes. Los datos no se tocan." wrapText="true" />
+                <HBox>
+                    <Button fx:id="btnVolverAtras" disable="true" minWidth="-Infinity" onAction="#volverAtras" styleClass="ps-btn-outline-danger, ps-btn-tall" text="Volver a la versión anterior" />
+                </HBox>
+            </VBox>
+        </HBox>
+    </VBox>
+</ScrollPane>

@@ -1,0 +1,1742 @@
+/* ==============================================================
+   PERSONAL - TURNOS
+   Hoja de estilos de la pestaña "Turnos" de Personal.fxml.
+   Misma paleta que gestion_productos.css / historial_ventas.css.
+   No afecta a Gastos (que usa empleadoYGastos.css).
+   ============================================================== */
+
+.ps-root {
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color: #f5f7fa;
+}
+
+.ps-icon {
+    -fx-fill: #1f2937;
+}
+
+.ps-muted {
+    -fx-text-fill: #9ca3af;
+    -fx-font-size: 15px;
+}
+
+/* ==============================
+   ENCABEZADO
+   ============================== */
+
+.ps-title {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.ps-subtitle {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 15px;
+}
+
+/* ==============================
+   TARJETA DEL FORMULARIO
+   ============================== */
+
+.ps-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 12px;
+    -fx-padding: 16px 20px 18px 20px;
+}
+
+.ps-field-label {
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 14px;
+}
+
+/* Campos de texto */
+.ps-input {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d5db;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-pref-height: 46px;
+    -fx-font-size: 16px;
+    -fx-text-fill: #1f2937;
+    -fx-prompt-text-fill: #9ca3af;
+    -fx-padding: 0 12px;
+}
+
+.ps-input:focused {
+    -fx-border-color: #2563eb;
+    -fx-effect: dropshadow(gaussian, rgba(37,99,235,0.18), 6, 0, 0, 0);
+}
+
+/* Botón contorno a la misma altura que los campos del formulario */
+.ps-btn-outline.ps-btn-tall {
+    -fx-pref-height: 46px;
+}
+
+/* Combos */
+.ps-combo {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d5db;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-pref-height: 46px;
+    -fx-cursor: hand;
+}
+
+.ps-combo:focused {
+    -fx-border-color: #2563eb;
+}
+
+.ps-combo .list-cell {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 16px;
+    -fx-background-color: transparent;
+    -fx-padding: 0 8px;
+}
+
+.ps-combo .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 12px 0 6px;
+}
+
+.ps-combo .arrow {
+    -fx-background-color: #4b5563;
+}
+
+.ps-combo .combo-box-popup .list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e5e7eb;
+}
+
+.ps-combo .combo-box-popup .list-cell {
+    -fx-padding: 8px 12px;
+}
+
+.ps-combo .combo-box-popup .list-cell:hover,
+.ps-combo .combo-box-popup .list-cell:selected {
+    -fx-background-color: #e8f0fe;
+    -fx-text-fill: #1f2937;
+}
+
+/* DatePickers */
+.ps-date {
+    -fx-pref-height: 46px;
+}
+
+.ps-date .text-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d5db;
+    -fx-background-radius: 10px 0 0 10px;
+    -fx-border-radius: 10px 0 0 10px;
+    -fx-font-size: 16px;
+    -fx-text-fill: #1f2937;
+    -fx-padding: 0 10px;
+}
+
+.ps-date .text-field:focused {
+    -fx-border-color: #2563eb;
+}
+
+.ps-date .arrow-button {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d5db #d1d5db #d1d5db transparent;
+    -fx-background-radius: 0 10px 10px 0;
+    -fx-border-radius: 0 10px 10px 0;
+    -fx-cursor: hand;
+}
+
+/* ==============================
+   BOTONES
+   ============================== */
+
+.ps-btn,
+.ps-btn-dark,
+.ps-btn-outline,
+.ps-btn-outline-danger {
+    -fx-font-size: 15px;
+    -fx-pref-height: 42px;
+    -fx-padding: 0 18px;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-graphic-text-gap: 8px;
+    -fx-cursor: hand;
+}
+
+.ps-btn {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-pref-height: 46px;
+    -fx-padding: 0 22px;
+}
+
+.ps-btn .ps-icon {
+    -fx-fill: #ffffff;
+}
+
+.ps-btn:hover {
+    -fx-background-color: #1d4ed8;
+}
+
+.ps-btn:pressed {
+    -fx-background-color: #1e40af;
+}
+
+.ps-btn-dark {
+    -fx-background-color: #1f2937;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+.ps-btn-dark:hover {
+    -fx-background-color: #111827;
+}
+
+.ps-btn-outline {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d5db;
+    -fx-text-fill: #1f2937;
+}
+
+.ps-btn-outline:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+.ps-btn-outline-danger {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d5db;
+    -fx-text-fill: #dc2626;
+}
+
+.ps-btn-outline-danger .ps-icon {
+    -fx-fill: #dc2626;
+}
+
+.ps-btn-outline-danger:hover {
+    -fx-background-color: #fef2f2;
+    -fx-border-color: #fca5a5;
+}
+
+.ps-btn:disabled,
+.ps-btn-outline:disabled,
+.ps-btn-outline-danger:disabled {
+    -fx-opacity: 0.5;
+}
+
+/* ==============================
+   PILLS DE PERÍODO
+   ============================== */
+
+.ps-pill {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d5db;
+    -fx-background-radius: 22px;
+    -fx-border-radius: 22px;
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 15px;
+    -fx-pref-height: 42px;
+    -fx-padding: 0 16px;
+    -fx-graphic-text-gap: 8px;
+    -fx-cursor: hand;
+}
+
+.ps-pill:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+.ps-pill:selected {
+    -fx-background-color: #1f2937;
+    -fx-border-color: #1f2937;
+    -fx-text-fill: #ffffff;
+}
+
+.ps-pill:selected .ps-icon {
+    -fx-fill: #ffffff;
+}
+
+.ps-counter {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 15px;
+    -fx-padding: 0 6px 0 0;
+}
+
+/* ==============================
+   TABLA DE TURNOS
+   ============================== */
+
+.ps-table {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 12px;
+    -fx-padding: 0;
+    -fx-table-cell-border-color: transparent;
+}
+
+.ps-table:focused {
+    -fx-background-insets: 0;
+    -fx-border-color: #e5e7eb;
+}
+
+.ps-table .column-header-background {
+    -fx-background-color: #f1f4f8;
+    -fx-background-radius: 12px 12px 0 0;
+    -fx-border-color: transparent transparent #e5e7eb transparent;
+}
+
+.ps-table .column-header,
+.ps-table .filler {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-size: 50px;
+}
+
+.ps-table .column-header .label {
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 15px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 20px;
+}
+
+.ps-table .column-header.ps-col-right .label {
+    -fx-alignment: CENTER_RIGHT;
+}
+
+.ps-table .table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-cell-size: 58px;
+    -fx-border-color: transparent transparent #eef0f3 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.ps-table .table-row-cell:empty {
+    -fx-border-color: transparent;
+}
+
+.ps-table .table-row-cell:filled:hover {
+    -fx-background-color: #f8fafc;
+}
+
+.ps-table .table-row-cell:filled:selected {
+    -fx-background-color: #e8f0fe;
+    -fx-border-color: transparent transparent #eef0f3 #2563eb;
+    -fx-border-width: 0 0 1 3;
+}
+
+.ps-table .table-row-cell:filled:selected,
+.ps-table .table-row-cell:filled:focused {
+    -fx-table-cell-border-color: transparent;
+}
+
+.ps-table .table-cell {
+    -fx-alignment: CENTER_LEFT;
+    -fx-font-size: 18px;
+    -fx-text-fill: #1f2937;
+    -fx-padding: 0 20px;
+    -fx-border-color: transparent;
+}
+
+.ps-table .table-cell.ps-col-muted {
+    -fx-text-fill: #6b7280;
+}
+
+.ps-table .table-cell.ps-col-right {
+    -fx-alignment: CENTER_RIGHT;
+}
+
+.ps-table .table-row-cell:selected .table-cell {
+    -fx-text-fill: #1f2937;
+}
+
+.ps-table .table-row-cell:selected .table-cell.ps-col-muted {
+    -fx-text-fill: #6b7280;
+}
+
+.ps-chip {
+    -fx-background-color: #e8f0fe;
+    -fx-background-radius: 14px;
+    -fx-text-fill: #1d4ed8;
+    -fx-font-size: 14px;
+    -fx-padding: 3px 12px;
+}
+
+.ps-placeholder {
+    -fx-text-fill: #9ca3af;
+    -fx-font-size: 15px;
+}
+
+.ps-table .scroll-bar:vertical,
+.ps-table .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.ps-table .scroll-bar .thumb {
+    -fx-background-color: #d1d5db;
+    -fx-background-radius: 6px;
+}
+
+/* ==============================
+   PESTAÑAS (solo Personal.fxml)
+   ============================== */
+
+.tab-pane.ps-tabs {
+    -fx-background-color: #f5f7fa;
+}
+
+.tab-pane.ps-tabs .tab-header-area {
+    -fx-padding: 0 0 0 20px;
+}
+
+.tab-pane.ps-tabs .tab-header-area .tab-header-background {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent transparent #e5e7eb transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.tab-pane.ps-tabs .tab {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-pref-height: 58px;
+    -fx-padding: 0 18px;
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-cursor: hand;
+}
+
+.tab-pane.ps-tabs .tab:selected {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #2563eb transparent;
+}
+
+.tab-pane.ps-tabs .tab .tab-label {
+    -fx-text-fill: #6b7280;
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+    -fx-font-weight: normal;
+    -fx-font-size: 17px;
+}
+
+.tab-pane.ps-tabs .tab:hover .tab-label {
+    -fx-text-fill: #1f2937;
+}
+
+.tab-pane.ps-tabs .tab:selected .tab-label {
+    -fx-text-fill: #1f2937;
+}
+
+.tab-pane.ps-tabs .tab:selected .focus-indicator {
+    -fx-border-color: transparent;
+}
+
+/* ==============================
+   BARRA DE TOTALES
+   ============================== */
+
+.ps-stats {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 12px;
+}
+
+.ps-stat {
+    -fx-padding: 16px 22px;
+}
+
+.ps-stat-divider {
+    -fx-border-color: transparent transparent transparent #e5e7eb;
+    -fx-border-width: 0 0 0 1;
+}
+
+.ps-stat-label {
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 14px;
+}
+
+.ps-stat-value {
+    -fx-text-fill: #111827;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.ps-stat-value-lg {
+    -fx-text-fill: #111827;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.ps-negativo,
+.ps-table .table-cell.ps-negativo {
+    -fx-text-fill: #dc2626;
+}
+
+/* ==============================
+   TABLA DE SALDOS: FILA TOTAL
+   ============================== */
+
+.ps-table .table-row-cell:total,
+.ps-table .table-row-cell:total:hover {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e5e7eb transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+}
+
+.ps-table .table-row-cell:total .table-cell {
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2937;
+}
+
+
+.ps-table .table-row-cell:total .table-cell.ps-col-muted {
+    -fx-text-fill: #4b5563;
+}
+
+/* ==============================
+   PANEL DEL EMPLEADO (ADELANTOS)
+   ============================== */
+
+.ps-detail-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 12px;
+    -fx-padding: 22px;
+}
+
+.ps-detail-title {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.ps-detail-sub {
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 16px;
+}
+
+.ps-section-label {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 14px;
+    -fx-padding: 0 0 6px 0;
+    -fx-border-color: transparent transparent #e5e7eb transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-max-width: Infinity;
+}
+
+.ps-section-title {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.ps-dashed {
+    -fx-min-height: 1px;
+    -fx-pref-height: 1px;
+    -fx-max-height: 1px;
+    -fx-border-color: #d1d5db transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+    -fx-border-style: segments(4, 4) line-cap butt;
+}
+
+.ps-items-scroll,
+.ps-items-scroll > .viewport {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-padding: 0;
+}
+
+.ps-items-scroll .scroll-bar .thumb {
+    -fx-background-color: #d1d5db;
+    -fx-background-radius: 6px;
+}
+
+.ps-item {
+    -fx-padding: 10px 0;
+    -fx-border-color: transparent transparent #eef0f3 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.ps-item-name {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 16px;
+}
+
+.ps-item-sub {
+    -fx-text-fill: #9ca3af;
+    -fx-font-size: 14px;
+}
+
+.ps-item-total {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 16px;
+}
+
+.ps-icon-btn,
+.ps-icon-btn-danger {
+    -fx-background-color: transparent;
+    -fx-background-radius: 8px;
+    -fx-padding: 4px;
+    -fx-pref-width: 32px;
+    -fx-pref-height: 32px;
+    -fx-cursor: hand;
+}
+
+.ps-icon-btn .ps-icon {
+    -fx-fill: #6b7280;
+}
+
+.ps-icon-btn:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+.ps-icon-btn-danger .ps-icon {
+    -fx-fill: #dc2626;
+}
+
+.ps-icon-btn-danger:hover {
+    -fx-background-color: #fef2f2;
+}
+
+/* ==============================
+   RESUMEN SEMANAL: LISTA DE EMPLEADOS
+   ============================== */
+
+.ps-emp-list {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 12px;
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+}
+
+.ps-emp-list:focused {
+    -fx-background-insets: 0;
+    -fx-border-color: #e5e7eb;
+}
+
+.ps-emp-list .list-cell {
+    -fx-background-color: #ffffff;
+    -fx-padding: 14px 20px 14px 22px;
+    -fx-border-color: transparent transparent #eef0f3 transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-cursor: hand;
+}
+
+.ps-emp-list .list-cell:empty {
+    -fx-border-color: transparent;
+    -fx-cursor: default;
+}
+
+.ps-emp-list .list-cell:filled:hover {
+    -fx-background-color: #f8fafc;
+}
+
+.ps-emp-list .list-cell:filled:selected {
+    -fx-background-color: #e8f0fe;
+    -fx-border-color: transparent transparent #eef0f3 #2563eb;
+    -fx-border-width: 0 0 1 3;
+    -fx-padding: 14px 20px 14px 19px;
+}
+
+.ps-emp-name {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 18px;
+}
+
+.ps-emp-sub {
+    -fx-text-fill: #9ca3af;
+    -fx-font-size: 14px;
+}
+
+.ps-emp-neto {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 18px;
+}
+
+.ps-emp-list .scroll-bar .thumb {
+    -fx-background-color: #d1d5db;
+    -fx-background-radius: 6px;
+}
+
+.ps-emp-list .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+/* ==============================
+   RESUMEN SEMANAL: COMPROBANTE
+   ============================== */
+
+.ps-paper-bg {
+    -fx-background-color: #e9edf2;
+    -fx-background-radius: 14px;
+    -fx-padding: 20px;
+}
+
+.ps-paper {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 8px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8px;
+    -fx-padding: 30px 32px;
+}
+
+.ps-comp-head {
+    -fx-padding: 0 0 14px 0;
+    -fx-border-color: transparent transparent #1f2937 transparent;
+    -fx-border-width: 0 0 2 0;
+}
+
+.ps-comp-kicker {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.ps-comp-nombre {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.ps-comp-totales {
+    -fx-background-color: #f1f4f8;
+    -fx-background-radius: 10px;
+    -fx-padding: 14px 20px;
+}
+
+.ps-comp-monto {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.ps-comp-seccion {
+    -fx-padding: 4px 0 8px 0;
+}
+
+.ps-comp-fila {
+    -fx-padding: 10px 0;
+    -fx-border-color: transparent transparent #eef0f3 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.ps-comp-fecha {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 16px;
+}
+
+.ps-comp-texto {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 16px;
+}
+
+.ps-comp-detalle {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 15px;
+}
+
+.ps-firma-linea {
+    -fx-min-height: 1px;
+    -fx-pref-height: 1px;
+    -fx-max-height: 1px;
+    -fx-background-color: #9ca3af;
+}
+
+/* ==============================
+   GASTOS (Gastos.fxml, misma hoja de estilos)
+   ============================== */
+
+.ps-chip-gris {
+    -fx-background-color: #eef1f5;
+    -fx-background-radius: 14px;
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 14px;
+    -fx-padding: 3px 12px;
+}
+
+/* Combo con forma de pill (filtro de categoría) */
+.ps-combo.ps-combo-pill {
+    -fx-background-radius: 22px;
+    -fx-border-radius: 22px;
+    -fx-pref-height: 42px;
+}
+
+.ps-combo.ps-combo-pill .list-cell {
+    -fx-font-size: 15px;
+    -fx-padding: 0 4px 0 12px;
+}
+
+/* ==============================
+   BALANCE (Gastos.fxml - Reportes y balance)
+   ============================== */
+
+/* Botón cuadrado (flechas de semana) */
+.ps-btn-outline.ps-btn-square {
+    -fx-pref-width: 50px;
+    -fx-pref-height: 50px;
+    -fx-padding: 0;
+}
+
+.ps-btn-outline.ps-btn-square:disabled {
+    -fx-opacity: 0.4;
+}
+
+/* Tarjetas de días */
+.ps-dia {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d5db;
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+    -fx-pref-height: 72px;
+    -fx-padding: 8px 6px;
+    -fx-cursor: hand;
+}
+
+.ps-dia:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+.ps-dia:selected {
+    -fx-background-color: #1f2937;
+    -fx-border-color: #1f2937;
+}
+
+.ps-dia:disabled {
+    -fx-opacity: 0.5;
+}
+
+.ps-dia-nombre {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 18px;
+}
+
+.ps-dia-monto {
+    -fx-text-fill: #9ca3af;
+    -fx-font-size: 15px;
+}
+
+.ps-dia:selected .ps-dia-nombre {
+    -fx-text-fill: #ffffff;
+}
+
+.ps-dia:selected .ps-dia-monto {
+    -fx-text-fill: #cbd5e1;
+}
+
+.ps-link {
+    -fx-text-fill: #2563eb;
+    -fx-font-size: 16px;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.ps-link:visited {
+    -fx-text-fill: #2563eb;
+}
+
+/* Tabla de balance (GridPane) */
+.ps-balance {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 12px;
+}
+
+.ps-bal-head {
+    -fx-background-color: #f1f4f8;
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 15px;
+    -fx-padding: 16px 24px;
+    -fx-border-color: transparent transparent #e5e7eb transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.ps-bal-head.ps-bal-first {
+    -fx-background-radius: 12px 0 0 0;
+}
+
+.ps-bal-head.ps-bal-last {
+    -fx-background-radius: 0 12px 0 0;
+}
+
+.ps-bal-section {
+    -fx-background-color: #f8fafc;
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 14px;
+    -fx-padding: 12px 24px;
+    -fx-border-color: transparent transparent #eef0f3 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.ps-bal-cell {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 18px;
+    -fx-padding: 18px 24px;
+    -fx-min-height: 60px;
+    -fx-border-color: transparent transparent #eef0f3 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.ps-bal-text {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 18px;
+}
+
+.ps-bal-nota {
+    -fx-text-fill: #9ca3af;
+    -fx-font-size: 14px;
+}
+
+.ps-bal-neg {
+    -fx-text-fill: #4b5563;
+}
+
+.ps-bal-pendiente {
+    -fx-text-fill: #9ca3af;
+}
+
+.ps-bal-res {
+    -fx-background-color: #e8f0fe;
+    -fx-padding: 16px 24px;
+    -fx-border-color: #1f2937 transparent transparent transparent;
+    -fx-border-width: 2 0 0 0;
+}
+
+.ps-bal-res-left {
+    -fx-background-radius: 0 0 0 12px;
+}
+
+.ps-bal-res-right {
+    -fx-background-radius: 0 0 12px 0;
+}
+
+.ps-bal-res-titulo {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 19px;
+    -fx-font-weight: bold;
+}
+
+.ps-bal-res-monto {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 18px;
+}
+
+.ps-bal-res-total {
+    -fx-text-fill: #111827;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.ps-bal-res.ps-negativo {
+    -fx-text-fill: #dc2626;
+}
+
+/* Botón oscuro a la altura de los campos (Buscar del balance) */
+.ps-btn-dark.ps-btn-tall {
+    -fx-pref-height: 46px;
+}
+
+/* ==============================
+   REPORTE DE PRODUCTOS (Gastos.fxml)
+   ============================== */
+
+.ps-panel {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 12px;
+}
+
+.ps-panel-head {
+    -fx-background-color: #f1f4f8;
+    -fx-background-radius: 12px 12px 0 0;
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 15px;
+    -fx-padding: 16px 24px;
+    -fx-border-color: transparent transparent #e5e7eb transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.ps-panel-titlebar {
+    -fx-padding: 16px 24px;
+}
+
+/* Tabla dentro de un panel: sin borde ni esquinas propias */
+.ps-table.ps-table-flat {
+    -fx-background-radius: 0 0 12px 12px;
+    -fx-border-color: transparent;
+}
+
+.ps-table.ps-table-flat:focused {
+    -fx-border-color: transparent;
+}
+
+.ps-table.ps-table-flat .column-header-background {
+    -fx-background-radius: 0;
+    -fx-border-color: #e5e7eb transparent #e5e7eb transparent;
+    -fx-border-width: 1 0 1 0;
+}
+
+.ps-prod-nombre {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 18px;
+}
+
+.ps-prod-cat {
+    -fx-text-fill: #9ca3af;
+    -fx-font-size: 15px;
+}
+
+/* Lista de categorías */
+.ps-cat-list {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+}
+
+.ps-cat-list:focused {
+    -fx-background-insets: 0;
+}
+
+.ps-cat-list .list-cell {
+    -fx-background-color: #ffffff;
+    -fx-padding: 16px 24px 16px 27px;
+    -fx-border-color: transparent transparent #eef0f3 transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-cursor: hand;
+}
+
+.ps-cat-list .list-cell:empty {
+    -fx-border-color: transparent;
+    -fx-cursor: default;
+}
+
+.ps-cat-list .list-cell:filled:hover {
+    -fx-background-color: #f8fafc;
+}
+
+.ps-cat-list .list-cell:filled:selected {
+    -fx-background-color: #e8f0fe;
+    -fx-border-color: transparent transparent #eef0f3 #2563eb;
+    -fx-border-width: 0 0 1 3;
+    -fx-padding: 16px 24px 16px 24px;
+}
+
+.ps-cat-nombre,
+.ps-cat-total {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 18px;
+}
+
+.ps-cat-sub {
+    -fx-text-fill: #9ca3af;
+    -fx-font-size: 15px;
+}
+
+.ps-cat-barra {
+    -fx-background-color: #eef1f5;
+    -fx-background-radius: 6px;
+    -fx-min-height: 10px;
+    -fx-pref-height: 10px;
+    -fx-max-height: 10px;
+}
+
+.ps-cat-barra-relleno {
+    -fx-background-color: #2563eb;
+    -fx-background-radius: 6px;
+    -fx-min-height: 10px;
+    -fx-pref-height: 10px;
+    -fx-max-height: 10px;
+}
+
+.ps-cat-list .scroll-bar .thumb {
+    -fx-background-color: #d1d5db;
+    -fx-background-radius: 6px;
+}
+
+.ps-cat-list .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+/* ==============================
+   STOCK (stockProducto.fxml)
+   ============================== */
+
+/* Campo de solo lectura con la categoría */
+.ps-campo-fijo {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d5db;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-pref-height: 50px;
+    -fx-padding: 0 18px;
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 17px;
+}
+
+/* Menú de acciones (⋮) */
+.ps-menu-btn {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d5db;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-pref-width: 50px;
+    -fx-pref-height: 50px;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+.ps-menu-btn:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+.ps-menu-btn > .arrow-button {
+    -fx-padding: 0;
+}
+
+.ps-menu-btn > .arrow-button > .arrow {
+    -fx-padding: 0;
+}
+
+.ps-menu-btn .context-menu {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 10px;
+    -fx-padding: 6px;
+}
+
+.ps-menu-btn .menu-item {
+    -fx-padding: 8px 14px;
+    -fx-background-radius: 6px;
+}
+
+.ps-menu-btn .menu-item .label {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 15px;
+}
+
+.ps-menu-btn .menu-item:focused {
+    -fx-background-color: #e8f0fe;
+}
+
+/* Buscador con lupa */
+.ps-input.ps-input-busqueda {
+    -fx-pref-height: 50px;
+    -fx-padding: 0 14px 0 44px;
+}
+
+.ps-icon-muted {
+    -fx-fill: #9ca3af;
+}
+
+/* Pills con contador */
+.ps-pill .ps-pill-texto {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 15px;
+}
+
+.ps-pill .ps-pill-cuenta {
+    -fx-text-fill: #9ca3af;
+    -fx-font-size: 14px;
+}
+
+.ps-pill:selected .ps-pill-texto {
+    -fx-text-fill: #ffffff;
+}
+
+.ps-pill:selected .ps-pill-cuenta {
+    -fx-text-fill: #cbd5e1;
+}
+
+/* Puntos y textos de estado */
+.ps-dot-rojo {
+    -fx-fill: #dc2626;
+}
+
+.ps-dot-naranja {
+    -fx-fill: #d97706;
+}
+
+.ps-dot-gris {
+    -fx-fill: #94a3b8;
+}
+
+.ps-estado-rojo {
+    -fx-text-fill: #dc2626;
+    -fx-font-size: 16px;
+}
+
+.ps-estado-naranja {
+    -fx-text-fill: #b45309;
+    -fx-font-size: 16px;
+}
+
+.ps-estado-gris {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 16px;
+}
+
+.ps-texto-rojo,
+.ps-table .table-cell.ps-texto-rojo,
+.ps-table .table-row-cell:selected .table-cell.ps-texto-rojo {
+    -fx-text-fill: #dc2626;
+}
+
+/* Stock actual grande */
+.ps-stock-grande {
+    -fx-text-fill: #111827;
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+}
+
+.ps-stock-unidad {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 18px;
+}
+
+/* Selector segmentado Ingreso / Egreso */
+.ps-segmentado {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d5db;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+}
+
+.ps-segmento {
+    -fx-background-color: transparent;
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 16px;
+    -fx-pref-height: 50px;
+    -fx-graphic-text-gap: 8px;
+    -fx-cursor: hand;
+}
+
+.ps-segmento-izq {
+    -fx-background-radius: 9px 0 0 9px;
+}
+
+.ps-segmento-der {
+    -fx-background-radius: 0 9px 9px 0;
+}
+
+.ps-segmento .ps-icon {
+    -fx-fill: #6b7280;
+}
+
+.ps-segmento:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+.ps-segmento:selected {
+    -fx-background-color: #1f2937;
+    -fx-text-fill: #ffffff;
+}
+
+.ps-segmento:selected .ps-icon {
+    -fx-fill: #ffffff;
+}
+
+/* Botón de egreso: rojo */
+.ps-btn.ps-btn-egreso {
+    -fx-background-color: #dc2626;
+}
+
+.ps-btn.ps-btn-egreso:hover {
+    -fx-background-color: #b91c1c;
+}
+
+/* ==============================
+   MERCADO PAGO (TokenMercadoPago.fxml + CajasMercadoPago.fxml)
+   ============================== */
+
+/* Chip de estado de la configuración */
+.mp-estado {
+    -fx-background-radius: 16px;
+    -fx-font-size: 14px;
+    -fx-padding: 6px 14px;
+}
+
+.mp-estado-activo {
+    -fx-background-color: #dcfce7;
+    -fx-text-fill: #15803d;
+}
+
+.mp-estado-inactivo {
+    -fx-background-color: #fee2e2;
+    -fx-text-fill: #b91c1c;
+}
+
+/* Aviso de bloqueo de la cuenta */
+.mp-aviso {
+    -fx-background-radius: 14px;
+    -fx-font-size: 13px;
+    -fx-padding: 4px 12px;
+}
+
+.mp-aviso-bloqueado {
+    -fx-background-color: #f1f4f8;
+    -fx-text-fill: #6b7280;
+}
+
+.mp-aviso-editando {
+    -fx-background-color: #fef3c7;
+    -fx-text-fill: #92400e;
+}
+
+/* Tarjetas Caja 1/2/3 */
+.mp-caja-card {
+    -fx-padding: 16px 20px;
+}
+
+.mp-caja-qr {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.mp-caja-qr.mp-caja-sin-qr {
+    -fx-text-fill: #9ca3af;
+    -fx-font-weight: normal;
+}
+
+/* Columna "Usado en" con QR asignado */
+.ps-table .table-cell.mp-celda-asignada {
+    -fx-text-fill: #15803d;
+    -fx-font-weight: bold;
+}
+
+/* Marco del QR */
+.mp-qr-marco {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 10px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 10px;
+    -fx-padding: 12px;
+    -fx-min-height: 214px;
+}
+
+/* "Más datos" plegable */
+.mp-mas-datos {
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 14px;
+}
+
+.mp-mas-datos > .title {
+    -fx-background-color: transparent;
+    -fx-padding: 6px 0;
+    -fx-cursor: hand;
+}
+
+.mp-mas-datos > .content {
+    -fx-background-color: transparent;
+    -fx-border-color: #eef0f3 transparent transparent transparent;
+    -fx-padding: 6px 0 0 0;
+}
+
+.mp-dato-titulo {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 13px;
+}
+
+.mp-dato-valor {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 13px;
+}
+
+/* ==============================================================
+   PALETA AZUL (misma identidad que Nueva Venta / theme.css)
+   Azul #3498db · Marino #2c3e50 / #34495e · Celeste #d6eaf8 / #ebf5fb
+   Sobrescribe los colores neutros de arriba. Afecta a Personal,
+   Gastos, Stock y Mercado Pago (todas usan esta hoja).
+   ============================================================== */
+
+/* Fondo y encabezados */
+.ps-root,
+.tab-pane.ps-tabs {
+    -fx-background-color: #e3eaf2;
+}
+.ps-title {
+    -fx-text-fill: #2c3e50;
+}
+.ps-subtitle,
+.ps-counter {
+    -fx-text-fill: #5d6d7e;
+}
+.ps-field-label {
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+}
+
+/* Pestañas: barra marino, pestaña activa azul */
+.tab-pane.ps-tabs .tab-header-area {
+    -fx-padding: 0;
+}
+.tab-pane.ps-tabs .tab-header-area .tab-header-background {
+    -fx-background-color: linear-gradient(to bottom, #2c3e50, #34495e);
+    -fx-border-color: transparent transparent #3498db transparent;
+    -fx-border-width: 0 0 3 0;
+}
+.tab-pane.ps-tabs .tab {
+    -fx-pref-height: 54px;
+    -fx-padding: 0 22px;
+    -fx-border-width: 0;
+}
+.tab-pane.ps-tabs .tab .tab-label {
+    -fx-text-fill: #bdc3c7;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+.tab-pane.ps-tabs .tab:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+}
+.tab-pane.ps-tabs .tab:hover .tab-label {
+    -fx-text-fill: #ffffff;
+}
+.tab-pane.ps-tabs .tab:selected {
+    -fx-background-color: #3498db;
+    -fx-background-radius: 8px 8px 0 0;
+    -fx-border-color: transparent;
+}
+.tab-pane.ps-tabs .tab:selected .tab-label {
+    -fx-text-fill: #ffffff;
+}
+
+/* Tarjetas y paneles: blancos con borde celeste y acento azul */
+.ps-card {
+    -fx-border-color: #3498db;
+    -fx-border-width: 0 0 0 5;
+    -fx-effect: dropshadow(gaussian, rgba(44, 62, 80, 0.15), 10, 0, 0, 2);
+}
+.ps-detail-card,
+.ps-panel,
+.ps-balance,
+.ps-emp-list,
+.ps-table {
+    -fx-border-color: #aec6dd;
+    -fx-effect: dropshadow(gaussian, rgba(44, 62, 80, 0.12), 8, 0, 0, 2);
+}
+.ps-detail-card {
+    -fx-border-color: #3498db #aec6dd #aec6dd #aec6dd;
+    -fx-border-width: 5 1 1 1;
+}
+.ps-table:focused,
+.ps-emp-list:focused {
+    -fx-border-color: #aec6dd;
+}
+.ps-detail-title,
+.ps-section-title,
+.ps-comp-nombre {
+    -fx-text-fill: #1b4f72;
+}
+
+/* Campos */
+.ps-input,
+.ps-combo,
+.ps-campo-fijo,
+.ps-date .text-field,
+.ps-segmentado {
+    -fx-border-color: #aec6dd;
+}
+.ps-date .arrow-button {
+    -fx-border-color: #aec6dd #aec6dd #aec6dd transparent;
+    -fx-background-color: #ebf5fb;
+}
+.ps-input:focused,
+.ps-combo:focused,
+.ps-date .text-field:focused {
+    -fx-border-color: #3498db;
+}
+.ps-combo .combo-box-popup .list-cell:hover,
+.ps-combo .combo-box-popup .list-cell:selected {
+    -fx-background-color: #d6eaf8;
+}
+
+/* Botones: fuente un poco menor para que el texto entre siempre */
+.ps-btn,
+.ps-btn-dark,
+.ps-btn-outline,
+.ps-btn-outline-danger {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 16px;
+}
+.ps-btn {
+    -fx-background-color: #3498db;
+    -fx-font-size: 15px;
+    -fx-padding: 0 18px;
+}
+.ps-btn:hover {
+    -fx-background-color: #2980b9;
+}
+.ps-btn:pressed {
+    -fx-background-color: #2471a3;
+}
+.ps-btn-dark {
+    -fx-background-color: #34495e;
+}
+.ps-btn-dark:hover {
+    -fx-background-color: #2c3e50;
+}
+.ps-btn-outline {
+    -fx-background-color: #ebf5fb;
+    -fx-border-color: #3498db;
+    -fx-text-fill: #21618c;
+}
+.ps-btn-outline .ps-icon {
+    -fx-fill: #21618c;
+}
+.ps-btn-outline:hover {
+    -fx-background-color: #d6eaf8;
+}
+.ps-btn-outline-danger {
+    -fx-background-color: #fdedec;
+    -fx-border-color: #e6b0aa;
+    -fx-text-fill: #c0392b;
+}
+.ps-btn-outline-danger .ps-icon {
+    -fx-fill: #c0392b;
+}
+.ps-btn-outline-danger:hover {
+    -fx-background-color: #fadbd8;
+    -fx-border-color: #e74c3c;
+}
+
+/* Pills de período: blancas, la elegida azul */
+.ps-pill {
+    -fx-border-color: #aec6dd;
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 14px;
+}
+.ps-pill .ps-icon {
+    -fx-fill: #2c3e50;
+}
+.ps-pill:hover {
+    -fx-background-color: #ebf5fb;
+}
+.ps-pill:selected {
+    -fx-background-color: #3498db;
+    -fx-border-color: #2980b9;
+    -fx-text-fill: #ffffff;
+}
+.ps-pill:selected .ps-icon {
+    -fx-fill: #ffffff;
+}
+.ps-combo.ps-combo-pill {
+    -fx-border-color: #aec6dd;
+}
+
+/* Barra de totales: marino con números blancos */
+.ps-stats {
+    -fx-background-color: linear-gradient(to right, #2c3e50, #34495e);
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(44, 62, 80, 0.25), 10, 0, 0, 3);
+}
+.ps-stat-divider {
+    -fx-border-color: transparent transparent transparent rgba(255, 255, 255, 0.15);
+}
+/* Texto claro solo dentro de la barra marino: en fondos claros (comprobante,
+   stock actual, tarjetas de cajas) quedan los colores oscuros de arriba */
+.ps-stats .ps-stat-label {
+    -fx-text-fill: #aed6f1;
+    -fx-font-weight: bold;
+}
+.ps-stats .ps-stat-value,
+.ps-stats .ps-stat-value-lg {
+    -fx-text-fill: #ffffff;
+}
+.ps-stat-label {
+    -fx-font-weight: bold;
+}
+.ps-stats .ps-negativo {
+    -fx-text-fill: #ff8a80;
+}
+
+/* Tablas: encabezado marino, filas alternadas, selección celeste */
+.ps-table .column-header-background {
+    -fx-background-color: #34495e;
+    -fx-border-color: transparent transparent #3498db transparent;
+    -fx-border-width: 0 0 2 0;
+}
+.ps-table .column-header .label {
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+.ps-table.ps-table-flat .column-header-background {
+    -fx-border-color: transparent transparent #3498db transparent;
+    -fx-border-width: 0 0 2 0;
+}
+.ps-table .table-row-cell:filled:odd {
+    -fx-background-color: #f4f8fc;
+}
+.ps-table .table-row-cell:filled:hover {
+    -fx-background-color: #ebf5fb;
+}
+.ps-table .table-row-cell:filled:selected {
+    -fx-background-color: #d6eaf8;
+    -fx-border-color: transparent transparent #eef0f3 #3498db;
+}
+.ps-table .table-row-cell:total,
+.ps-table .table-row-cell:total:hover {
+    -fx-background-color: #d6eaf8;
+    -fx-border-color: #3498db transparent transparent transparent;
+}
+.ps-chip {
+    -fx-background-color: #d6eaf8;
+    -fx-text-fill: #21618c;
+    -fx-font-weight: bold;
+}
+.ps-chip-gris {
+    -fx-background-color: #e3eaf2;
+    -fx-text-fill: #2c3e50;
+}
+
+/* Listas (empleados, categorías) */
+.ps-emp-list .list-cell:filled:hover,
+.ps-cat-list .list-cell:filled:hover {
+    -fx-background-color: #ebf5fb;
+}
+.ps-emp-list .list-cell:filled:selected,
+.ps-cat-list .list-cell:filled:selected {
+    -fx-background-color: #d6eaf8;
+    -fx-border-color: transparent transparent #eef0f3 #3498db;
+}
+.ps-cat-barra {
+    -fx-background-color: #d6eaf8;
+}
+.ps-cat-barra-relleno {
+    -fx-background-color: #3498db;
+}
+
+/* Paneles con encabezado marino */
+.ps-panel-head,
+.ps-bal-head {
+    -fx-background-color: #34495e;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-border-color: transparent transparent #3498db transparent;
+    -fx-border-width: 0 0 2 0;
+}
+.ps-panel-titlebar {
+    -fx-background-color: #ebf5fb;
+    -fx-background-radius: 12px 12px 0 0;
+}
+
+/* Balance */
+.ps-bal-section {
+    -fx-background-color: #d6eaf8;
+    -fx-text-fill: #21618c;
+    -fx-font-weight: bold;
+}
+.ps-bal-res {
+    -fx-background-color: #d6eaf8;
+    -fx-border-color: #3498db transparent transparent transparent;
+}
+.ps-bal-res-titulo,
+.ps-bal-res-total {
+    -fx-text-fill: #1b4f72;
+}
+.ps-link,
+.ps-link:visited {
+    -fx-text-fill: #2980b9;
+    -fx-font-weight: bold;
+}
+
+/* Días de la semana del balance */
+.ps-dia {
+    -fx-border-color: #aec6dd;
+    -fx-padding: 8px 4px;
+}
+.ps-dia:hover {
+    -fx-background-color: #ebf5fb;
+}
+.ps-dia:selected {
+    -fx-background-color: #3498db;
+    -fx-border-color: #2980b9;
+}
+.ps-dia-nombre {
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+.ps-dia-monto {
+    -fx-text-fill: #5d6d7e;
+    -fx-font-size: 14px;
+}
+.ps-dia:selected .ps-dia-monto {
+    -fx-text-fill: #ebf5fb;
+}
+
+/* Resumen semanal (comprobante) */
+.ps-paper-bg {
+    -fx-background-color: #d6e4f0;
+}
+.ps-comp-head {
+    -fx-border-color: transparent transparent #3498db transparent;
+}
+.ps-comp-totales {
+    -fx-background-color: #ebf5fb;
+}
+
+/* Selector Ingreso / Egreso (Stock) */
+.ps-segmento:hover {
+    -fx-background-color: #ebf5fb;
+}
+.ps-segmento:selected {
+    -fx-background-color: #3498db;
+}
+.ps-menu-btn {
+    -fx-border-color: #aec6dd;
+}
+.ps-menu-btn:hover,
+.ps-icon-btn:hover {
+    -fx-background-color: #ebf5fb;
+}
+
+/* Botón rojo a la altura de los campos (Eliminar tarjeta) */
+.ps-btn-outline-danger.ps-btn-tall {
+    -fx-pref-height: 46px;
+}
+
+/* ==============================
+   MERCADO PAGO: tarjetas Caja 1/2/3 en marino
+   ============================== */
+.ps-card.mp-caja-card {
+    -fx-background-color: linear-gradient(to bottom right, #2c3e50, #34495e);
+    -fx-border-color: #3498db;
+    -fx-border-width: 0 0 0 5;
+    -fx-effect: dropshadow(gaussian, rgba(44, 62, 80, 0.25), 10, 0, 0, 3);
+}
+.mp-caja-card .ps-stat-label {
+    -fx-text-fill: #aed6f1;
+}
+.mp-caja-card .mp-caja-qr {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 20px;
+}
+.mp-caja-card .mp-caja-qr.mp-caja-sin-qr {
+    -fx-text-fill: #95a5a6;
+}
+.mp-caja-card .ps-item-sub {
+    -fx-text-fill: #bdc3c7;
+}
+
+/* Avisos y "Más datos" */
+.mp-aviso-bloqueado {
+    -fx-background-color: #d6eaf8;
+    -fx-text-fill: #21618c;
+}
+.mp-qr-marco {
+    -fx-background-color: #ebf5fb;
+    -fx-border-color: #aec6dd;
+}
+.mp-mas-datos > .title {
+    -fx-text-fill: #21618c;
+}

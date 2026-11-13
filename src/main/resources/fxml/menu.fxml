@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.shape.SVGPath?>
+
+<!-- Pantalla principal (back-office): barra de navegación fina arriba y el
+     módulo elegido ocupando todo el resto de la pantalla. -->
+<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" styleClass="menu-root" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
+    <stylesheets>
+        <URL value="@../styles/menu.css" />
+    </stylesheets>
+   <children>
+      <!-- Barra de navegación superior -->
+      <HBox fx:id="barraNavegacion" alignment="CENTER_LEFT" prefHeight="64.0" spacing="6.0" styleClass="nav-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label minWidth="-Infinity" styleClass="nav-marca" text="SISTEMA DE VENTAS" />
+
+            <!-- Acceso destacado: abre Nueva Venta a pantalla completa -->
+            <Button fx:id="btnCrearVenta" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleCrearVenta" styleClass="nav-btn-venta" text="Nueva Venta">
+               <graphic>
+                  <SVGPath content="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z" scaleX="0.85" scaleY="0.85" styleClass="nav-icono" />
+               </graphic>
+               <tooltip><Tooltip text="Nueva Venta (F1)" /></tooltip>
+            </Button>
+
+            <Region minWidth="1.0" prefHeight="34.0" styleClass="nav-separador" />
+
+            <!-- Módulos: el que está abierto queda resaltado en azul -->
+            <Button fx:id="btnHistorialVentas" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleHistorialVentas" styleClass="nav-btn" text="Historial">
+               <tooltip><Tooltip text="Historial y reportes de ventas (F2)" /></tooltip>
+            </Button>
+            <Button fx:id="btnVisualizarProductos" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleVisualizarProductos" styleClass="nav-btn" text="Productos">
+               <tooltip><Tooltip text="Catálogo de productos (F3)" /></tooltip>
+            </Button>
+            <Button fx:id="btnIngresarIndividual" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleIngresarIndividual" styleClass="nav-btn" text="Stock">
+               <tooltip><Tooltip text="Stock de productos secos (F4)" /></tooltip>
+            </Button>
+            <Button fx:id="btnPersonal" minWidth="-Infinity" mnemonicParsing="false" onAction="#handlePersonal" styleClass="nav-btn" text="Personal">
+               <tooltip><Tooltip text="Personal (F5)" /></tooltip>
+            </Button>
+            <Button fx:id="btnGastos" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleGastos" styleClass="nav-btn" text="Gastos">
+               <tooltip><Tooltip text="Gastos y balance (F6)" /></tooltip>
+            </Button>
+            <Button fx:id="btnVisualizarTarjeta" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleVisualizarTarjeta" styleClass="nav-btn" text="Tarjetas">
+               <tooltip><Tooltip text="Tarjetas (F7)" /></tooltip>
+            </Button>
+            <Button fx:id="btnMercadoPago" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleMercadoPago" styleClass="nav-btn" text="Mercado Pago">
+               <tooltip><Tooltip text="Token y cajas de Mercado Pago (F8)" /></tooltip>
+            </Button>
+
+            <Region HBox.hgrow="ALWAYS" />
+
+            <!-- Se pinta de verde cuando hay una versión nueva publicada -->
+            <Button fx:id="btnActualizaciones" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleActualizaciones" styleClass="nav-btn" text="Actualizaciones">
+               <tooltip><Tooltip text="Buscar e instalar actualizaciones (F9)" /></tooltip>
+            </Button>
+            <Label fx:id="lblVersion" minWidth="-Infinity" styleClass="nav-version" text="" />
+         </children>
+      </HBox>
+
+      <!-- Área del módulo abierto: ocupa todo el ancho debajo de la barra -->
+      <AnchorPane fx:id="contenidoPrincipal" styleClass="content-area" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
+         <children>
+            <AnchorPane fx:id="overlayClientes" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

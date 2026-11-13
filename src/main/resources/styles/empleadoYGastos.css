@@ -1,0 +1,57 @@
+/* ==============================================================
+   PERSONAL / GASTOS / GANANCIA REAL
+   Usa el tema compartido (theme.css) para colores, botones, tarjetas,
+   inputs, tablas y pestañas. Solo queda acá lo que ya no está en
+   el tema (por ahora nada específico de estas pantallas).
+   ============================================================== */
+
+@import "theme.css";
+
+/* ==============================
+   TABLA DE REPORTES Y BALANCE
+   Números grandes, filas de subtotal/balance resaltadas.
+   ============================== */
+.tabla-balance .table-cell {
+    -fx-font-size: 20px;
+    -fx-font-weight: 700;
+}
+.tabla-balance .table-row-cell:odd {
+    -fx-background-color: #f8f9fa;
+}
+.fila-balance {
+    -fx-background-color: #eaf1f7;
+}
+.fila-balance .table-cell {
+    -fx-font-size: 24px;
+    -fx-font-weight: 900;
+}
+.fila-balance:hover {
+    -fx-background-color: #dfe9f1;
+}
+
+/* ==============================
+   BOTONES DE DÍAS DE LA SEMANA (Reportes y Balance)
+   Gris sin marcar, verde marcado.
+   ============================== */
+.boton-dia {
+    -fx-background-color: #ecf0f1;
+    -fx-text-fill: #2C3E50;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 0 10 0;
+    -fx-background-radius: 6;
+    -fx-border-color: #BDC3C7;
+    -fx-border-radius: 6;
+    -fx-cursor: hand;
+}
+.boton-dia:hover {
+    -fx-background-color: #dfe6e9;
+}
+.boton-dia:selected {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-border-color: #229954;
+}
+.boton-dia:selected:hover {
+    -fx-background-color: #229954;
+}

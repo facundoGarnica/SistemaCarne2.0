@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <!-- Conexión a MySQL -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/carnedb?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">1234</property>
+
+        <!-- Dialecto para MySQL -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!-- Mostrar SQL en consola -->
+        <property name="hibernate.show_sql">false</property>
+
+        <!-- Crear tablas automáticamente -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- Pool de conexiones -->
+        <property name="hibernate.connection.pool_size">5</property>
+
+        <!-- Contexto de sesión -->
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.format_sql">false</property>
+
+        <!-- Clases mapeadas -->
+        <mapping class="model.DetalleVenta"/>
+        <mapping class="model.Producto"/>
+        <mapping class="model.Stock"/>
+        <mapping class="model.Venta"/>
+        <mapping class="model.Empleado"/>
+        <mapping class="model.TurnoEmpleados"/>
+        <mapping class="model.Gastos"/>
+        <mapping class="model.Adelanto"/>
+        <mapping class="model.MercadoPagoToken"/>
+        <mapping class="model.Tarjeta"/>
+    </session-factory>
+</hibernate-configuration>

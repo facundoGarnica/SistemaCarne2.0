@@ -1,0 +1,126 @@
+/* ==============================================================
+   CONFIGURACIÓN DE MERCADO PAGO
+   Usa el tema compartido (theme.css): tarjetas .seccion-formulario,
+   inputs .input-text y botones. Acá solo va lo propio de la pantalla.
+   ============================================================== */
+
+@import "theme.css";
+
+.mp-scroll {
+    -fx-background-color: transparent;
+    -fx-background: #f4f6f8;
+}
+.mp-scroll > .viewport {
+    -fx-background-color: #f4f6f8;
+}
+.mp-fondo {
+    -fx-background-color: #f4f6f8;
+}
+
+.mp-descripcion {
+    -fx-font-size: 15px;
+    -fx-text-fill: #7F8C8D;
+}
+
+.mp-ayuda {
+    -fx-font-size: 13px;
+    -fx-text-fill: #95A5A6;
+    -fx-wrap-text: true;
+}
+
+/* ==============================
+   ESTADO (badge del encabezado)
+   ============================== */
+.mp-estado {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 6 14 6 14;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+    -fx-border-width: 1px;
+}
+.mp-estado-activo {
+    -fx-background-color: #eafaf1;
+    -fx-border-color: #27ae60;
+    -fx-text-fill: #229954;
+}
+.mp-estado-inactivo {
+    -fx-background-color: #fdecea;
+    -fx-border-color: #e74c3c;
+    -fx-text-fill: #c0392b;
+}
+
+/* ==============================
+   BLOQUEO DE EDICIÓN
+   ============================== */
+.mp-aviso {
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-padding: 10 14 10 14;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-width: 0 0 0 4px;
+}
+.mp-aviso-bloqueado {
+    -fx-background-color: #eaf2f8;
+    -fx-border-color: #3498db;
+    -fx-text-fill: #2c3e50;
+}
+.mp-aviso-editando {
+    -fx-background-color: #fef5e7;
+    -fx-border-color: #f39c12;
+    -fx-text-fill: #9c640c;
+}
+
+/* Campo bloqueado: se ve gris y al pasar el mouse indica que se puede hacer clic */
+.input-text:readonly {
+    -fx-background-color: #f4f6f8;
+    -fx-text-fill: #566573;
+    -fx-cursor: hand;
+}
+.input-text:readonly:focused {
+    -fx-border-color: #BDC3C7;
+    -fx-border-width: 1px;
+}
+
+/* ==============================
+   PESTAÑA CAJAS Y QR
+   ============================== */
+.mp-qr-marco {
+    -fx-background-color: white;
+    -fx-border-color: #dfe6e9;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 10px;
+    -fx-min-height: 212px;
+}
+.mp-dato-titulo {
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #7F8C8D;
+    -fx-min-width: 130px;
+}
+.mp-dato-valor {
+    -fx-font-size: 14px;
+    -fx-text-fill: #2C3E50;
+}
+.table-view .table-cell.mp-celda-asignada {
+    -fx-text-fill: #229954;
+    -fx-font-weight: bold;
+}
+
+/* ==============================
+   TARJETA DE CADA CAJA
+   ============================== */
+.mp-caja {
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 8px;
+    -fx-border-color: #dfe6e9;
+    -fx-border-radius: 8px;
+    -fx-padding: 14px;
+}
+.mp-caja-titulo {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2C3E50;
+}
