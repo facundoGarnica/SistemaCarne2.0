@@ -1,5 +1,6 @@
 package carniceria.sistemacarne;
 
+import Util.ActualizadorEjecutable;
 import Util.EstiloApp;
 import controller.Crear_ventasController;
 import javafx.application.Application;
@@ -30,6 +31,8 @@ public class App extends Application {
         // Paleta de colores elegida en Configuración > Estilo, en todas las ventanas
         EstiloApp.instalar();
         stage.show();
+        // Si esta versión trae un SistemaCarne.exe distinto (por ejemplo, ícono nuevo), lo instala
+        ActualizadorEjecutable.revisarEnSegundoPlano();
     }
 
     static void setRoot(String fxml) throws IOException {

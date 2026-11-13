@@ -80,6 +80,10 @@ echo [4/4] Copiando configuracion y archivo para GitHub...
 copy /y instalacion\config.properties dist\SistemaCarne\ >nul
 copy /y instalacion\backup-base.bat dist\SistemaCarne\ >nul
 copy /y target\SistemaCarne.jar dist\SistemaCarne.jar >nul
+rem El .exe (con su icono) viaja dentro del .jar de GitHub: al actualizar,
+rem el sistema lo instala solo (ver Util\ActualizadorEjecutable.java)
+"%JDKBIN%jar.exe" uf dist\SistemaCarne.jar -C dist\SistemaCarne SistemaCarne.exe
+if errorlevel 1 goto error
 
 echo.
 echo ==============================================================
