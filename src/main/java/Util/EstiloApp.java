@@ -3,7 +3,11 @@ package Util;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.prefs.Preferences;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Parent;
@@ -153,6 +157,7 @@ public final class EstiloApp {
     }
 
     private static void vigilar(Window w) {
+        ponerIcono(w);
         aplicar(w.getScene());
         w.sceneProperty().addListener((obs, anterior, escena) -> aplicar(escena));
     }
@@ -180,6 +185,27 @@ public final class EstiloApp {
         if (hoja != null) {
             raiz.getStylesheets().add(hoja);
         }
+    }
+
+    // ===================== ÍCONO =====================
+
+    private static List<Image> iconos;
+
+    /** Ícono del sistema (barra de título y de tareas) en todas las ventanas. */
+    private static void ponerIcono(Window w) {
+        if (!(w instanceof Stage stage) || !stage.getIcons().isEmpty()) {
+            return;
+        }
+        if (iconos == null) {
+            iconos = new ArrayList<>();
+            for (int t : new int[]{16, 24, 32, 48, 64, 128, 256}) {
+                URL url = EstiloApp.class.getResource("/imagenes/icono-" + t + ".png");
+                if (url != null) {
+                    iconos.add(new Image(url.toExternalForm()));
+                }
+            }
+        }
+        stage.getIcons().setAll(iconos);
     }
 
     // ===================== REINICIAR =====================

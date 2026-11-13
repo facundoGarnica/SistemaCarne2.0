@@ -70,6 +70,7 @@ echo [3/4] Generando SistemaCarne.exe (tarda un poco)...
     --input target\jpackage-input ^
     --main-jar SistemaCarne.jar ^
     --main-class carniceria.sistemacarne.Launcher ^
+    --icon instalacion\SistemaCarne.ico ^
     --add-modules %MODULOS% ^
     --java-options "-Dfile.encoding=UTF-8" ^
     --dest dist
