@@ -65,8 +65,8 @@
 
                 <!-- Período + acciones -->
                 <HBox alignment="CENTER_LEFT" spacing="8.0">
-                    <ToggleButton minWidth="-Infinity" fx:id="tglTurnosHoy" onAction="#mostrarTurnosDeHoy" styleClass="ps-pill" text="Hoy" toggleGroup="$grupoPeriodoTurnos" />
-                    <ToggleButton minWidth="-Infinity" fx:id="tglTurnosSemana" onAction="#mostrarSemanalTurnos" selected="true" styleClass="ps-pill" text="Esta semana" toggleGroup="$grupoPeriodoTurnos" />
+                    <ToggleButton minWidth="-Infinity" fx:id="tglTurnosHoy" onAction="#mostrarTurnosDeHoy" styleClass="ps-pill" text="Hoy" toggleGroup="$grupoPeriodoTurnos" selected="true" />
+                    <ToggleButton minWidth="-Infinity" fx:id="tglTurnosSemana" onAction="#mostrarSemanalTurnos" styleClass="ps-pill" text="Esta semana" toggleGroup="$grupoPeriodoTurnos" />
                     <ToggleButton minWidth="-Infinity" onAction="#mostrarTurnosSemanaPasada" styleClass="ps-pill" text="Semana pasada" toggleGroup="$grupoPeriodoTurnos" />
                     <ToggleButton minWidth="-Infinity" fx:id="tglTurnosRango" onAction="#mostrarSelectorRangoTurnos" styleClass="ps-pill" text="Rango…" toggleGroup="$grupoPeriodoTurnos">
                         <graphic>
@@ -85,7 +85,6 @@
 
                     <Region HBox.hgrow="ALWAYS" />
                     <Label fx:id="lblContadorTurnos" styleClass="ps-counter" text="0 turnos" />
-                    <Button minWidth="-Infinity" onAction="#actualizarTodo" styleClass="ps-btn-outline" text="Ver todo" />
                     <Button minWidth="-Infinity" fx:id="btnBorrarTurno" disable="true" onAction="#borrarTurno" styleClass="ps-btn-outline-danger" text="Eliminar">
                         <graphic>
                             <SVGPath content="M9 3v1H4v2h1v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1V4h-5V3H9zM7 6h10v13H7V6zm2 2v9h2V8H9zm4 0v9h2V8h-2z" scaleX="0.7" scaleY="0.7" styleClass="ps-icon" />
@@ -238,7 +237,8 @@
                         <Label fx:id="lblTotalAdelantadoAdelanto" styleClass="ps-stat-value" text="\$0" />
                     </VBox>
                     <VBox maxWidth="Infinity" spacing="2.0" styleClass="ps-stat, ps-stat-divider" HBox.hgrow="ALWAYS">
-                        <Label styleClass="ps-stat-label" text="Neto a pagar" />
+                        <!-- "Neto a pagar" solo con una semana de pago; con varias, "Diferencia" -->
+                        <Label fx:id="lblNetoTituloAdelanto" styleClass="ps-stat-label" text="Neto a pagar" />
                         <Label fx:id="lblNetoAdelanto" styleClass="ps-stat-value-lg" text="\$0" />
                     </VBox>
                 </HBox>
@@ -293,7 +293,7 @@
                                 </VBox>
                                 <VBox spacing="6.0">
                                     <Label styleClass="ps-field-label" text="Fecha" />
-                                    <DatePicker fx:id="dpFechaAdelanto" prefWidth="150.0" styleClass="ps-date" />
+                                    <DatePicker fx:id="dpFechaAdelanto" minWidth="-Infinity" prefWidth="175.0" styleClass="ps-date" />
                                 </VBox>
                             </HBox>
 

@@ -48,7 +48,7 @@
                 <HBox alignment="BOTTOM_LEFT" spacing="14.0" styleClass="ps-card">
                     <VBox spacing="6.0">
                         <Label styleClass="ps-field-label" text="Fecha" />
-                        <DatePicker fx:id="dpFechaGasto" prefWidth="160.0" styleClass="ps-date" />
+                        <DatePicker fx:id="dpFechaGasto" minWidth="-Infinity" prefWidth="175.0" styleClass="ps-date" />
                     </VBox>
                     <VBox minWidth="160.0" spacing="6.0" HBox.hgrow="ALWAYS">
                         <Label styleClass="ps-field-label" text="Descripción" />
@@ -80,7 +80,6 @@
                             <SVGPath content="M7 2h2v2h6V2h2v2h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2V2zM5 10v10h14V10H5zm0-4v2h14V6H5z" scaleX="0.65" scaleY="0.65" styleClass="ps-icon" />
                         </graphic>
                     </ToggleButton>
-                    <ToggleButton minWidth="-Infinity" onAction="#actualizarTodo" styleClass="ps-pill" text="Todo" toggleGroup="$grupoPeriodoGastos" />
 
                     <HBox fx:id="boxRangoGastos" alignment="CENTER_LEFT" managed="false" spacing="8.0" visible="false">
                         <HBox.margin><Insets left="6.0" /></HBox.margin>
@@ -256,7 +255,14 @@
                         <Label styleClass="ps-subtitle" text="Qué se vende más, por categoría y por producto" />
                     </VBox>
                     <Region HBox.hgrow="ALWAYS" />
-                    <Button minWidth="-Infinity" onAction="#imprimirReporteProductos" styleClass="ps-btn-outline, ps-btn-tall" text="Imprimir">
+                    <!-- Solo la categoría elegida en la lista de la izquierda -->
+                    <Button fx:id="btnImprimirCategoria" disable="true" minWidth="-Infinity" onAction="#imprimirCategoriaProductos" styleClass="ps-btn-outline, ps-btn-tall" text="Imprimir categoría">
+                        <graphic>
+                            <SVGPath content="M7 3h10v4h1a3 3 0 0 1 3 3v6h-4v5H7v-5H3v-6a3 3 0 0 1 3-3h1V3zm2 2v2h6V5H9zm-3 4a1 1 0 0 0-1 1v4h2v-2h10v2h2v-4a1 1 0 0 0-1-1H6zm3 5v5h6v-5H9z" scaleX="0.72" scaleY="0.72" styleClass="ps-icon" />
+                        </graphic>
+                    </Button>
+                    <Region minWidth="8.0" />
+                    <Button minWidth="-Infinity" onAction="#imprimirReporteProductos" styleClass="ps-btn-outline, ps-btn-tall" text="Imprimir todo">
                         <graphic>
                             <SVGPath content="M7 3h10v4h1a3 3 0 0 1 3 3v6h-4v5H7v-5H3v-6a3 3 0 0 1 3-3h1V3zm2 2v2h6V5H9zm-3 4a1 1 0 0 0-1 1v4h2v-2h10v2h2v-4a1 1 0 0 0-1-1H6zm3 5v5h6v-5H9z" scaleX="0.72" scaleY="0.72" styleClass="ps-icon" />
                         </graphic>
@@ -305,7 +311,7 @@
                 <!-- Categorías + productos -->
                 <HBox spacing="18.0" VBox.vgrow="ALWAYS">
                     <VBox minWidth="300.0" prefWidth="380.0" styleClass="ps-panel">
-                        <Label maxWidth="Infinity" styleClass="ps-panel-head" text="Categorías" />
+                        <Label maxWidth="Infinity" styleClass="ps-panel-head" text="Categorías · tocá una para filtrar" />
                         <ListView fx:id="lvCategoriasProductos" styleClass="ps-cat-list" VBox.vgrow="ALWAYS">
                             <placeholder><Label styleClass="ps-placeholder" text="No hay ventas en el período" /></placeholder>
                         </ListView>

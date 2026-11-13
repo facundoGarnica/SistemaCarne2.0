@@ -62,7 +62,13 @@ public class PersonalController {
     @FXML private DatePicker dpFechaAdelanto, dpDesdeAdelanto, dpHastaAdelanto;
     @FXML private ComboBox<String> cbMedioPagoAdelanto;
     @FXML private TextField txtDescripcionAdelanto, txtMontoAdelanto;
-    @FXML private Label lblTotalTrabajadoAdelanto, lblTotalAdelantadoAdelanto, lblNetoAdelanto;
+    @FXML private Label lblTotalTrabajadoAdelanto, lblTotalAdelantadoAdelanto, lblNetoAdelanto, lblNetoTituloAdelanto;
+    /**
+     * true si el período de Adelantos abarca más de una semana de pago
+     * (lunes a domingo). Los sueldos se pagan cada sábado, así que en ese caso
+     * trabajado − adelantado incluye semanas ya pagadas: no es "lo que le queda".
+     */
+    private boolean adelantosVariasSemanas = false;
     @FXML private ToggleGroup grupoPeriodoAdelantos;
     @FXML private ToggleButton tglAdelantosRango;
     @FXML private javafx.scene.layout.HBox boxRangoAdelantos;
@@ -75,8 +81,6 @@ public class PersonalController {
     private List<Adelanto> adelantosPeriodo = new ArrayList<>();
     /** Adelanto que se está editando en el formulario (null = alta de uno nuevo). */
     private Adelanto adelantoEnEdicion;
-    /** true mientras se muestran todos los adelantos ("Ver todo"): ninguna pill queda activa. */
-    private boolean mostrandoTodosLosAdelantos = false;
     @FXML private TableView<SaldoEmpleado> tvSaldoEmpleados;
     @FXML private TableColumn<SaldoEmpleado, String> colSaldoEmpleado;
     @FXML private TableColumn<SaldoEmpleado, Double> colSaldoTrabajado, colSaldoAdelantado, colSaldoNeto;
@@ -105,7 +109,8 @@ public class PersonalController {
         cargarDatosIniciales();
 
         dpFechaTurno.setValue(LocalDate.now());
-        dpDesdeTurno.setValue(LocalDate.now().with(DayOfWeek.MONDAY));
+        // Al entrar, la tabla de turnos muestra los de hoy (pill "Hoy")
+        dpDesdeTurno.setValue(LocalDate.now());
         dpHastaTurno.setValue(LocalDate.now());
         configurarPeriodoTurnos();
         dpFechaAdelanto.setValue(LocalDate.now());
@@ -547,7 +552,7 @@ public class PersonalController {
     /** Siempre queda un período elegido y el selector de rango se muestra solo con "Rango…". */
     private void configurarPeriodoTurnos() {
         grupoPeriodoTurnos.selectedToggleProperty().addListener((obs, anterior, nuevo) -> {
-            if (nuevo == null && anterior != null && !mostrandoTodosLosTurnos) {
+            if (nuevo == null && anterior != null) {
                 anterior.setSelected(true);
             }
             boolean esRango = grupoPeriodoTurnos.getSelectedToggle() == tglTurnosRango;
@@ -555,9 +560,6 @@ public class PersonalController {
             boxRangoTurnos.setManaged(esRango);
         });
     }
-
-    /** true mientras se muestran todos los turnos ("Ver todo"): ninguna pill queda activa. */
-    private boolean mostrandoTodosLosTurnos = false;
 
     @FXML
     private void mostrarTurnosDeHoy() {
@@ -585,18 +587,6 @@ public class PersonalController {
     private void mostrarSelectorRangoTurnos() {
         // Deja cargado el período actual para ajustarlo y aplicar
         dpDesdeTurno.requestFocus();
-    }
-
-    @FXML
-    private void actualizarTodo() {
-        if (!validarPasswordAdmin()) {
-            mostrarError("Acceso denegado", "Contraseña incorrecta.");
-            return;
-        }
-
-        actualizarTablaTurnos();
-        actualizarTablaAdelantos();
-        mostrarInfo("Actualizado", "Se muestran todos los turnos y adelantos registrados.");
     }
 
 
@@ -754,6 +744,7 @@ public class PersonalController {
             return;
         }
 
+        adelantosVariasSemanas = desde.isBefore(hasta.with(DayOfWeek.MONDAY));
         mostrarAdelantos(adelantoDAO.buscarPorRango(desde, hasta), empleadoDAO.obtenerTurnosPorRango(desde, hasta));
     }
 
@@ -817,6 +808,7 @@ public class PersonalController {
 
         lblTotalTrabajadoAdelanto.setText("$" + formatoMoneda.format(totalTrabajado));
         lblTotalAdelantadoAdelanto.setText("$" + formatoMoneda.format(totalAdelantado));
+        lblNetoTituloAdelanto.setText(adelantosVariasSemanas ? "Diferencia (varias semanas)" : "Neto a pagar");
         lblNetoAdelanto.setText(neto < 0 ? "−$" + formatoMoneda.format(-neto) : "$" + formatoMoneda.format(neto));
         lblNetoAdelanto.getStyleClass().remove("ps-negativo");
         if (neto < 0) lblNetoAdelanto.getStyleClass().add("ps-negativo");
@@ -848,9 +840,15 @@ public class PersonalController {
 
         lblEmpleadoAdelanto.setText(saldo.empleado());
         double neto = saldo.neto();
-        lblLeQuedanAdelanto.setText(neto < 0
-                ? "Debe $" + formatoMoneda.format(-neto)
-                : "Le quedan $" + formatoMoneda.format(neto));
+        if (adelantosVariasSemanas) {
+            // Con varias semanas ya hubo sábados de pago: solo se informa la diferencia
+            lblLeQuedanAdelanto.setText("Diferencia del período: "
+                    + (neto < 0 ? "−$" + formatoMoneda.format(-neto) : "$" + formatoMoneda.format(neto)));
+        } else {
+            lblLeQuedanAdelanto.setText(neto < 0
+                    ? "Debe $" + formatoMoneda.format(-neto)
+                    : "Le quedan $" + formatoMoneda.format(neto));
+        }
         lblLeQuedanAdelanto.getStyleClass().remove("ps-negativo");
         if (neto < 0) lblLeQuedanAdelanto.getStyleClass().add("ps-negativo");
 
@@ -933,7 +931,7 @@ public class PersonalController {
     /** Siempre queda un período elegido y el selector de rango se muestra solo con "Rango…". */
     private void configurarPeriodoAdelantos() {
         grupoPeriodoAdelantos.selectedToggleProperty().addListener((obs, anterior, nuevo) -> {
-            if (nuevo == null && anterior != null && !mostrandoTodosLosAdelantos) {
+            if (nuevo == null && anterior != null) {
                 anterior.setSelected(true);
             }
             boolean esRango = grupoPeriodoAdelantos.getSelectedToggle() == tglAdelantosRango;
@@ -1334,24 +1332,6 @@ public class PersonalController {
     }
 
     // --- Actualización de Tablas y Limpieza ---
-
-    private void actualizarTablaTurnos() {
-        mostrarTurnos(empleadoDAO.obtenerTodosLosTurnos());
-
-        // "Ver todo" no corresponde a ningún período: se apagan las pills
-        mostrandoTodosLosTurnos = true;
-        grupoPeriodoTurnos.selectToggle(null);
-        mostrandoTodosLosTurnos = false;
-    }
-
-    private void actualizarTablaAdelantos() {
-        mostrarAdelantos(adelantoDAO.buscarTodos(), empleadoDAO.obtenerTodosLosTurnos());
-
-        // "Ver todo" no corresponde a ningún período: se apagan las pills
-        mostrandoTodosLosAdelantos = true;
-        grupoPeriodoAdelantos.selectToggle(null);
-        mostrandoTodosLosAdelantos = false;
-    }
 
     private void actualizarTablaGestionEmpleados() {
         List<Empleado> lista = empleadoDAO.buscarTodos();

@@ -100,6 +100,7 @@ public class GastosController {
     @FXML private TableColumn<ProductoReporte, ProductoReporte> colRPPosicion, colRPNombre;
     @FXML private TableColumn<ProductoReporte, Double> colRPKilos, colRPPrecio, colRPTotal;
     @FXML private ListView<CategoriaReporte> lvCategoriasProductos;
+    @FXML private Button btnImprimirCategoria;
     @FXML private ToggleGroup grupoPeriodoProductos;
     @FXML private ToggleButton tglProductosRango;
     @FXML private javafx.scene.layout.HBox boxRangoProductos;
@@ -454,9 +455,6 @@ public class GastosController {
         recargarPeriodoGastos();
     }
 
-    /** true cuando la pill activa es "Todo" (se muestran todos los gastos, sin rango). */
-    private boolean mostrandoTodosLosGastos = false;
-
     @FXML
     private void filtrarGastos() {
         LocalDate desde = dpDesdeGasto.getValue();
@@ -471,17 +469,12 @@ public class GastosController {
             return;
         }
 
-        mostrandoTodosLosGastos = false;
         mostrarGastos(gastoDAO.buscarPorRango(desde, hasta));
     }
 
     /** Vuelve a cargar el período que se está viendo (después de guardar o borrar). */
     private void recargarPeriodoGastos() {
-        if (mostrandoTodosLosGastos) {
-            actualizarTablaGastos();
-        } else {
-            filtrarGastos();
-        }
+        filtrarGastos();
     }
 
     /** Carga los gastos del período (más recientes primero) y recalcula totales. */
@@ -551,13 +544,6 @@ public class GastosController {
     @FXML
     private void mostrarSelectorRangoGastos() {
         dpDesdeGasto.requestFocus();
-    }
-
-    /** Pill "Todo": muestra todos los gastos registrados. */
-    @FXML
-    private void actualizarTodo() {
-        mostrandoTodosLosGastos = true;
-        actualizarTablaGastos();
     }
 
     // --- Lógica de Reportes y Balances ---
@@ -1208,9 +1194,13 @@ public class GastosController {
         if (categoria == null || categoria.categoria() == null) {
             productosFiltrados.setPredicate(null);
             lblTituloDetalleProductos.setText("Todos los productos");
+            btnImprimirCategoria.setText("Imprimir categoría");
+            btnImprimirCategoria.setDisable(true);
         } else {
             productosFiltrados.setPredicate(p -> categoriaDe(p.getTipo()).equals(categoria.categoria()));
             lblTituloDetalleProductos.setText(categoria.categoria());
+            btnImprimirCategoria.setText("Imprimir " + categoria.categoria());
+            btnImprimirCategoria.setDisable(false);
         }
         double total = productosFiltrados.stream().mapToDouble(ProductoReporte::getTotal).sum();
         int n = productosFiltrados.size();
@@ -1222,8 +1212,28 @@ public class GastosController {
     /** Fila de la lista de categorías ("Todas" tiene categoria == null). */
     private record CategoriaReporte(String categoria, double kilos, double total, double porcentaje) { }
 
+    /** "Imprimir todo": todas las categorías, aunque en pantalla haya una filtrada. */
     @FXML
     private void imprimirReporteProductos(ActionEvent event) {
+        imprimirProductos((Node) event.getSource(), null);
+    }
+
+    /** "Imprimir <categoría>": solo los productos de la categoría elegida en la lista. */
+    @FXML
+    private void imprimirCategoriaProductos(ActionEvent event) {
+        CategoriaReporte elegida = lvCategoriasProductos.getSelectionModel().getSelectedItem();
+        if (elegida == null || elegida.categoria() == null) {
+            mostrarAdvertencia("Elegí una categoría", "Tocá una categoría de la lista para imprimir solo sus productos.");
+            return;
+        }
+        imprimirProductos((Node) event.getSource(), elegida.categoria());
+    }
+
+    /**
+     * Ticket del reporte de productos del período elegido.
+     * @param soloCategoria null = todas las categorías; si no, solo esa.
+     */
+    private void imprimirProductos(Node origen, String soloCategoria) {
         LocalDate inicio = dpInicioProductos.getValue();
         LocalDate fin = dpFinProductos.getValue();
 
@@ -1235,10 +1245,13 @@ public class GastosController {
         try {
             generarReporteProductos();
 
-            // Siempre todos los productos, aunque en pantalla haya una categoría filtrada
-            List<ProductoReporte> filas = productosReporte;
+            List<ProductoReporte> filas = soloCategoria == null
+                    ? productosReporte
+                    : productosReporte.stream().filter(p -> categoriaDe(p.getTipo()).equals(soloCategoria)).toList();
             if (filas == null || filas.isEmpty()) {
-                mostrarAdvertencia("Sin datos", "No hay productos vendidos en el rango seleccionado.");
+                mostrarAdvertencia("Sin datos", soloCategoria == null
+                        ? "No hay productos vendidos en el rango seleccionado."
+                        : "No hay productos de " + soloCategoria + " vendidos en el rango seleccionado.");
                 return;
             }
 
@@ -1246,6 +1259,9 @@ public class GastosController {
 
             ticket.append(centrar("CARNICERIA MONCHO")).append("\n");
             ticket.append(centrar("REPORTE DE PRODUCTOS")).append("\n");
+            if (soloCategoria != null) {
+                ticket.append(centrar("CATEGORIA: " + soloCategoria.toUpperCase())).append("\n");
+            }
             ticket.append(lineaSeparadora()).append("\n");
 
             if (inicio.equals(fin)) {
@@ -1259,9 +1275,12 @@ public class GastosController {
                     .append("\n");
             ticket.append(lineaSeparadora()).append("\n");
 
-            // Resumen: dinero generado por cada categoría
-            List<CategoriaReporte> categorias = categoriasReporte;
-            ticket.append("DINERO POR CATEGORIA\n");
+            // Resumen: dinero generado por cada categoría (con una sola, solo esa
+            // y su porcentaje sobre el total vendido)
+            List<CategoriaReporte> categorias = soloCategoria == null
+                    ? categoriasReporte
+                    : categoriasReporte.stream().filter(c -> c.categoria().equals(soloCategoria)).toList();
+            ticket.append(soloCategoria == null ? "DINERO POR CATEGORIA\n" : "PARTICIPACION EN LAS VENTAS\n");
             for (CategoriaReporte categoria : categorias) {
                 ticket.append(fila(ajustar(categoria.categoria(), 14).trim()
                                 + String.format(" %.0f%%", categoria.porcentaje()),
@@ -1296,11 +1315,19 @@ public class GastosController {
                 ticket.append(lineaSeparadora()).append("\n");
             }
 
-            ticket.append(fila("Total kilos", lblTotalKilosProductos.getText())).append("\n");
-            ticket.append(fila("Total facturado", lblTotalFacturadoProductos.getText())).append("\n");
+            if (soloCategoria == null) {
+                ticket.append(fila("Total kilos", lblTotalKilosProductos.getText())).append("\n");
+                ticket.append(fila("Total facturado", lblTotalFacturadoProductos.getText())).append("\n");
+            } else {
+                // Con una sola categoría el subtotal es el total; se aclara de todas formas
+                double kilos = filas.stream().mapToDouble(ProductoReporte::getKilos).sum();
+                double total = filas.stream().mapToDouble(ProductoReporte::getTotal).sum();
+                ticket.append(fila("Total kilos", formatoKilos.format(kilos) + " kg")).append("\n");
+                ticket.append(fila("Total " + ajustar(soloCategoria, 12).trim(), "$" + formatoMoneda.format(total))).append("\n");
+            }
             ticket.append("\n\n\n");
 
-            imprimirEnSegundoPlano((Node) event.getSource(), ticket.toString());
+            imprimirEnSegundoPlano(origen, ticket.toString());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1415,11 +1442,6 @@ public class GastosController {
     }
 
     // --- Actualización de Tablas y Limpieza ---
-
-    private void actualizarTablaGastos() {
-        List<Gastos> lista = gastoDAO.buscarTodos();
-        mostrarGastos(lista);
-    }
 
     private void limpiarCamposGasto() {
         gastoEnEdicion = null;
