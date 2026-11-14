@@ -584,7 +584,7 @@ public class Crear_ventasController implements Initializable {
         lblResto.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
         javafx.scene.control.CheckBox chkResto = new javafx.scene.control.CheckBox("Cobrar el resto en efectivo   (tecla +)");
         chkResto.setStyle("-fx-font-size: 17px;");
-        chkResto.setSelected(c.montoQRPersonalizado > 0 ? Venta.MIXTO.equals(c.medioPago) : true);
+        chkResto.setSelected(false); // siempre empieza sin marcar: el resto no se cobra salvo que se marque con +
         VBox contenido = new VBox(10, new Label("Monto a cobrar por QR:"), txtMonto, lblResto, chkResto);
         contenido.setPadding(new javafx.geometry.Insets(16, 20, 10, 20));
         contenido.setPrefWidth(480);
