@@ -35,8 +35,9 @@ public class ExportarExcel {
                         venta.getFecha().format(formato)
                 );
 
+                // Solo lo cobrado en virtual (en un pago mixto, la parte por QR)
                 row.createCell(1).setCellValue(
-                        venta.getTotal()
+                        venta.montoEnVirtual()
                 );
             }
 

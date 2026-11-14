@@ -510,3 +510,10 @@
 .nv-root .boton-qr:hover {
     -fx-background-color: -c-suave-2;
 }
+
+/* Debajo de "Medio de pago": división del cobro del QR personalizado */
+.nv-root .detalle-mixto {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}

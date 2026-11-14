@@ -4,7 +4,7 @@
     <groupId>carniceria</groupId>
     <artifactId>SistemaCarne</artifactId>
     <!-- Versión del sistema: subirla en cada actualización publicada (ver INSTALACION.md) -->
-    <version>1.7.0</version>
+    <version>1.8.0</version>
      <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>17</maven.compiler.release>

@@ -125,6 +125,8 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
+                  <!-- QR personalizado: cómo se divide el cobro, o qué no se cobra -->
+                  <Label fx:id="lblDetalleMixto" managed="false" styleClass="detalle-mixto" text="" visible="false" />
                </children>
             </VBox>
             

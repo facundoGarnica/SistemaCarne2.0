@@ -814,14 +814,10 @@ public class GastosController {
         double totalVirtual = 0.0;
 
         for (Venta v : ventasEnRango) {
-            double total = v.getTotal();
-            totalVentas += total;
-
-            if (v.getMedioPago() != null && v.getMedioPago().equalsIgnoreCase("Efectivo")) {
-                totalEfectivo += total;
-            } else {
-                totalVirtual += total;
-            }
+            totalVentas += v.getTotal();
+            // Pago mixto: la parte en efectivo a Efectivo y la del QR a Virtual
+            totalEfectivo += v.montoEnEfectivo();
+            totalVirtual += v.montoEnVirtual();
         }
 
         // 2. Gastos del período, desglosados por medio de pago (consultas agregadas: no se trae todo el historial)
