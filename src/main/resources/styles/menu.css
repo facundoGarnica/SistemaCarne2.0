@@ -108,6 +108,65 @@
     -fx-padding: 0 4px 0 8px;
 }
 
+/* "SISTEMA DE VENTAS": vuelve al inicio */
+.nav-marca {
+    -fx-cursor: hand;
+}
+
+/* Pantalla de inicio: en blanco, hora y fecha en grande */
+.inicio-panel {
+    -fx-background-color: #ffffff;
+}
+.inicio-hora {
+    -fx-text-fill: -c-oscuro;
+    -fx-font-size: 170px;
+    -fx-font-weight: bold;
+}
+.inicio-fecha {
+    -fx-text-fill: #5d6d7e;
+    -fx-font-size: 38px;
+}
+
+/* Clima en la pantalla de inicio */
+.clima-tarjeta {
+    -fx-background-color: -c-suave-2;
+    -fx-border-color: -c-borde;
+    -fx-background-radius: 18px;
+    -fx-border-radius: 18px;
+    -fx-padding: 18px 34px;
+}
+.clima-icono {
+    -fx-font-family: "Segoe UI Symbol";
+    -fx-font-size: 64px;
+    -fx-text-fill: -c-primario;
+}
+.clima-temp {
+    -fx-text-fill: -c-oscuro;
+    -fx-font-size: 46px;
+    -fx-font-weight: bold;
+}
+.clima-desc {
+    -fx-text-fill: #5d6d7e;
+    -fx-font-size: 18px;
+}
+.clima-separador {
+    -fx-background-color: -c-borde;
+    -fx-min-width: 1px;
+    -fx-pref-width: 1px;
+    -fx-max-width: 1px;
+    -fx-pref-height: 80px;
+    -fx-max-height: 80px;
+}
+.clima-ciudad {
+    -fx-text-fill: -c-oscuro;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+.clima-detalle {
+    -fx-text-fill: #5d6d7e;
+    -fx-font-size: 16px;
+}
+
 /* Área del módulo abierto */
 .content-area {
     -fx-background-color: -c-fondo;

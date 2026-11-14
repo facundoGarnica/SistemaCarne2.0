@@ -1,0 +1,18 @@
+/* Índigo */
+.root {
+    -c-primario: #3f51b5;
+    -c-primario-hover: #3646a0;
+    -c-primario-press: #2d3b88;
+    -c-oscuro: #1f2547;
+    -c-oscuro-2: #2b3260;
+    -c-oscuro-3: #171c38;
+    -c-titulo: #283593;
+    -c-acento: #303f9f;
+    -c-suave: #dde1f5;
+    -c-suave-2: #eef0fa;
+    -c-borde: #b3badf;
+    -c-sobre-oscuro: #c5cbf0;
+    -c-fondo: #e4e6f0;
+    -c-fila: #f5f6fb;
+    -c-papel: #d9dcee;
+}

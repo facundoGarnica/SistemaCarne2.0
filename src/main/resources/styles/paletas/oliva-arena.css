@@ -1,0 +1,18 @@
+/* Oliva y arena (combinada) */
+.root {
+    -c-primario: #6b7d3a;
+    -c-primario-hover: #5c6c31;
+    -c-primario-press: #4d5a29;
+    -c-oscuro: #2f3324;
+    -c-oscuro-2: #3e4430;
+    -c-oscuro-3: #24281b;
+    -c-titulo: #47522a;
+    -c-acento: #55632f;
+    -c-suave: #e9ecd8;
+    -c-suave-2: #f4f6eb;
+    -c-borde: #c9cfa9;
+    -c-sobre-oscuro: #dbe2b5;
+    -c-fondo: #e9e7de;
+    -c-fila: #faf9f4;
+    -c-papel: #e1dfd2;
+}

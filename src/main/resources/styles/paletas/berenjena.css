@@ -1,0 +1,18 @@
+/* Berenjena */
+.root {
+    -c-primario: #7b4b94;
+    -c-primario-hover: #6a4080;
+    -c-primario-press: #59356b;
+    -c-oscuro: #2e1f38;
+    -c-oscuro-2: #3e2a4b;
+    -c-oscuro-3: #22172a;
+    -c-titulo: #4f2d63;
+    -c-acento: #5e3875;
+    -c-suave: #ebe0f1;
+    -c-suave-2: #f5eff8;
+    -c-borde: #cdb8da;
+    -c-sobre-oscuro: #dcc7ea;
+    -c-fondo: #ebe6ee;
+    -c-fila: #faf7fb;
+    -c-papel: #e1d7e7;
+}

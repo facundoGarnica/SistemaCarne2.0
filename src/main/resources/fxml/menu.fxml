@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
 
 <!-- Pantalla principal (back-office): barra de navegación fina arriba y el
@@ -19,7 +21,10 @@
       <!-- Barra de navegación superior -->
       <HBox fx:id="barraNavegacion" alignment="CENTER_LEFT" prefHeight="64.0" spacing="6.0" styleClass="nav-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label minWidth="-Infinity" styleClass="nav-marca" text="SISTEMA DE VENTAS" />
+            <!-- Tocarlo vuelve a la pantalla de inicio (hora y fecha) -->
+            <Label fx:id="lblMarca" minWidth="-Infinity" onMouseClicked="#mostrarInicio" styleClass="nav-marca" text="SISTEMA DE VENTAS">
+               <tooltip><Tooltip text="Volver al inicio" /></tooltip>
+            </Label>
 
             <!-- Acceso destacado: abre Nueva Venta a pantalla completa -->
             <Button fx:id="btnCrearVenta" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleCrearVenta" styleClass="nav-btn-venta" text="Nueva Venta">
@@ -67,6 +72,35 @@
       <!-- Área del módulo abierto: ocupa todo el ancho debajo de la barra -->
       <AnchorPane fx:id="contenidoPrincipal" styleClass="content-area" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
          <children>
+            <!-- Inicio: en blanco, solo la hora y la fecha en grande -->
+            <VBox fx:id="panelInicio" alignment="CENTER" spacing="4.0" styleClass="inicio-panel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label fx:id="lblHoraInicio" styleClass="inicio-hora" text="00:00" />
+                  <Label fx:id="lblFechaInicio" styleClass="inicio-fecha" text="" />
+
+                  <!-- Clima de la ciudad elegida en Configuración > Estilo del sistema -->
+                  <HBox fx:id="boxClima" alignment="CENTER" maxWidth="-Infinity" spacing="22.0" styleClass="clima-tarjeta">
+                     <VBox.margin><Insets top="40.0" /></VBox.margin>
+                     <children>
+                        <Label fx:id="lblClimaIcono" styleClass="clima-icono" text="☁" />
+                        <VBox alignment="CENTER_LEFT" spacing="2.0">
+                           <children>
+                              <Label fx:id="lblClimaTemp" styleClass="clima-temp" text="—" />
+                              <Label fx:id="lblClimaDesc" styleClass="clima-desc" text="Cargando clima…" />
+                           </children>
+                        </VBox>
+                        <Region styleClass="clima-separador" />
+                        <VBox alignment="CENTER_LEFT" spacing="4.0">
+                           <children>
+                              <Label fx:id="lblClimaCiudad" styleClass="clima-ciudad" text="" />
+                              <Label fx:id="lblClimaDetalle" styleClass="clima-detalle" text="" />
+                              <Label fx:id="lblClimaDetalle2" styleClass="clima-detalle" text="" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
             <AnchorPane fx:id="overlayClientes" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>

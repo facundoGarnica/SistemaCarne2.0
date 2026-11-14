@@ -1,0 +1,18 @@
+/* Petróleo */
+.root {
+    -c-primario: #1f7a8c;
+    -c-primario-hover: #1a6878;
+    -c-primario-press: #155664;
+    -c-oscuro: #12343b;
+    -c-oscuro-2: #1b454e;
+    -c-oscuro-3: #0d272c;
+    -c-titulo: #134b57;
+    -c-acento: #1a5d6b;
+    -c-suave: #d3ebf0;
+    -c-suave-2: #e9f5f8;
+    -c-borde: #a6cfd8;
+    -c-sobre-oscuro: #a8dbe6;
+    -c-fondo: #e1eaec;
+    -c-fila: #f3f8f9;
+    -c-papel: #d3e2e6;
+}

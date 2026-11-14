@@ -1,5 +1,6 @@
 package controller;
 
+import Util.ClimaService;
 import Util.DialogoUtil;
 import Util.EstiloApp;
 import Util.EstiloApp.Paleta;
@@ -35,20 +36,92 @@ public class EstiloController implements Initializable {
     private Label lblZoomInfo;
     @FXML
     private Button btnReiniciar;
+    @FXML
+    private VBox contenedorPreview;
+    @FXML
+    private Label lblPaletaPreview;
+    @FXML
+    private Label lblCiudadActual;
+    @FXML
+    private javafx.scene.control.TextField txtCiudad;
+    @FXML
+    private Button btnBuscarCiudad;
+    @FXML
+    private javafx.scene.layout.FlowPane resultadosCiudad;
 
     private final ToggleGroup grupoPaletas = new ToggleGroup();
+    private final VistaPreviaVenta preview = new VistaPreviaVenta(0.55);
     private final ToggleGroup grupoZoom = new ToggleGroup();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         armarPaletas();
         armarZoom();
+        mostrarCiudadActual();
+    }
+
+    // ===================== CIUDAD DEL CLIMA =====================
+
+    private void mostrarCiudadActual() {
+        ClimaService.Ciudad c = ClimaService.ciudadGuardada();
+        lblCiudadActual.setText(c == null ? "Todavía no elegiste una ciudad." : "Ciudad elegida: " + c.texto());
+    }
+
+    @FXML
+    private void buscarCiudad() {
+        String texto = txtCiudad.getText() == null ? "" : txtCiudad.getText().trim();
+        if (texto.length() < 2) {
+            return;
+        }
+        btnBuscarCiudad.setDisable(true);
+        resultadosCiudad.getChildren().setAll(new Label("Buscando…"));
+        javafx.concurrent.Task<java.util.List<ClimaService.Ciudad>> tarea = new javafx.concurrent.Task<>() {
+            @Override
+            protected java.util.List<ClimaService.Ciudad> call() throws Exception {
+                return ClimaService.buscarCiudades(texto);
+            }
+        };
+        tarea.setOnSucceeded(e -> {
+            btnBuscarCiudad.setDisable(false);
+            mostrarResultadosCiudad(tarea.getValue());
+        });
+        tarea.setOnFailed(e -> {
+            btnBuscarCiudad.setDisable(false);
+            resultadosCiudad.getChildren().setAll(new Label("No se pudo buscar: revisá la conexión a internet."));
+        });
+        Thread hilo = new Thread(tarea, "buscar-ciudad");
+        hilo.setDaemon(true);
+        hilo.start();
+    }
+
+    private void mostrarResultadosCiudad(java.util.List<ClimaService.Ciudad> ciudades) {
+        resultadosCiudad.getChildren().clear();
+        if (ciudades.isEmpty()) {
+            resultadosCiudad.getChildren().add(new Label("No se encontró esa ciudad. Probá con otro nombre."));
+            return;
+        }
+        for (ClimaService.Ciudad c : ciudades) {
+            Button b = new Button(c.texto());
+            b.getStyleClass().addAll("ps-btn-outline");
+            b.setMinWidth(Region.USE_PREF_SIZE);
+            b.setOnAction(e -> {
+                ClimaService.guardarCiudad(c);
+                mostrarCiudadActual();
+                resultadosCiudad.getChildren().clear();
+                txtCiudad.clear();
+            });
+            resultadosCiudad.getChildren().add(b);
+        }
     }
 
     // ===================== PALETAS =====================
 
     private void armarPaletas() {
         Paleta actual = EstiloApp.paleta();
+        contenedorPreview.getChildren().add(1, preview);
+        mostrarEnPreview(actual, false);
+        ajustarTamanioPreview();
+
         for (Paleta p : Paleta.values()) {
             ToggleButton tarjeta = new ToggleButton();
             tarjeta.setUserData(p);
@@ -56,17 +129,46 @@ public class EstiloController implements Initializable {
             tarjeta.getStyleClass().add("est-paleta");
             tarjeta.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
             tarjeta.setMaxWidth(Double.MAX_VALUE);
-            tarjeta.setPrefWidth(300);
+            tarjeta.setPrefWidth(250);
             tarjeta.setGraphic(vistaPrevia(p));
             tarjeta.setSelected(p == actual);
+            // Al pasar el mouse, la vista previa muestra esa paleta; al salir, vuelve a la elegida
+            tarjeta.setOnMouseEntered(e -> mostrarEnPreview(p, p != EstiloApp.paleta()));
+            tarjeta.setOnMouseExited(e -> mostrarEnPreview(EstiloApp.paleta(), false));
             contenedorPaletas.getChildren().add(tarjeta);
         }
         evitarQuedarSinSeleccion(grupoPaletas);
         grupoPaletas.selectedToggleProperty().addListener((obs, anterior, nuevo) -> {
             if (nuevo != null) {
-                EstiloApp.cambiarPaleta((Paleta) nuevo.getUserData());
+                Paleta elegida = (Paleta) nuevo.getUserData();
+                EstiloApp.cambiarPaleta(elegida);
+                mostrarEnPreview(elegida, false);
             }
         });
+    }
+
+    /**
+     * La vista previa ocupa todo el ancho libre a la derecha de las paletas
+     * (fila − tarjetas − separación), sin pasarse del 90 % del tamaño real.
+     */
+    private void ajustarTamanioPreview() {
+        HBox fila = (HBox) contenedorPreview.getParent();
+        Runnable ajustar = () -> {
+            double libre = fila.getWidth() - contenedorPaletas.getWidth() - fila.getSpacing();
+            if (libre > 0) {
+                double escala = Math.max(0.35, Math.min(0.9, libre / VistaPreviaVenta.anchoReal()));
+                preview.setEscala(escala);
+            }
+        };
+        fila.widthProperty().addListener((obs, antes, ahora) -> ajustar.run());
+        contenedorPaletas.widthProperty().addListener((obs, antes, ahora) -> ajustar.run());
+    }
+
+    private void mostrarEnPreview(Paleta p, boolean soloMirando) {
+        preview.mostrarPaleta(EstiloApp.variablesEnLinea(p));
+        lblPaletaPreview.setText(soloMirando
+                ? p.nombre + " · tocala para aplicarla"
+                : p.nombre + " · en uso");
     }
 
     /** Muestra de la paleta: barra oscura con botón, resaltado y fondo, más el nombre. */

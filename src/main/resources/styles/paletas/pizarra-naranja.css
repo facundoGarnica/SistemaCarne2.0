@@ -1,0 +1,18 @@
+/* Pizarra y naranja (combinada) */
+.root {
+    -c-primario: #d0692a;
+    -c-primario-hover: #b85b22;
+    -c-primario-press: #a04f1d;
+    -c-oscuro: #2f3a45;
+    -c-oscuro-2: #3d4a57;
+    -c-oscuro-3: #252e37;
+    -c-titulo: #2f3a45;
+    -c-acento: #a04f1d;
+    -c-suave: #fbe5d4;
+    -c-suave-2: #fdf2ea;
+    -c-borde: #e8c3a6;
+    -c-sobre-oscuro: #f5c8a5;
+    -c-fondo: #e6e8ea;
+    -c-fila: #f7f8f9;
+    -c-papel: #dde1e5;
+}

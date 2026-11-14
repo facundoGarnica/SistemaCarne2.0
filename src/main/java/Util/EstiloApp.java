@@ -29,14 +29,20 @@ import javafx.stage.Window;
  */
 public final class EstiloApp {
 
-    /** Las 6 paletas disponibles. Los colores de muestra son solo para la vista previa. */
+    /** Las paletas disponibles. Los colores de muestra son solo para la tarjeta de cada una. */
     public enum Paleta {
         AZUL("azul", "Azul clásico", "Predeterminada", "#2c3e50", "#3498db", "#d6eaf8", "#e3eaf2"),
         VERDE("verde", "Verde esmeralda", "Sobria y descansada", "#1e3b30", "#2e8b62", "#d5ede2", "#e2ece7"),
         GRAFITO("grafito", "Gris grafito", "Neutra, sin color", "#263238", "#546e7a", "#dfe6e9", "#e4e8eb"),
         BORDO("bordo", "Bordó", "Cálida y elegante", "#3a1f29", "#9e3a4f", "#f2dde2", "#eee5e8"),
+        INDIGO("indigo", "Índigo", "Azul profundo y serio", "#1f2547", "#3f51b5", "#dde1f5", "#e4e6f0"),
+        PETROLEO("petroleo", "Petróleo", "Azul verdoso, tranquila", "#12343b", "#1f7a8c", "#d3ebf0", "#e1eaec"),
+        BERENJENA("berenjena", "Berenjena", "Violeta sobrio", "#2e1f38", "#7b4b94", "#ebe0f1", "#ebe6ee"),
         MARINO_DORADO("marino-dorado", "Marino y dorado", "Combinada", "#1f2a44", "#b0812a", "#f2e9d5", "#e8e5de"),
-        CARBON_TURQUESA("carbon-turquesa", "Carbón y turquesa", "Combinada", "#2d3436", "#16a085", "#d1f0e9", "#e4e9e8");
+        CARBON_TURQUESA("carbon-turquesa", "Carbón y turquesa", "Combinada", "#2d3436", "#16a085", "#d1f0e9", "#e4e9e8"),
+        CHOCOLATE_CREMA("chocolate-crema", "Chocolate y crema", "Combinada", "#3b2a20", "#9c6b3c", "#f1e6d6", "#ece6dd"),
+        PIZARRA_NARANJA("pizarra-naranja", "Pizarra y naranja", "Combinada", "#2f3a45", "#d0692a", "#fbe5d4", "#e6e8ea"),
+        OLIVA_ARENA("oliva-arena", "Oliva y arena", "Combinada", "#2f3324", "#6b7d3a", "#e9ecd8", "#e9e7de");
 
         public final String id;
         public final String nombre;
@@ -125,6 +131,28 @@ public final class EstiloApp {
         PREFS.put("paleta", p.id);
         for (Window w : Window.getWindows()) {
             aplicar(w.getScene());
+        }
+    }
+
+    /**
+     * Los colores de una paleta como estilo en línea ("-c-primario: #...; ..."),
+     * para pintar una vista previa con esa paleta sin cambiar la del sistema.
+     */
+    public static String variablesEnLinea(Paleta p) {
+        try (java.io.InputStream in = EstiloApp.class.getResourceAsStream(CARPETA_PALETAS + p.id + ".css")) {
+            if (in == null) {
+                return "";
+            }
+            String css = new String(in.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+            StringBuilder sb = new StringBuilder();
+            java.util.regex.Matcher m = java.util.regex.Pattern
+                    .compile("(-c-[a-z0-9-]+)\\s*:\\s*(#[0-9a-fA-F]{6})").matcher(css);
+            while (m.find()) {
+                sb.append(m.group(1)).append(": ").append(m.group(2)).append("; ");
+            }
+            return sb.toString();
+        } catch (java.io.IOException e) {
+            return "";
         }
     }
 

@@ -1,0 +1,18 @@
+/* Chocolate y crema (combinada) */
+.root {
+    -c-primario: #9c6b3c;
+    -c-primario-hover: #875c33;
+    -c-primario-press: #714d2b;
+    -c-oscuro: #3b2a20;
+    -c-oscuro-2: #4d382b;
+    -c-oscuro-3: #2e2018;
+    -c-titulo: #5a3b26;
+    -c-acento: #6f4a2e;
+    -c-suave: #f1e6d6;
+    -c-suave-2: #f9f3ea;
+    -c-borde: #d8c3a6;
+    -c-sobre-oscuro: #e8d2b4;
+    -c-fondo: #ece6dd;
+    -c-fila: #fbf8f3;
+    -c-papel: #e6dccd;
+}

@@ -1772,3 +1772,8 @@
     -fx-text-fill: #6b7280;
     -fx-font-size: 13px;
 }
+
+/* Vista previa de Nueva Venta en Configuración > Estilo */
+.est-preview {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 12, 0, 0, 3);
+}
