@@ -41,43 +41,7 @@ public class Venta {
     @Column(name = "sello_despues")
     private Integer selloDespues;
 
-    /**
-     * Solo en pagos mixtos (medioPago = "Mixto"): la parte pagada en efectivo.
-     * El resto (total − montoEfectivo) se cobró por QR / virtual.
-     */
-    @Column(name = "monto_efectivo")
-    private Double montoEfectivo;
-
-    public static final String MIXTO = "Mixto";
-
     public Venta() {
-    }
-
-    /** Parte de la venta pagada en efectivo (todo, nada o la parte del pago mixto). */
-    public double montoEnEfectivo() {
-        double t = total != null ? total : 0.0;
-        if (MIXTO.equalsIgnoreCase(medioPago)) {
-            return montoEfectivo != null ? Math.min(montoEfectivo, t) : 0.0;
-        }
-        return "Efectivo".equalsIgnoreCase(medioPago) ? t : 0.0;
-    }
-
-    /** Parte de la venta pagada en virtual / QR. */
-    public double montoEnVirtual() {
-        double t = total != null ? total : 0.0;
-        return t - montoEnEfectivo();
-    }
-
-    public boolean esMixto() {
-        return MIXTO.equalsIgnoreCase(medioPago);
-    }
-
-    public Double getMontoEfectivo() {
-        return montoEfectivo;
-    }
-
-    public void setMontoEfectivo(Double montoEfectivo) {
-        this.montoEfectivo = montoEfectivo;
     }
 
     public Long getId() {

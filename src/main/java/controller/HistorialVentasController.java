@@ -256,10 +256,7 @@ public class HistorialVentasController implements Initializable {
         }
 
         lblVentaNumero.setText("Venta #" + String.format("%04d", venta.getId()));
-        lblVentaPago.setText(venta.getMedioPago() == null ? "---"
-                : venta.esMixto()
-                        ? "Mixto · Efectivo " + moneda(venta.montoEnEfectivo()) + " + QR " + moneda(venta.montoEnVirtual())
-                        : venta.getMedioPago());
+        lblVentaPago.setText(venta.getMedioPago() == null ? "---" : venta.getMedioPago());
         lblVentaFecha.setText(venta.getFecha() == null ? ""
                 : venta.getFecha().format(FORMATO_DIA_MES) + " · " + venta.getFecha().format(FORMATO_HORA));
         lblVentaTotal.setText(moneda(venta.getTotal()));
@@ -325,8 +322,7 @@ public class HistorialVentasController implements Initializable {
         if (medio == null || TODOS_LOS_PAGOS.equals(medio)) {
             ventasFiltradas.setPredicate(v -> true);
         } else if ("Efectivo".equals(medio)) {
-            // Los pagos mixtos aparecen en los dos filtros (tienen una parte de cada uno)
-            ventasFiltradas.setPredicate(v -> esEfectivo(v) || v.esMixto());
+            ventasFiltradas.setPredicate(this::esEfectivo);
         } else {
             ventasFiltradas.setPredicate(v -> !esEfectivo(v));
         }
@@ -535,7 +531,6 @@ public class HistorialVentasController implements Initializable {
                         String medio = v.getMedioPago();
                         return medio != null
                                 && (medio.equalsIgnoreCase("Virtual")
-                                || v.esMixto()
                                 || medio.toLowerCase().contains("virtual")
                                 || medio.toLowerCase().contains("transferencia")
                                 || medio.toLowerCase().contains("tarjeta"));
@@ -606,9 +601,11 @@ public class HistorialVentasController implements Initializable {
                 double total = venta.getTotal();
                 resumen.cantidad++;
                 resumen.total += total;
-                // Pago mixto: cada parte va a su columna
-                resumen.efectivo += venta.montoEnEfectivo();
-                resumen.virtual += venta.montoEnVirtual();
+                if (venta.getMedioPago() != null && venta.getMedioPago().equalsIgnoreCase("Efectivo")) {
+                    resumen.efectivo += total;
+                } else {
+                    resumen.virtual += total;
+                }
                 totalGeneral += total;
             }
 
@@ -696,10 +693,12 @@ public class HistorialVentasController implements Initializable {
             double totalVenta = venta.getTotal() == null ? 0.0 : venta.getTotal();
             totalVendido += totalVenta;
 
-            // Pago mixto: cada parte suma donde va. Cualquier medio que no sea
-            // efectivo (virtual, transferencia, tarjeta) cuenta como virtual.
-            totalEfectivo += venta.montoEnEfectivo();
-            totalVirtual += venta.montoEnVirtual();
+            if (esEfectivo(venta)) {
+                totalEfectivo += totalVenta;
+            } else {
+                // Virtual, transferencia, tarjeta o cualquier otro medio no-efectivo
+                totalVirtual += totalVenta;
+            }
         }
 
         lblCantidadVentas.setText(String.valueOf(ventasFiltradas.size()));

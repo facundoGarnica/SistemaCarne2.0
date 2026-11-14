@@ -169,12 +169,6 @@ public class Crear_ventasController implements Initializable {
     @FXML
     private Label lblMedioPago;
     @FXML
-    private Label lblDetalleMixto;
-    /** "Pago mixto (F3)": solo se muestra (y funciona) en la Caja 3. */
-    @FXML
-    private Button btnPagoMixto;
-    private static final int CAJA_PAGO_MIXTO = 3;
-    @FXML
     private Label lblBadgeDescuento;
 
     @FXML
@@ -279,7 +273,6 @@ public class Crear_ventasController implements Initializable {
 
     // Selector de caja
     botonesCaja = new ToggleButton[] { tbCaja1, tbCaja2, tbCaja3 };
-    actualizarBotonPagoMixto(); // arranca en Caja 1: el pago mixto queda oculto
     ToggleGroup grupoCajas = new ToggleGroup();
     for (ToggleButton boton : botonesCaja) {
         boton.setToggleGroup(grupoCajas);
@@ -320,7 +313,7 @@ public class Crear_ventasController implements Initializable {
 
                 switch (event.getCode()) {
                     case F1:
-                        if ("Virtual".equals(caja().medioPago) || Venta.MIXTO.equals(caja().medioPago)) {
+                        if ("Virtual".equals(caja().medioPago)) {
                             cancelarOrdenQRPendiente(caja());
                         }
                         setMedioPago("Efectivo");
@@ -333,8 +326,9 @@ public class Crear_ventasController implements Initializable {
                         generarCobroQR();
                         event.consume();
                         break;
-                    case F3:
-                        pagoMixto();
+                    // "+" del teclado numérico (al lado de / * - de las cajas): QR personalizado
+                    case ADD:
+                        qrPersonalizado();
                         event.consume();
                         break;
                     case F4:
@@ -404,7 +398,7 @@ public class Crear_ventasController implements Initializable {
             // campo de código, así que también se descarta el KEY_TYPED.
             newScene.addEventFilter(KeyEvent.KEY_TYPED, event -> {
                 String caracter = event.getCharacter();
-                if ("/".equals(caracter) || "*".equals(caracter) || "-".equals(caracter)) {
+                if ("/".equals(caracter) || "*".equals(caracter) || "-".equals(caracter) || "+".equals(caracter)) {
                     event.consume();
                 }
             });
@@ -482,8 +476,7 @@ public class Crear_ventasController implements Initializable {
         EstadoCaja c = caja();
         mostrarProductosDeCaja(c);
         lblMedioPago.setText(c.medioPago);
-        actualizarTotales(); // incluye el detalle del pago mixto de esta caja
-        actualizarBotonPagoMixto();
+        actualizarTotales();
         refrescarBannerQR();
         actualizarIndicadoresCajas();
     }
@@ -503,59 +496,22 @@ public class Crear_ventasController implements Initializable {
 
     private void setMedioPago(String medioPago) {
         caja().medioPago = medioPago;
-        if (!Venta.MIXTO.equals(medioPago)) {
-            caja().montoQRMixto = 0.0;
-        }
+        // Cualquier cambio de medio de pago (F1, F2, venta nueva) vuelve al QR por el total
+        caja().montoQRPersonalizado = 0.0;
         lblMedioPago.setText(medioPago);
-        actualizarDetalleMixto(caja());
     }
 
     // ==============================================================
-    // PAGO MIXTO: una parte en efectivo y otra por QR
+    // QR PERSONALIZADO: generar el QR por un monto escrito a mano
     // ==============================================================
-
-    /** Total de la venta sin el redondeo a 10 del efectivo (como se cobra en virtual). */
-    private double totalSinRedondeo(EstadoCaja c) {
-        return Math.round(c.sumaPrecios - calcularDescuentoFidelidad(c));
-    }
-
-    /** Lo que se cobra por QR: todo en Virtual, o la parte elegida en Mixto. */
-    private double montoACobrarPorQR(EstadoCaja c) {
-        return Venta.MIXTO.equals(c.medioPago) ? c.montoQRMixto : calcularTotalFinal(c);
-    }
-
-    /** En Mixto, la parte en efectivo: total − lo que va por QR. */
-    private double parteEfectivoMixto(EstadoCaja c) {
-        return Math.max(0, calcularTotalFinal(c) - c.montoQRMixto);
-    }
-
-    private void actualizarDetalleMixto(EstadoCaja c) {
-        boolean mixto = Venta.MIXTO.equals(c.medioPago) && c.montoQRMixto > 0;
-        lblDetalleMixto.setVisible(mixto);
-        lblDetalleMixto.setManaged(mixto);
-        if (mixto) {
-            lblDetalleMixto.setText(String.format("Efectivo $%,.0f · QR $%,.0f", parteEfectivoMixto(c), c.montoQRMixto));
-        }
-    }
 
     /**
-     * "Pago mixto (F3)": el cliente paga una parte en efectivo y el resto por
-     * QR. Se elige cuánto va por QR, se genera el QR solo por ese monto y el
-     * vuelto se calcula sobre la parte en efectivo. La venta se guarda como
-     * "Mixto" con las dos partes, para que los reportes sumen cada una donde va.
+     * "QR personalizado (+)": con el "+" del teclado numérico; pide un monto y genera el QR por ese monto en
+     * lugar del total de la venta. Todo lo demás funciona igual que con F2
+     * (medio de pago Virtual, espera del pago, F5 para guardar).
      */
-    /** El botón de pago mixto aparece solo en la Caja 3. */
-    private void actualizarBotonPagoMixto() {
-        boolean visible = cajaActual == CAJA_PAGO_MIXTO;
-        btnPagoMixto.setVisible(visible);
-        btnPagoMixto.setManaged(visible);
-    }
-
     @FXML
-    private void pagoMixto() {
-        if (cajaActual != CAJA_PAGO_MIXTO) {
-            return; // F3 solo en la Caja 3
-        }
+    private void qrPersonalizado() {
         EstadoCaja c = caja();
         if (c.productos.isEmpty()) {
             mostrarNotificacion("✗ Primero agregá los productos de la venta", "toast-error");
@@ -565,75 +521,49 @@ public class Crear_ventasController implements Initializable {
             mostrarNotificacion("✓ Esta venta ya fue cobrada. Presione F5 para guardarla.", "toast-exito");
             return;
         }
-        double total = totalSinRedondeo(c);
-        if (total < 2) {
-            return;
-        }
 
         javafx.scene.control.Dialog<Double> dialogo = new javafx.scene.control.Dialog<>();
         DialogoUtil.aplicarEstilo(dialogo);
-        dialogo.setTitle("Pago mixto");
-        dialogo.setHeaderText(String.format("Total de la venta: $%,.0f", total));
-        ButtonType generar = new ButtonType("Generar QR", javafx.scene.control.ButtonBar.ButtonData.OK_DONE);
+        dialogo.setTitle("QR personalizado");
+        dialogo.setHeaderText(String.format("Total de la venta: $%,.0f", (double) Math.round(c.sumaPrecios)));
+        ButtonType generar = new ButtonType("Generar QR (F5)", javafx.scene.control.ButtonBar.ButtonData.OK_DONE);
         dialogo.getDialogPane().getButtonTypes().addAll(generar, ButtonType.CANCEL);
 
-        TextField txtQR = new TextField();
-        txtQR.setPromptText("Ej: 450");
-        txtQR.setStyle("-fx-font-size: 22px; -fx-pref-height: 50px;");
-        if (Venta.MIXTO.equals(c.medioPago) && c.montoQRMixto > 0) {
-            txtQR.setText(String.format("%.0f", c.montoQRMixto));
-        }
-        Label lblEfectivo = new Label();
-        lblEfectivo.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
-
-        VBox contenido = new VBox(10,
-                new Label("¿Cuánto paga por QR (virtual)?"), txtQR,
-                new Label("El resto lo paga en efectivo:"), lblEfectivo);
+        TextField txtMonto = new TextField();
+        txtMonto.setPromptText("Ej: 450");
+        txtMonto.setStyle("-fx-font-size: 22px; -fx-pref-height: 50px;");
+        VBox contenido = new VBox(10, new Label("Monto a cobrar por QR:"), txtMonto);
         contenido.setPadding(new javafx.geometry.Insets(16, 20, 10, 20));
         dialogo.getDialogPane().setContent(contenido);
 
-        javafx.scene.Node botonGenerar = dialogo.getDialogPane().lookupButton(generar);
+        Button botonGenerar = (Button) dialogo.getDialogPane().lookupButton(generar);
         Runnable validar = () -> {
-            Double qr = leerMonto(txtQR.getText());
-            boolean valido = qr != null && qr >= 1 && qr < total;
-            botonGenerar.setDisable(!valido);
-            if (qr == null) {
-                lblEfectivo.setText("—");
-            } else if (!valido) {
-                lblEfectivo.setText(qr >= total
-                        ? "El QR tiene que ser menor que el total (para todo virtual usá F2)"
-                        : "—");
-            } else {
-                lblEfectivo.setText(String.format("$%,.0f en efectivo", total - qr));
-            }
+            Double monto = leerMonto(txtMonto.getText());
+            botonGenerar.setDisable(monto == null || monto < 1);
         };
-        txtQR.textProperty().addListener((obs, a, b) -> validar.run());
+        txtMonto.textProperty().addListener((obs, a, b) -> validar.run());
         validar.run();
 
-        // F5 acepta igual que Enter (es la tecla que se usa para guardar la venta)
+        // F5 acepta igual que Enter
         dialogo.getDialogPane().addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, ev -> {
             if (ev.getCode() == javafx.scene.input.KeyCode.F5) {
                 ev.consume();
                 if (!botonGenerar.isDisabled()) {
-                    ((Button) botonGenerar).fire();
+                    botonGenerar.fire();
                 }
             }
         });
-        Platform.runLater(txtQR::requestFocus);
+        Platform.runLater(txtMonto::requestFocus);
 
-        dialogo.setResultConverter(b -> b == generar ? leerMonto(txtQR.getText()) : null);
-        Double montoQR = dialogo.showAndWait().orElse(null);
-        if (montoQR == null) {
-            txtCodigoDeBarra.requestFocus();
-            return;
+        dialogo.setResultConverter(b -> b == generar ? leerMonto(txtMonto.getText()) : null);
+        Double monto = dialogo.showAndWait().orElse(null);
+        if (monto != null) {
+            setMedioPago("Virtual");
+            c.montoQRPersonalizado = Math.round(monto);
+            actualizarTotales();
+            // Si había un QR por otro monto, generarCobroQR lo reemplaza
+            generarCobroQR();
         }
-
-        setMedioPago(Venta.MIXTO);
-        c.montoQRMixto = Math.round(montoQR);
-        actualizarTotales();
-        actualizarDetalleMixto(c);
-        // Si había un QR por otro monto (por ejemplo de F2), generarCobroQR lo reemplaza
-        generarCobroQR();
         txtCodigoDeBarra.requestFocus();
     }
 
@@ -921,16 +851,13 @@ public class Crear_ventasController implements Initializable {
             lblBadgeDescuento.setManaged(false);
         }
 
-        actualizarDetalleMixto(c);
-
-        // Tabla de vueltos en Efectivo, y en Mixto sobre la parte en efectivo
-        boolean mixto = Venta.MIXTO.equals(medioPago) && c.montoQRMixto > 0;
-        if (medioPago.equals("Efectivo") || mixto) {
+        // Tabla de vueltos solo en Efectivo
+        if (medioPago.equals("Efectivo")) {
             tbolVueltos.setVisible(true);
             tbolVueltos.setManaged(true);
 
             CalcularVuelto calculador = new CalcularVuelto();
-            calculador.CalcularVuelto(mixto ? parteEfectivoMixto(c) : totalMostrar);
+            calculador.CalcularVuelto(totalMostrar);
 
             tbolVueltos.setItems(
                     FXCollections.observableArrayList(calculador.GetListaTransacciones())
@@ -1204,8 +1131,8 @@ public class Crear_ventasController implements Initializable {
             return;
         }
 
-        // En pago mixto el QR es solo por la parte virtual
-        double monto = montoACobrarPorQR(c);
+        // QR personalizado (F3): el monto escrito; si no, el total de la venta
+        double monto = c.montoQRPersonalizado > 0 ? c.montoQRPersonalizado : calcularTotalFinal(c);
 
         if (monto <= 0) {
             return;
@@ -1331,15 +1258,6 @@ public class Crear_ventasController implements Initializable {
                 && (c.ordenQRActualId != null || c.generandoQR)) {
             generarCobroQR();
         }
-        // Pago mixto: el QR queda por el mismo monto y la diferencia la absorbe
-        // el efectivo. Si el total quedó menor o igual que el QR, ya no es mixto.
-        if (Venta.MIXTO.equals(c.medioPago) && !c.ventaYaCobrada
-                && c.montoQRMixto >= totalSinRedondeo(c)) {
-            cancelarOrdenQRPendiente(c);
-            setMedioPago("---");
-            actualizarTotales();
-            mostrarNotificacion("✗ El total cambió: volvé a elegir el pago (F1, F2 o F3)", "toast-error");
-        }
     }
 
     /**
@@ -1464,9 +1382,7 @@ public class Crear_ventasController implements Initializable {
         detenerTemporizadorQR();
         detenerAnimacionBannerQR();
 
-        lblQRListo.setText("QR GENERADO CAJA " + c.numero + ": $" + String.format("%,.0f", c.montoQRActual)
-                + (Venta.MIXTO.equals(c.medioPago)
-                        ? String.format("  (+ $%,.0f en efectivo)", parteEfectivoMixto(c)) : ""));
+        lblQRListo.setText("QR GENERADO CAJA " + c.numero + ": $" + String.format("%,.0f", c.montoQRActual));
         barraQR.setVisible(true);
         barraQR.setManaged(true);
         panelQRListo.getStyleClass().remove("qr-rojo");
@@ -2108,10 +2024,6 @@ public class Crear_ventasController implements Initializable {
         venta.setFecha(LocalDateTime.now());
         venta.setMedioPago(c.medioPago);
         venta.setTotal(totalRedondeado);
-        if (Venta.MIXTO.equals(c.medioPago)) {
-            // Se guarda la parte en efectivo; el resto (total − efectivo) fue por QR
-            venta.setMontoEfectivo(parteEfectivoMixto(c));
-        }
 
         GenerarDetalleVenta();
         limpiarTodo();
@@ -2322,8 +2234,8 @@ public class Crear_ventasController implements Initializable {
         final ObservableList<ItemCarrito> productos = FXCollections.observableArrayList();
         double sumaPrecios = 0.0;
         String medioPago = "---";
-        // Pago mixto: lo que se cobra por QR (el resto va en efectivo)
-        double montoQRMixto = 0.0;
+        // QR personalizado (F3): monto escrito a mano; 0 = el QR va por el total
+        double montoQRPersonalizado = 0.0;
 
         // Descuento de tarjeta de fidelidad ganado en esta venta
         boolean descuentoFidelidadActivo = false;

@@ -493,8 +493,8 @@
     -fx-background-color: -c-primario-hover;
 }
 
-/* Botón "Pago mixto (F3)" al lado de las cajas */
-.nv-root .boton-mixto {
+/* Botón "QR personalizado (F3)" al lado de las cajas */
+.nv-root .boton-qr {
     -fx-background-color: #ffffff;
     -fx-border-color: -c-primario;
     -fx-border-width: 2;
@@ -507,13 +507,6 @@
     -fx-padding: 0 16px;
     -fx-cursor: hand;
 }
-.nv-root .boton-mixto:hover {
+.nv-root .boton-qr:hover {
     -fx-background-color: -c-suave-2;
-}
-
-/* Debajo de "Medio de pago": cuánto va en efectivo y cuánto por QR */
-.nv-root .detalle-mixto {
-    -fx-text-fill: #ffffff;
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
 }
