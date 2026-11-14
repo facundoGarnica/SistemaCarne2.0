@@ -12,3 +12,6 @@ carnedb/
 # Configuración personal del editor
 .claude/
 .vscode/
+
+# Registros de cierre forzado de Java
+hs_err_pid*.log
