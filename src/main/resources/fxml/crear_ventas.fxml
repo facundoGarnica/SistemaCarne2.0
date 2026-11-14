@@ -32,6 +32,8 @@
                   <ToggleButton minWidth="-Infinity" fx:id="tbCaja1" focusTraversable="false" mnemonicParsing="false" onAction="#seleccionarCajaClick" prefWidth="110.0" selected="true" styleClass="boton-caja" text="Caja 1" />
                   <ToggleButton minWidth="-Infinity" fx:id="tbCaja2" focusTraversable="false" mnemonicParsing="false" onAction="#seleccionarCajaClick" prefWidth="110.0" styleClass="boton-caja" text="Caja 2" />
                   <ToggleButton minWidth="-Infinity" fx:id="tbCaja3" focusTraversable="false" mnemonicParsing="false" onAction="#seleccionarCajaClick" prefWidth="110.0" styleClass="boton-caja" text="Caja 3" />
+                  <!-- Parte en efectivo y parte por QR (ej: $3.000 efectivo + $450 QR) -->
+                  <Button fx:id="btnPagoMixto" focusTraversable="false" minWidth="-Infinity" mnemonicParsing="false" onAction="#pagoMixto" styleClass="boton-mixto" text="Pago mixto (F3)" />
                </children>
             </HBox>
 
@@ -43,7 +45,7 @@
                   <HBox alignment="CENTER_LEFT" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
                      <children>
                         <Label minWidth="-Infinity" styleClass="textoBarra" text="Código de barra" />
-                        <TextField fx:id="txtCodigoDeBarra" prefHeight="38.0" prefWidth="230.0" styleClass="codigoBarra" />
+                        <TextField fx:id="txtCodigoDeBarra" minWidth="200.0" prefHeight="38.0" prefWidth="230.0" styleClass="codigoBarra" />
                         <!-- Recuadros de las 3 cajas: ocupan el espacio libre de la barra -->
                         <HBox alignment="CENTER_RIGHT" spacing="20.0" HBox.hgrow="ALWAYS">
                            <children>
@@ -123,6 +125,8 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
+                  <!-- Solo en pago mixto: cuánto va en efectivo y cuánto por QR -->
+                  <Label fx:id="lblDetalleMixto" managed="false" styleClass="detalle-mixto" text="" visible="false" />
                </children>
             </VBox>
             
