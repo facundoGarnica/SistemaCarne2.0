@@ -312,7 +312,8 @@ public class MenuController implements Initializable {
 
     @FXML
     private void handleVisualizarProductos() {
-        abrirModulo("/fxml/producto_menu.fxml", "Productos", btnVisualizarProductos);
+        // Pestañas: Catálogo y Precios (Excel)
+        abrirModulo("/fxml/productos.fxml", "Productos", btnVisualizarProductos);
     }
 
     @FXML

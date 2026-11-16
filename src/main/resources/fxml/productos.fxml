@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+
+<!-- Módulo Productos: catálogo y exportar / importar precios por Excel -->
+<TabPane fx:id="pestanas" prefHeight="650.0" prefWidth="1000.0" styleClass="ps-tabs" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProductosController">
+    <stylesheets>
+        <URL value="@../styles/personal.css" />
+    </stylesheets>
+    <tabs>
+        <Tab fx:id="tabCatalogo" closable="false" text="Catálogo">
+            <fx:include fx:id="catalogo" source="producto_menu.fxml" />
+        </Tab>
+        <Tab fx:id="tabPrecios" closable="false" text="Precios (Excel)">
+            <fx:include fx:id="precios" source="precios_excel.fxml" />
+        </Tab>
+    </tabs>
+</TabPane>

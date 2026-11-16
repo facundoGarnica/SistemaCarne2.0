@@ -4,6 +4,7 @@ import Util.Actualizador;
 import Util.Actualizador.Version;
 import Util.ConfiguracionApp;
 import Util.DialogoUtil;
+import Util.InicioWindows;
 import java.awt.Desktop;
 import java.net.URL;
 import java.nio.file.Files;
@@ -17,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.VBox;
@@ -45,6 +47,8 @@ public class ActualizacionesController implements Initializable {
     @FXML private Button btnInstalar;
     @FXML private Button btnBackup;
     @FXML private Button btnVolverAtras;
+    @FXML private CheckBox chkInicioWindows;
+    @FXML private Label lblInicioWindows;
 
     private Version ultima;
     private boolean ocupado;
@@ -57,6 +61,50 @@ public class ActualizacionesController implements Initializable {
             lblAvisoInstalacion.setText("Estás usando el sistema desde el IDE: instalar solo funciona en la versión instalada (.exe).");
         }
         buscarActualizaciones();
+        mostrarInicioWindows();
+    }
+
+    // ===================== INICIAR CON WINDOWS =====================
+
+    private void mostrarInicioWindows() {
+        if (!InicioWindows.disponible()) {
+            chkInicioWindows.setSelected(false);
+            chkInicioWindows.setDisable(true);
+            lblInicioWindows.setText(InicioWindows.estaEnCarpetaInicio()
+                    ? "Este sistema se abrió desde la carpeta Inicio de Windows: borrá esa copia y abrí el sistema desde su instalación."
+                    : "Solo se puede activar en el sistema instalado (SistemaCarne.exe).");
+            return;
+        }
+        String ruta = InicioWindows.rutaRegistrada();
+        chkInicioWindows.setDisable(false);
+        chkInicioWindows.setSelected(ruta != null);
+        lblInicioWindows.setText(ruta != null ? "✓ Windows abre: " + ruta : "Desactivado.");
+    }
+
+    @FXML
+    private void cambiarInicioWindows() {
+        boolean activar = chkInicioWindows.isSelected();
+        chkInicioWindows.setDisable(true);
+        lblInicioWindows.setText(activar ? "Activando…" : "Desactivando…");
+        Task<Void> tarea = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                if (activar) {
+                    InicioWindows.activar();
+                } else {
+                    InicioWindows.desactivar();
+                }
+                return null;
+            }
+        };
+        tarea.setOnSucceeded(e -> mostrarInicioWindows());
+        tarea.setOnFailed(e -> {
+            mostrarInicioWindows();
+            error("No se pudo cambiar el inicio con Windows", tarea.getException().getMessage());
+        });
+        Thread hilo = new Thread(tarea, "inicio-windows");
+        hilo.setDaemon(true);
+        hilo.start();
     }
 
     @FXML

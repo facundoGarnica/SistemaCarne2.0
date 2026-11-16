@@ -67,6 +67,33 @@ public class ProductoDAO {
         }
     }
    
+    /**
+     * Cambia el precio de varios productos (id → precio nuevo) en una sola
+     * transacción: si falla uno, no se cambia ninguno. Solo toca el precio.
+     * Devuelve cuántos productos se actualizaron.
+     */
+    public int actualizarPrecios(java.util.Map<Long, Double> preciosPorId) {
+        Transaction tx = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            int actualizados = 0;
+            for (java.util.Map.Entry<Long, Double> e : preciosPorId.entrySet()) {
+                actualizados += session.createMutationQuery(
+                        "UPDATE Producto p SET p.precio = :precio WHERE p.id = :id")
+                        .setParameter("precio", e.getValue())
+                        .setParameter("id", e.getKey())
+                        .executeUpdate();
+            }
+            tx.commit();
+            return actualizados;
+        } catch (RuntimeException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw e;
+        }
+    }
+
     public List<Producto> obtenerProductoPorTipo(String tipo) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("FROM Producto p WHERE p.tipo = :tipo", Producto.class)
