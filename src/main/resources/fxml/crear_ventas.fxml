@@ -150,6 +150,14 @@
                      </children>
                   </VBox>
 
+                  <!-- Contador de productos de la venta (se oculta con el carrito vacío) -->
+                  <Label fx:id="lblContadorProductos"
+                         text="0 productos"
+                         visible="false"
+                         styleClass="nv-contador-productos"
+                         AnchorPane.topAnchor="-10.0"
+                         AnchorPane.leftAnchor="12.0"/>
+
                   <!-- Badge de descuento por tarjeta de fidelidad: oculto por defecto -->
                   <Label fx:id="lblBadgeDescuento"
                          text="-10% TARJETA"

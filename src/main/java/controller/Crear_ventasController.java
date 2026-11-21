@@ -175,6 +175,17 @@ public class Crear_ventasController implements Initializable {
     private static final int MONTO_MINIMO_QR = 15;
     @FXML
     private Label lblBadgeDescuento;
+    @FXML
+    private Label lblContadorProductos;
+
+    private void actualizarContadorProductos() {
+        if (lblContadorProductos == null) {
+            return;
+        }
+        int n = productosEnPantalla.size();
+        lblContadorProductos.setText(n + (n == 1 ? " producto" : " productos"));
+        lblContadorProductos.setVisible(n > 0);
+    }
 
     @FXML
     private TableView<Transaccion> tbolVueltos;
@@ -263,7 +274,10 @@ public class Crear_ventasController implements Initializable {
 
     // La tabla muestra el carrito de la caja seleccionada
     tblVistaProductos.setItems(productosEnPantalla);
+    // Contador de productos (sobre "Total a pagar"): se actualiza solo al agregar, quitar o cambiar de caja
+    productosEnPantalla.addListener((ListChangeListener<ItemCarrito>) cambio -> actualizarContadorProductos());
     mostrarProductosDeCaja(caja());
+    actualizarContadorProductos();
 
     // Mantener foco siempre en el TextField
     Platform.runLater(() -> txtCodigoDeBarra.requestFocus());

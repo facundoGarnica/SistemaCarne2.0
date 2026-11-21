@@ -517,3 +517,13 @@
     -fx-font-size: 20px;
     -fx-font-weight: bold;
 }
+
+/* Contador de productos sobre "Total a pagar" */
+.nv-root .nv-contador-productos {
+    -fx-background-color: -c-primario;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 4px 12px;
+    -fx-background-radius: 12px;
+}

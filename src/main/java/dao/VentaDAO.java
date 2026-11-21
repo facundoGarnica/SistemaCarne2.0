@@ -90,6 +90,93 @@ public class VentaDAO {
         }
     }
 
+    /**
+     * Edita una venta ya registrada (Historial de ventas > Editar), todo en
+     * una sola transacción: reemplaza sus productos, cambia medio de pago y
+     * total, y ajusta el stock de los productos "Seco" (los únicos que
+     * descuentan stock al vender) según la diferencia de peso.
+     */
+    public void editarVenta(Long ventaId, String medioPago, Double montoEfectivo, double total,
+            List<DetalleVenta> nuevosDetalles) {
+        Transaction tx = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            Venta venta = session.get(Venta.class, ventaId);
+            if (venta == null) {
+                throw new IllegalStateException("La venta ya no existe.");
+            }
+
+            List<DetalleVenta> viejos = session.createQuery(
+                    "FROM DetalleVenta dv WHERE dv.venta.id = :ventaId", DetalleVenta.class)
+                    .setParameter("ventaId", ventaId)
+                    .list();
+
+            // Diferencia de peso por producto (nuevo - viejo) para ajustar el stock
+            java.util.Map<Long, Double> diferencia = new java.util.HashMap<>();
+            java.util.Map<Long, Producto> productos = new java.util.HashMap<>();
+            for (DetalleVenta d : viejos) {
+                if (d.getProducto() != null) {
+                    productos.put(d.getProducto().getId(), d.getProducto());
+                    diferencia.merge(d.getProducto().getId(), -valor(d.getPeso()), Double::sum);
+                }
+            }
+            for (DetalleVenta d : nuevosDetalles) {
+                Producto p = session.get(Producto.class, d.getProducto().getId());
+                d.setProducto(p);
+                productos.put(p.getId(), p);
+                diferencia.merge(p.getId(), valor(d.getPeso()), Double::sum);
+            }
+
+            // Reemplazar los productos de la venta
+            if (venta.getDetalleVentas() != null) {
+                venta.getDetalleVentas().clear();
+            }
+            for (DetalleVenta d : viejos) {
+                session.remove(d);
+            }
+            session.flush();
+            for (DetalleVenta d : nuevosDetalles) {
+                d.setId(null);
+                d.setVenta(venta);
+                session.persist(d);
+                if (venta.getDetalleVentas() != null) {
+                    venta.getDetalleVentas().add(d);
+                }
+            }
+
+            // Stock: solo productos "Seco" que tengan stock cargado
+            for (java.util.Map.Entry<Long, Double> e : diferencia.entrySet()) {
+                Producto p = productos.get(e.getKey());
+                double delta = e.getValue();
+                if (p == null || Math.abs(delta) < 0.0001 || !"Seco".equals(p.getTipo())) {
+                    continue;
+                }
+                Stock stock = session.createQuery("FROM Stock s WHERE s.producto.id = :id", Stock.class)
+                        .setParameter("id", p.getId())
+                        .uniqueResult();
+                if (stock != null) {
+                    double nueva = Math.round((stock.getCantidad() - delta) * 100.0) / 100.0;
+                    stock.setCantidad(Math.max(0, nueva));
+                    stock.setFecha(LocalDateTime.now());
+                }
+            }
+
+            venta.setMedioPago(medioPago);
+            venta.setMontoEfectivo(Venta.MIXTO.equals(medioPago) ? montoEfectivo : null);
+            venta.setTotal(total);
+            tx.commit();
+        } catch (RuntimeException e) {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+            throw e;
+        }
+    }
+
+    private static double valor(Double d) {
+        return d == null ? 0.0 : d;
+    }
+
     // NUEVO MÉTODO: Eliminar venta con restauración de stock
     public void eliminarVenta(Long ventaId) {
         Transaction tx = null;

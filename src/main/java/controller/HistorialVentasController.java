@@ -467,6 +467,40 @@ public class HistorialVentasController implements Initializable {
     }
 
     @FXML
+    public void editarVentaSeleccionada() {
+        Venta ventaSeleccionada = tlbVerVentas.getSelectionModel().getSelectedItem();
+        if (ventaSeleccionada == null) {
+            return;
+        }
+        if (!validarPasswordAdmin()) {
+            mostrarError("Acceso denegado", "Contraseña incorrecta.");
+            return;
+        }
+        List<DetalleVenta> detalles;
+        try {
+            detalles = detalleVentaDao.buscarPorVenta(ventaSeleccionada);
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarError("Error", "No se pudieron cargar los productos de la venta.");
+            return;
+        }
+        Long id = ventaSeleccionada.getId();
+        if (!EditarVentaDialogo.mostrar(tlbVerVentas.getScene().getWindow(), ventaSeleccionada, detalles)) {
+            return;
+        }
+
+        // Recargar el período y volver a seleccionar la venta editada
+        mostrarVentas(ventaDao.buscarVentasPorFecha(periodoDesde, periodoHasta), periodoDesde, periodoHasta);
+        for (Venta v : ventasFiltradas) {
+            if (id.equals(v.getId())) {
+                tlbVerVentas.getSelectionModel().select(v);
+                tlbVerVentas.scrollTo(v);
+                break;
+            }
+        }
+    }
+
+    @FXML
     private void btnImprimirVenta() {
         imprimirVentaSeleccionada();
     }

@@ -596,3 +596,52 @@
 .hv-dashed {
     -fx-border-color: -c-borde transparent transparent transparent;
 }
+
+/* ===== Editar venta (cuadro de diálogo) ===== */
+.ev-dialogo .ev-titulo {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2937;
+}
+.ev-dialogo .ev-fila {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 8px;
+    -fx-padding: 6px 10px;
+}
+.ev-dialogo .ev-nombre {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2937;
+}
+.ev-dialogo .ev-subtotal {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -c-primario;
+}
+.ev-dialogo .ev-quitar {
+    -fx-background-color: transparent;
+    -fx-text-fill: #dc2626;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.ev-dialogo .ev-quitar:hover {
+    -fx-background-color: #fef2f2;
+}
+.ev-dialogo .ev-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+.ev-dialogo .ev-suma {
+    -fx-text-fill: #6b7280;
+}
+.ev-dialogo .ev-error {
+    -fx-text-fill: #dc2626;
+    -fx-font-weight: bold;
+}
+.ev-dialogo .ev-aviso {
+    -fx-text-fill: #b45309;
+}
+.ev-dialogo .ev-sub {
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 14px;
+}
