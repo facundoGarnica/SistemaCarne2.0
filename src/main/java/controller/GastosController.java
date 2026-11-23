@@ -3,6 +3,8 @@ package controller;
 import Util.DialogoUtil;
 import Util.HorarioLocal;
 import dao.AdelantoDAO;
+import dao.ArqueoCajaDAO;
+import model.ArqueoCaja;
 import dao.DetalleVentaDAO;
 import dao.EmpleadoDAO;
 import dao.GastoDAO;
@@ -778,6 +780,285 @@ public class GastosController {
         return String.join(", ", dias);
     }
 
+    // ===================== CONTROL DE CAJA =====================
+
+    @FXML private HBox boxArqueoManiana, boxArqueoTarde;
+    @FXML private javafx.scene.layout.VBox boxControlCaja, boxControlCajaDetalle;
+    @FXML private Label lblControlCajaTitulo, lblControlCajaTotal;
+    private final ArqueoCajaDAO arqueoDAO = new ArqueoCajaDAO();
+    private ControlArqueo arqueoManiana, arqueoTarde;
+
+    /**
+     * Casillas de un turno: "Coincide" (los billetes son lo que dice el
+     * sistema) o "No coincide" + cuánto hay en la caja. Con un solo día en
+     * pantalla se pueden marcar; con varios días muestra un resumen.
+     */
+    private final class ControlArqueo {
+        final String turno;
+        final HBox box;
+        final CheckBox chkSi = new CheckBox("Coincide");
+        final CheckBox chkNo = new CheckBox("No coincide");
+        final TextField txtContado = new TextField();
+        final Label lblEstado = new Label();
+        final Label lblResumen = new Label();
+        LocalDate dia;
+        double sistema;
+        boolean cargando;
+
+        ControlArqueo(String turno, HBox box) {
+            this.turno = turno;
+            this.box = box;
+            chkSi.getStyleClass().add("ps-arqueo-chk");
+            chkNo.getStyleClass().add("ps-arqueo-chk");
+            txtContado.setPromptText("Hay en caja $");
+            txtContado.setPrefWidth(115);
+            chkSi.setMinWidth(Region.USE_PREF_SIZE);
+            chkNo.setMinWidth(Region.USE_PREF_SIZE);
+            txtContado.setMinWidth(90);
+            txtContado.getStyleClass().add("ps-arqueo-txt");
+            lblEstado.getStyleClass().add("ps-arqueo-estado");
+            lblEstado.setMinWidth(Region.USE_PREF_SIZE);
+            lblResumen.getStyleClass().add("ps-arqueo-estado");
+
+            chkSi.selectedProperty().addListener((o, antes, si) -> {
+                if (cargando) return;
+                if (si) {
+                    cargando = true;
+                    chkNo.setSelected(false);
+                    cargando = false;
+                    mostrarCampo(false);
+                    guardar(sistema);
+                } else if (!chkNo.isSelected()) {
+                    borrar();
+                }
+            });
+            chkNo.selectedProperty().addListener((o, antes, no) -> {
+                if (cargando) return;
+                if (no) {
+                    cargando = true;
+                    chkSi.setSelected(false);
+                    cargando = false;
+                    mostrarCampo(true);
+                    txtContado.requestFocus();
+                    Double monto = parsearMonto(txtContado.getText());
+                    if (monto != null) {
+                        guardar(monto);
+                    } else {
+                        borrar();
+                        lblEstado.setText("Escribí cuánto hay");
+                        marcarEstado(null);
+                    }
+                } else {
+                    mostrarCampo(false);
+                    if (!chkSi.isSelected()) borrar();
+                }
+            });
+            txtContado.setOnAction(e -> guardarContado());
+            txtContado.focusedProperty().addListener((o, antes, foco) -> {
+                if (!foco) guardarContado();
+            });
+        }
+
+        void mostrarCampo(boolean ver) {
+            txtContado.setVisible(ver);
+            txtContado.setManaged(ver);
+        }
+
+        void guardarContado() {
+            if (cargando || !chkNo.isSelected()) return;
+            Double monto = parsearMonto(txtContado.getText());
+            if (monto == null) {
+                lblEstado.setText("Escribí cuánto hay");
+                marcarEstado(null);
+                return;
+            }
+            guardar(monto);
+        }
+
+        void guardar(double contado) {
+            try {
+                arqueoDAO.guardar(dia, turno, sistema, contado);
+                ArqueoCaja a = arqueoDAO.buscar(dia, turno);
+                mostrarEstado(a);
+                refrescarControlCaja();
+            } catch (Exception e) {
+                e.printStackTrace();
+                mostrarAdvertencia("No se pudo guardar", "No se pudo guardar el control de caja:\n" + e.getMessage());
+            }
+        }
+
+        void borrar() {
+            try {
+                arqueoDAO.borrar(dia, turno);
+                mostrarEstado(null);
+                refrescarControlCaja();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        /** Un solo día: casillas para marcar. */
+        void mostrarDia(LocalDate dia, double sistema, ArqueoCaja a) {
+            this.dia = dia;
+            this.sistema = sistema;
+            cargando = true;
+            boolean noCoincide = a != null && !a.coincide();
+            chkSi.setSelected(a != null && a.coincide());
+            chkNo.setSelected(noCoincide);
+            txtContado.setText(noCoincide ? formatoMoneda.format(a.getMontoContado()) : "");
+            mostrarCampo(noCoincide);
+            cargando = false;
+            mostrarEstado(a);
+            box.getChildren().setAll(chkSi, chkNo, txtContado, lblEstado);
+        }
+
+        /** Varios días: cuántos se contaron y la diferencia. */
+        void mostrarResumen(List<ArqueoCaja> delTurno) {
+            if (delTurno.isEmpty()) {
+                lblResumen.setText("Sin contar");
+                marcar(lblResumen, null);
+            } else {
+                double dif = delTurno.stream().mapToDouble(ArqueoCaja::diferencia).sum();
+                int n = delTurno.size();
+                lblResumen.setText((n == 1 ? "1 día contado" : n + " días contados") + " · " + textoDiferencia(dif));
+                marcar(lblResumen, Math.abs(dif) < 0.5);
+            }
+            box.getChildren().setAll(lblResumen);
+        }
+
+        void mostrarEstado(ArqueoCaja a) {
+            if (a == null) {
+                lblEstado.setText("");
+                marcarEstado(null);
+                return;
+            }
+            lblEstado.setText(textoDiferencia(a.diferencia()));
+            marcarEstado(a.coincide());
+        }
+
+        void marcarEstado(Boolean ok) {
+            marcar(lblEstado, ok);
+        }
+    }
+
+    private static void marcar(Label l, Boolean ok) {
+        l.getStyleClass().removeAll("ps-arqueo-ok", "ps-arqueo-mal");
+        if (ok != null) {
+            l.getStyleClass().add(ok ? "ps-arqueo-ok" : "ps-arqueo-mal");
+        }
+    }
+
+    /** "✓ Coincide", "Faltan $500" o "Sobran $200". */
+    private String textoDiferencia(double dif) {
+        if (Math.abs(dif) < 0.5) return "✓ Coincide";
+        return (dif < 0 ? "Faltan $" : "Sobran $") + formatoMoneda.format(Math.abs(dif));
+    }
+
+    /** Acepta "15000", "15.000", "15.000,50" y "$ 15.000". */
+    private static Double parsearMonto(String texto) {
+        if (texto == null) return null;
+        String t = texto.replace("$", "").replace(" ", "").trim();
+        if (t.isEmpty()) return null;
+        if (t.contains(",")) {
+            t = t.replace(".", "").replace(",", ".");
+        } else if (t.matches("\\d{1,3}(\\.\\d{3})+")) {
+            t = t.replace(".", "");
+        }
+        try {
+            double v = Double.parseDouble(t);
+            return v < 0 ? null : v;
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    /** El día mostrado, si el balance es de un solo día; si no, null. */
+    private LocalDate diaUnicoBalance() {
+        List<LocalDate[]> p = periodosReporte();
+        return p.size() == 1 && p.get(0)[0] != null && p.get(0)[0].equals(p.get(0)[1]) ? p.get(0)[0] : null;
+    }
+
+    private List<ArqueoCaja> arqueosDelPeriodo() {
+        List<ArqueoCaja> todos = new ArrayList<>();
+        for (LocalDate[] p : periodosReporte()) {
+            if (p[0] != null && p[1] != null) {
+                todos.addAll(arqueoDAO.buscarPorRango(p[0], p[1]));
+            }
+        }
+        todos.sort(java.util.Comparator.comparing(ArqueoCaja::getFecha)
+                .thenComparing(a -> HorarioLocal.MANIANA.equals(a.getTurno()) ? 0 : 1));
+        return todos;
+    }
+
+    /** Casillas de cada turno y tarjeta "Control de caja" del período. */
+    private void mostrarArqueos(double efectivoManiana, double efectivoTarde) {
+        if (arqueoManiana == null) {
+            arqueoManiana = new ControlArqueo(HorarioLocal.MANIANA, boxArqueoManiana);
+            arqueoTarde = new ControlArqueo(HorarioLocal.TARDE, boxArqueoTarde);
+        }
+        List<ArqueoCaja> arqueos = arqueosDelPeriodo();
+        LocalDate dia = diaUnicoBalance();
+        if (dia != null) {
+            arqueoManiana.mostrarDia(dia, efectivoManiana, buscarArqueo(arqueos, dia, HorarioLocal.MANIANA));
+            arqueoTarde.mostrarDia(dia, efectivoTarde, buscarArqueo(arqueos, dia, HorarioLocal.TARDE));
+        } else {
+            arqueoManiana.mostrarResumen(arqueos.stream().filter(a -> HorarioLocal.MANIANA.equals(a.getTurno())).toList());
+            arqueoTarde.mostrarResumen(arqueos.stream().filter(a -> HorarioLocal.TARDE.equals(a.getTurno())).toList());
+        }
+        mostrarControlCaja(arqueos);
+    }
+
+    private static ArqueoCaja buscarArqueo(List<ArqueoCaja> arqueos, LocalDate dia, String turno) {
+        for (ArqueoCaja a : arqueos) {
+            if (dia.equals(a.getFecha()) && turno.equals(a.getTurno())) return a;
+        }
+        return null;
+    }
+
+    private void refrescarControlCaja() {
+        mostrarControlCaja(arqueosDelPeriodo());
+    }
+
+    /** Tarjeta debajo del balance: cada turno contado y la diferencia total. */
+    private void mostrarControlCaja(List<ArqueoCaja> arqueos) {
+        boolean hay = !arqueos.isEmpty();
+        boxControlCaja.setVisible(hay);
+        boxControlCaja.setManaged(hay);
+        boxControlCajaDetalle.getChildren().clear();
+        if (!hay) return;
+
+        double total = arqueos.stream().mapToDouble(ArqueoCaja::diferencia).sum();
+        long conDiferencia = arqueos.stream().filter(a -> !a.coincide()).count();
+        lblControlCajaTitulo.setText(arqueos.size() + (arqueos.size() == 1 ? " turno contado" : " turnos contados")
+                + (conDiferencia > 0 ? " · " + conDiferencia + " con diferencia" : ""));
+        lblControlCajaTotal.setText(textoDiferencia(total));
+        marcar(lblControlCajaTotal, Math.abs(total) < 0.5);
+
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM");
+        for (ArqueoCaja a : arqueos) {
+            Label cuando = new Label(DIAS_CORTOS_BALANCE[a.getFecha().getDayOfWeek().getValue() - 1] + " "
+                    + a.getFecha().format(f) + " · " + a.getTurno());
+            cuando.getStyleClass().add("ps-arqueo-linea");
+            cuando.setMinWidth(170);
+            Label detalle = new Label("Sistema $" + formatoMoneda.format(valor(a.getMontoSistema()))
+                    + "   ·   Contado $" + formatoMoneda.format(valor(a.getMontoContado())));
+            detalle.getStyleClass().add("ps-bal-nota");
+            Region esp = new Region();
+            HBox.setHgrow(esp, Priority.ALWAYS);
+            Label dif = new Label(textoDiferencia(a.diferencia()));
+            dif.getStyleClass().add("ps-arqueo-estado");
+            marcar(dif, a.coincide());
+            HBox fila = new HBox(14, cuando, detalle, esp, dif);
+            fila.setAlignment(Pos.CENTER_LEFT);
+            fila.getStyleClass().add("ps-arqueo-fila");
+            boxControlCajaDetalle.getChildren().add(fila);
+        }
+    }
+
+    private static double valor(Double d) {
+        return d == null ? 0 : d;
+    }
+
     /** 0 = mañana, 1 = tarde. Las ventas fuera de horario van al turno más cercano. */
     private static int indiceTurno(Venta v) {
         String franja = HorarioLocal.franjaMasCercana(v.getFecha() != null ? v.getFecha().toLocalTime() : null);
@@ -841,6 +1122,8 @@ public class GastosController {
             setMontoBalance(filasTurno[t][1], porTurno[t][1], false);
             setMontoBalance(filasTurno[t][2], porTurno[t][0] + porTurno[t][1], false);
         }
+        // Control de caja: billetes contados por turno
+        mostrarArqueos(porTurno[0][0], porTurno[1][0]);
 
         // 2. Gastos del período, desglosados por medio de pago (consultas agregadas: no se trae todo el historial)
         // 3. Sueldos del período, desglosados por medio de pago.
@@ -1021,6 +1304,25 @@ public class GastosController {
             ticket.append(fila("  Efectivo", "$" + formatoMoneda.format(efectivoTarde))).append("\n");
             ticket.append(fila("  Virtual", "$" + formatoMoneda.format(virtualTarde))).append("\n");
             ticket.append(lineaSeparadora()).append("\n");
+
+            // Control de caja: billetes contados contra el sistema
+            List<ArqueoCaja> arqueos = arqueosDelPeriodo();
+            if (!arqueos.isEmpty()) {
+                ticket.append("CONTROL DE CAJA\n");
+                DateTimeFormatter fdm = DateTimeFormatter.ofPattern("dd/MM");
+                double difTotal = 0;
+                for (ArqueoCaja a : arqueos) {
+                    String cuando = "  " + a.getFecha().format(fdm) + " " + a.getTurno();
+                    double dif = a.diferencia();
+                    difTotal += dif;
+                    String estado = a.coincide() ? "OK"
+                            : (dif < 0 ? "-$" : "+$") + formatoMoneda.format(Math.abs(dif));
+                    ticket.append(fila(cuando, estado)).append("\n");
+                }
+                ticket.append(fila("Diferencia", Math.abs(difTotal) < 0.5 ? "$0"
+                        : (difTotal < 0 ? "-$" : "+$") + formatoMoneda.format(Math.abs(difTotal)))).append("\n");
+                ticket.append(lineaSeparadora()).append("\n");
+            }
 
             ticket.append("GASTOS\n");
             ticket.append(fila("Total gastos", "$" + formatoMoneda.format(repTotalGastos))).append("\n");

@@ -38,5 +38,6 @@
         <mapping class="model.Adelanto"/>
         <mapping class="model.MercadoPagoToken"/>
         <mapping class="model.Tarjeta"/>
+        <mapping class="model.ArqueoCaja"/>
     </session-factory>
 </hibernate-configuration>

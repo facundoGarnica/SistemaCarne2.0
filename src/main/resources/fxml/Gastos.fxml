@@ -188,9 +188,9 @@
                 <GridPane styleClass="ps-balance">
                     <columnConstraints>
                         <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" />
-                        <ColumnConstraints halignment="RIGHT" minWidth="150.0" percentWidth="20.0" />
-                        <ColumnConstraints halignment="RIGHT" minWidth="150.0" percentWidth="20.0" />
-                        <ColumnConstraints halignment="RIGHT" minWidth="150.0" percentWidth="20.0" />
+                        <ColumnConstraints halignment="RIGHT" minWidth="130.0" percentWidth="16.0" />
+                        <ColumnConstraints halignment="RIGHT" minWidth="130.0" percentWidth="16.0" />
+                        <ColumnConstraints halignment="RIGHT" minWidth="130.0" percentWidth="16.0" />
                     </columnConstraints>
 
                     <!-- Encabezado -->
@@ -208,20 +208,25 @@
 
                     <!-- Ventas por turno (mismo horario que el ticket de cierre) -->
                     <HBox alignment="CENTER_LEFT" spacing="8.0" styleClass="ps-bal-cell, ps-bal-sub, ps-bal-first" GridPane.columnIndex="0" GridPane.rowIndex="3">
-                        <Label styleClass="ps-bal-text-sub" text="Ventas de mañana" />
-                        <Label styleClass="ps-bal-nota" text="08:30 a 13:00" />
+                        <Label minWidth="-Infinity" styleClass="ps-bal-text-sub" text="Ventas de mañana" />
+                        <Label minWidth="-Infinity" styleClass="ps-bal-nota" text="08:30 a 13:00" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <!-- Control de caja del turno (lo arma el controlador) -->
+                        <HBox fx:id="boxArqueoManiana" alignment="CENTER_RIGHT" spacing="10.0" />
                     </HBox>
-                    <Label fx:id="lblBalManianaEf" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-sub" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                    <Label fx:id="lblBalManianaVi" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-sub" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                    <Label fx:id="lblBalManianaTot" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-sub, ps-bal-last" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                    <Label fx:id="lblBalManianaEf" alignment="CENTER_RIGHT" maxHeight="Infinity" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-sub" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <Label fx:id="lblBalManianaVi" alignment="CENTER_RIGHT" maxHeight="Infinity" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-sub" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                    <Label fx:id="lblBalManianaTot" alignment="CENTER_RIGHT" maxHeight="Infinity" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-sub, ps-bal-last" GridPane.columnIndex="3" GridPane.rowIndex="3" />
 
                     <HBox alignment="CENTER_LEFT" spacing="8.0" styleClass="ps-bal-cell, ps-bal-sub, ps-bal-first" GridPane.columnIndex="0" GridPane.rowIndex="4">
-                        <Label styleClass="ps-bal-text-sub" text="Ventas de tarde" />
-                        <Label styleClass="ps-bal-nota" text="17:00 a 21:00" />
+                        <Label minWidth="-Infinity" styleClass="ps-bal-text-sub" text="Ventas de tarde" />
+                        <Label minWidth="-Infinity" styleClass="ps-bal-nota" text="17:00 a 21:00" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <HBox fx:id="boxArqueoTarde" alignment="CENTER_RIGHT" spacing="10.0" />
                     </HBox>
-                    <Label fx:id="lblBalTardeEf" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-sub" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                    <Label fx:id="lblBalTardeVi" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-sub" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                    <Label fx:id="lblBalTardeTot" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-sub, ps-bal-last" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                    <Label fx:id="lblBalTardeEf" alignment="CENTER_RIGHT" maxHeight="Infinity" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-sub" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <Label fx:id="lblBalTardeVi" alignment="CENTER_RIGHT" maxHeight="Infinity" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-sub" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                    <Label fx:id="lblBalTardeTot" alignment="CENTER_RIGHT" maxHeight="Infinity" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-sub, ps-bal-last" GridPane.columnIndex="3" GridPane.rowIndex="4" />
 
                     <!-- Egresos -->
                     <Label maxWidth="Infinity" styleClass="ps-bal-section, ps-bal-first" text="Egresos" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="5" />
@@ -253,6 +258,22 @@
                     <Label fx:id="lblBalResVi" alignment="CENTER_RIGHT" maxHeight="Infinity" maxWidth="Infinity" styleClass="ps-bal-res, ps-bal-res-monto" GridPane.columnIndex="2" GridPane.rowIndex="9" />
                     <Label fx:id="lblBalResTot" alignment="CENTER_RIGHT" maxHeight="Infinity" maxWidth="Infinity" styleClass="ps-bal-res, ps-bal-res-total, ps-bal-last, ps-bal-res-right" GridPane.columnIndex="3" GridPane.rowIndex="9" />
                 </GridPane>
+
+                <!-- Control de caja: billetes contados contra el sistema, en el período mostrado -->
+                <VBox fx:id="boxControlCaja" managed="false" spacing="10.0" styleClass="ps-card" visible="false">
+                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                        <VBox spacing="2.0">
+                            <Label styleClass="ps-section-title" text="Control de caja" />
+                            <Label styleClass="ps-bal-nota" text="Billetes contados contra el efectivo del sistema" />
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <VBox alignment="CENTER_RIGHT" spacing="2.0">
+                            <Label fx:id="lblControlCajaTitulo" styleClass="ps-bal-nota" text="Diferencia" />
+                            <Label fx:id="lblControlCajaTotal" styleClass="ps-arqueo-total" text="" />
+                        </VBox>
+                    </HBox>
+                    <VBox fx:id="boxControlCajaDetalle" spacing="4.0" />
+                </VBox>
             </VBox>
             </ScrollPane>
         </Tab>

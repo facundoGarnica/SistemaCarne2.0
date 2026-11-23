@@ -1807,3 +1807,45 @@
 .ps-ojo .ps-icon {
     -fx-fill: -c-primario;
 }
+
+/* Balance: control de caja (billetes contados contra el sistema) */
+.ps-arqueo-chk {
+    -fx-font-size: 14px;
+    -fx-text-fill: #374151;
+}
+.ps-arqueo-txt {
+    -fx-font-size: 14px;
+    -fx-pref-height: 32px;
+}
+.ps-arqueo-estado {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6b7280;
+}
+.ps-arqueo-ok {
+    -fx-text-fill: #15803d;
+}
+.ps-arqueo-mal {
+    -fx-text-fill: #dc2626;
+}
+.ps-arqueo-total {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2937;
+}
+.ps-arqueo-total.ps-arqueo-ok {
+    -fx-text-fill: #15803d;
+}
+.ps-arqueo-total.ps-arqueo-mal {
+    -fx-text-fill: #dc2626;
+}
+.ps-arqueo-fila {
+    -fx-padding: 8px 12px;
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 8px;
+}
+.ps-arqueo-linea {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2937;
+}
