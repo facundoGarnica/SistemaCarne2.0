@@ -32,4 +32,29 @@ public final class HorarioLocal {
         }
         return FUERA_DE_HORARIO;
     }
+
+    /**
+     * Como determinarFranja, pero sin "fuera de horario": una venta fuera de
+     * los dos horarios va al turno más cercano. Cuenta la distancia dando la
+     * vuelta al reloj (las 01:00 están más cerca de las 21:00 que de las 08:30).
+     */
+    public static String franjaMasCercana(LocalTime hora) {
+        if (hora == null) {
+            return MANIANA;
+        }
+        String franja = determinarFranja(hora);
+        if (!FUERA_DE_HORARIO.equals(franja)) {
+            return franja;
+        }
+        int m = hora.toSecondOfDay() / 60;
+        int aManiana = Math.min(distancia(m, MANIANA_INICIO), distancia(m, MANIANA_FIN));
+        int aTarde = Math.min(distancia(m, TARDE_INICIO), distancia(m, TARDE_FIN));
+        return aManiana <= aTarde ? MANIANA : TARDE;
+    }
+
+    /** Minutos entre dos horas, por el camino más corto del reloj. */
+    private static int distancia(int minutos, LocalTime limite) {
+        int d = Math.abs(minutos - limite.toSecondOfDay() / 60);
+        return Math.min(d, 24 * 60 - d);
+    }
 }

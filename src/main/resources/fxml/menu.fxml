@@ -49,7 +49,7 @@
             <Button fx:id="btnPersonal" minWidth="-Infinity" mnemonicParsing="false" onAction="#handlePersonal" styleClass="nav-btn" text="Personal">
                <tooltip><Tooltip text="Personal (F5)" /></tooltip>
             </Button>
-            <Button fx:id="btnGastos" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleGastos" styleClass="nav-btn" text="Gastos">
+            <Button fx:id="btnGastos" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleGastos" styleClass="nav-btn" text="Gastos y reportes">
                <tooltip><Tooltip text="Gastos y balance (F6)" /></tooltip>
             </Button>
             <Button fx:id="btnVisualizarTarjeta" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleVisualizarTarjeta" styleClass="nav-btn" text="Tarjetas">

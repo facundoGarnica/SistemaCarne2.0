@@ -73,6 +73,8 @@ public class GastosController {
     /** true cuando se busca un período o día puntual con Desde/Hasta (se ocultan las tarjetas de días). */
     private boolean modoRangoBalance = false;
     @FXML private Label lblBalVentasEf, lblBalVentasVi, lblBalVentasTot;
+    @FXML private Label lblBalManianaEf, lblBalManianaVi, lblBalManianaTot;
+    @FXML private Label lblBalTardeEf, lblBalTardeVi, lblBalTardeTot;
     @FXML private Label lblBalGastosEf, lblBalGastosVi, lblBalGastosTot;
     @FXML private Label lblBalSueldosEf, lblBalSueldosVi, lblBalSueldosTot;
     @FXML private Label lblBalAdelEf, lblBalAdelVi, lblBalAdelTot;
@@ -776,6 +778,12 @@ public class GastosController {
         return String.join(", ", dias);
     }
 
+    /** 0 = mañana, 1 = tarde. Las ventas fuera de horario van al turno más cercano. */
+    private static int indiceTurno(Venta v) {
+        String franja = HorarioLocal.franjaMasCercana(v.getFecha() != null ? v.getFecha().toLocalTime() : null);
+        return HorarioLocal.TARDE.equals(franja) ? 1 : 0;
+    }
+
     /** Escribe un monto en la tabla de balance: "—" si es cero, "−$x" si es un egreso. */
     private void setMontoBalance(Label label, double valor, boolean egreso) {
         if (Math.abs(valor) < 0.005) {
@@ -813,11 +821,25 @@ public class GastosController {
         double totalEfectivo = 0.0;
         double totalVirtual = 0.0;
 
+        // Por turno: [0] mañana, [1] tarde; cada uno {efectivo, virtual}
+        double[][] porTurno = new double[2][2];
         for (Venta v : ventasEnRango) {
             totalVentas += v.getTotal();
             // Pago mixto: la parte en efectivo a Efectivo y la del QR a Virtual
             totalEfectivo += v.montoEnEfectivo();
             totalVirtual += v.montoEnVirtual();
+            int t = indiceTurno(v);
+            porTurno[t][0] += v.montoEnEfectivo();
+            porTurno[t][1] += v.montoEnVirtual();
+        }
+        Label[][] filasTurno = {
+            { lblBalManianaEf, lblBalManianaVi, lblBalManianaTot },
+            { lblBalTardeEf, lblBalTardeVi, lblBalTardeTot }
+        };
+        for (int t = 0; t < 2; t++) {
+            setMontoBalance(filasTurno[t][0], porTurno[t][0], false);
+            setMontoBalance(filasTurno[t][1], porTurno[t][1], false);
+            setMontoBalance(filasTurno[t][2], porTurno[t][0] + porTurno[t][1], false);
         }
 
         // 2. Gastos del período, desglosados por medio de pago (consultas agregadas: no se trae todo el historial)
@@ -948,25 +970,19 @@ public class GastosController {
 
             double efectivoManiana = 0.0, virtualManiana = 0.0;
             double efectivoTarde = 0.0, virtualTarde = 0.0;
-            double efectivoOtro = 0.0, virtualOtro = 0.0;
 
             if (ventasEnRango != null) {
                 for (Venta v : ventasEnRango) {
-                    double total = v.getTotal();
-                    boolean esEfectivo = v.getMedioPago() != null && v.getMedioPago().equalsIgnoreCase("Efectivo");
-                    LocalDateTime fechaVenta = v.getFecha();
-                    String franja = HorarioLocal.determinarFranja(fechaVenta != null ? fechaVenta.toLocalTime() : null);
-
-                    switch (franja) {
-                        case HorarioLocal.MANIANA -> {
-                            if (esEfectivo) efectivoManiana += total; else virtualManiana += total;
-                        }
-                        case HorarioLocal.TARDE -> {
-                            if (esEfectivo) efectivoTarde += total; else virtualTarde += total;
-                        }
-                        default -> {
-                            if (esEfectivo) efectivoOtro += total; else virtualOtro += total;
-                        }
+                    // Pago mixto: cada parte a su medio (igual que en pantalla)
+                    double ef = v.montoEnEfectivo();
+                    double vi = v.montoEnVirtual();
+                    // Fuera de horario: al turno más cercano
+                    if (indiceTurno(v) == 0) {
+                        efectivoManiana += ef;
+                        virtualManiana += vi;
+                    } else {
+                        efectivoTarde += ef;
+                        virtualTarde += vi;
                     }
                 }
             }
@@ -1005,13 +1021,6 @@ public class GastosController {
             ticket.append(fila("  Efectivo", "$" + formatoMoneda.format(efectivoTarde))).append("\n");
             ticket.append(fila("  Virtual", "$" + formatoMoneda.format(virtualTarde))).append("\n");
             ticket.append(lineaSeparadora()).append("\n");
-
-            if (efectivoOtro > 0 || virtualOtro > 0) {
-                ticket.append("VENTAS FUERA DE HORARIO\n");
-                ticket.append(fila("  Efectivo", "$" + formatoMoneda.format(efectivoOtro))).append("\n");
-                ticket.append(fila("  Virtual", "$" + formatoMoneda.format(virtualOtro))).append("\n");
-                ticket.append(lineaSeparadora()).append("\n");
-            }
 
             ticket.append("GASTOS\n");
             ticket.append(fila("Total gastos", "$" + formatoMoneda.format(repTotalGastos))).append("\n");

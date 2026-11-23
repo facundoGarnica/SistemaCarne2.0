@@ -1777,3 +1777,33 @@
 .est-preview {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 12, 0, 0, 3);
 }
+
+/* Balance: ventas de mañana / tarde (sub-filas debajo de "Ventas") */
+.ps-bal-sub {
+    -fx-font-size: 16px;
+    -fx-text-fill: #4b5563;
+    -fx-padding: 10px 24px;
+    -fx-min-height: 44px;
+    -fx-background-color: #fbfcfe;
+}
+.ps-bal-sub.ps-bal-first {
+    -fx-padding: 10px 24px 10px 48px;
+}
+.ps-bal-text-sub {
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 16px;
+}
+
+/* Personal: ojo para mostrar / ocultar los datos de un empleado */
+.ps-ojo {
+    -fx-background-color: transparent;
+    -fx-background-radius: 8px;
+    -fx-padding: 4px 8px;
+    -fx-cursor: hand;
+}
+.ps-ojo:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.06);
+}
+.ps-ojo .ps-icon {
+    -fx-fill: -c-primario;
+}

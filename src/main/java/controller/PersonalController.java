@@ -99,6 +99,9 @@ public class PersonalController {
     // --- DAOs ---
     private final EmpleadoDAO empleadoDAO = new EmpleadoDAO();
     private final AdelantoDAO adelantoDAO = new AdelantoDAO();
+    private final PrivacidadEmpleados privacidad = new PrivacidadEmpleados();
+    private Long idEmpleadoPanelAdelanto;
+    private Long idEmpleadoComprobante;
 
     private final DecimalFormat formatoMoneda = new DecimalFormat("#,##0", java.text.DecimalFormatSymbols.getInstance(new java.util.Locale("es", "AR")));
     private static final DateTimeFormatter FORMATO_DIA_MES = DateTimeFormatter.ofPattern("dd/MM");
@@ -232,14 +235,36 @@ public class PersonalController {
                 if (item < 0) getStyleClass().add("ps-negativo");
             }
         });
-        // La última fila es el total: se pinta distinto
-        tvSaldoEmpleados.setRowFactory(tv -> new TableRow<>() {
-            @Override
-            protected void updateItem(SaldoEmpleado item, boolean empty) {
-                super.updateItem(item, empty);
-                pseudoClassStateChanged(PSEUDO_TOTAL, !empty && item != null && item.total());
-            }
+        // Datos de cada empleado borrosos hasta tocar su ojo. En saldos, la
+        // última fila es el total: se pinta distinto y no se oculta.
+        // Los nombres siempre se ven; se ocultan los demás datos.
+        privacidad.proteger(tvSaldoEmpleados, s -> s.total() ? null : s.id(),
+                (fila, item) -> fila.pseudoClassStateChanged(PSEUDO_TOTAL, item != null && item.total()),
+                colSaldoEmpleado);
+        privacidad.proteger(tvTurnos, t -> t.getEmpleado() != null ? t.getEmpleado().getId() : null, null,
+                colTurnoEmpleado);
+        privacidad.proteger(tvGestionEmpleados, Empleado::getId, null, colGestionNombre);
+        privacidad.alCambiar(() -> {
+            lvEmpleadosResumen.refresh();
+            aplicarPrivacidadPaneles();
         });
+    }
+
+    /** Paneles de detalle (adelantos y comprobante): borrosos si su empleado está oculto. */
+    private void aplicarPrivacidadPaneles() {
+        privacidad.aplicar(idEmpleadoPanelAdelanto, lblLeQuedanAdelanto, boxAdelantosEmpleado);
+        privacidad.aplicar(idEmpleadoComprobante, lblCompTrabajado, lblCompAdelantos, lblCompNeto,
+                lblCompCantTurnos, boxCompTurnos, lblCompCantAdelantos, boxCompAdelantos);
+    }
+
+    /** Empleados por nombre, de la A a la Z. */
+    private static final Comparator<Empleado> POR_NOMBRE = Comparator.comparing(
+            (Empleado e) -> e.getNombre() == null ? "" : e.getNombre(), String.CASE_INSENSITIVE_ORDER);
+
+    private static List<Empleado> ordenados(List<Empleado> empleados) {
+        List<Empleado> lista = empleados != null ? new ArrayList<>(empleados) : new ArrayList<>();
+        lista.sort(POR_NOMBRE);
+        return lista;
     }
 
     private <T> TableCell<T, Double> celdaMoneda() {
@@ -256,7 +281,7 @@ public class PersonalController {
         try {
             List<Empleado> empleados = empleadoDAO.buscarTodos();
             if (empleados != null) {
-                cbEmpleado.setItems(FXCollections.observableArrayList(empleados));
+                cbEmpleado.setItems(FXCollections.observableArrayList(ordenados(empleados)));
             }
             cbTurno.setItems(FXCollections.observableArrayList("Mañana", "Tarde"));
 
@@ -403,7 +428,7 @@ public class PersonalController {
 
     private void recargarCombosEmpleado() {
         List<Empleado> empleados = empleadoDAO.buscarTodos();
-        cbEmpleado.setItems(FXCollections.observableArrayList(empleados));
+        cbEmpleado.setItems(FXCollections.observableArrayList(ordenados(empleados)));
         filtrarAdelantos();
         generarResumenSemanal();
     }
@@ -540,7 +565,10 @@ public class PersonalController {
      */
     private void mostrarTurnos(List<TurnoEmpleados> lista) {
         List<TurnoEmpleados> turnos = lista != null ? new ArrayList<>(lista) : new ArrayList<>();
-        turnos.sort(Comparator.comparing(TurnoEmpleados::getFecha, Comparator.nullsLast(Comparator.reverseOrder()))
+        // Por empleado (A a Z); de cada uno, los turnos más nuevos primero
+        turnos.sort(Comparator.comparing((TurnoEmpleados t) -> t.getEmpleado() != null && t.getEmpleado().getNombre() != null
+                        ? t.getEmpleado().getNombre() : "", String.CASE_INSENSITIVE_ORDER)
+                .thenComparing(TurnoEmpleados::getFecha, Comparator.nullsLast(Comparator.reverseOrder()))
                 .thenComparing(t -> t.getTurno() == null ? "" : t.getTurno()));
         tvTurnos.setItems(FXCollections.observableArrayList(turnos));
 
@@ -839,6 +867,8 @@ public class PersonalController {
         }
 
         lblEmpleadoAdelanto.setText(saldo.empleado());
+        idEmpleadoPanelAdelanto = saldo.id();
+        aplicarPrivacidadPaneles();
         double neto = saldo.neto();
         if (adelantosVariasSemanas) {
             // Con varias semanas ya hubo sábados de pago: solo se informa la diferencia
@@ -1008,15 +1038,17 @@ public class PersonalController {
             private final Label nombre = new Label();
             private final Label turnos = new Label();
             private final Label neto = new Label();
+            private final Button ojo = privacidad.botonOjo();
+            private final javafx.scene.layout.VBox textos;
             private final javafx.scene.layout.HBox contenido;
             {
                 nombre.getStyleClass().add("ps-emp-name");
                 turnos.getStyleClass().add("ps-emp-sub");
                 neto.getStyleClass().add("ps-emp-neto");
                 neto.setMinWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
-                javafx.scene.layout.VBox textos = new javafx.scene.layout.VBox(1, nombre, turnos);
+                textos = new javafx.scene.layout.VBox(1, nombre, turnos);
                 javafx.scene.layout.HBox.setHgrow(textos, javafx.scene.layout.Priority.ALWAYS);
-                contenido = new javafx.scene.layout.HBox(10, textos, neto);
+                contenido = new javafx.scene.layout.HBox(10, ojo, textos, neto);
                 contenido.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
             }
 
@@ -1034,6 +1066,9 @@ public class PersonalController {
                 neto.setText(moneda(item.neto()));
                 neto.getStyleClass().remove("ps-negativo");
                 if (item.neto() < 0) neto.getStyleClass().add("ps-negativo");
+                Long id = item.empleado().getId();
+                privacidad.actualizarOjo(ojo, id);
+                privacidad.aplicar(id, turnos, neto);
                 setGraphic(contenido);
             }
         });
@@ -1100,9 +1135,8 @@ public class PersonalController {
                 resumenes.add(new ResumenEmpleado(e, suyos, susAdelantos));
             }
         }
-        // Primero los que trabajaron o pidieron adelantos; después por nombre
-        resumenes.sort(Comparator.comparing((ResumenEmpleado r) -> !r.tieneMovimientos())
-                .thenComparing(r -> r.empleado().getNombre(), String.CASE_INSENSITIVE_ORDER));
+        // Por nombre, de la A a la Z
+        resumenes.sort(Comparator.comparing((ResumenEmpleado r) -> r.empleado(), POR_NOMBRE));
 
         Long idSeleccionado = lvEmpleadosResumen.getSelectionModel().getSelectedItem() != null
                 ? lvEmpleadosResumen.getSelectionModel().getSelectedItem().empleado().getId() : null;
@@ -1128,6 +1162,8 @@ public class PersonalController {
             btnImprimirResumen.setDisable(true);
             return;
         }
+        idEmpleadoComprobante = r.empleado().getId();
+        aplicarPrivacidadPaneles();
 
         LocalDate desde = dpDesdeResumen.getValue();
         LocalDate hasta = dpHastaResumen.getValue();
@@ -1335,7 +1371,7 @@ public class PersonalController {
 
     private void actualizarTablaGestionEmpleados() {
         List<Empleado> lista = empleadoDAO.buscarTodos();
-        if (lista != null) tvGestionEmpleados.setItems(FXCollections.observableArrayList(lista));
+        if (lista != null) tvGestionEmpleados.setItems(FXCollections.observableArrayList(ordenados(lista)));
     }
 
     private void limpiarCamposTurno() {

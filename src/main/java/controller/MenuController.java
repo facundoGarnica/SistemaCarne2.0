@@ -331,10 +331,10 @@ public class MenuController implements Initializable {
 
     @FXML
     private void handleGastos() {
-        if (yaAbierto(btnGastos) || !pedirClave("Gastos")) {
+        if (yaAbierto(btnGastos) || !pedirClave("Gastos y reportes")) {
             return;
         }
-        abrirModulo("/fxml/Gastos.fxml", "Gastos", btnGastos);
+        abrirModulo("/fxml/Gastos.fxml", "Gastos y reportes", btnGastos);
     }
 
     @FXML

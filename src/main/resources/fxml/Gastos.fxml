@@ -206,35 +206,52 @@
                     <Label fx:id="lblBalVentasVi" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                     <Label fx:id="lblBalVentasTot" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-last" GridPane.columnIndex="3" GridPane.rowIndex="2" />
 
+                    <!-- Ventas por turno (mismo horario que el ticket de cierre) -->
+                    <HBox alignment="CENTER_LEFT" spacing="8.0" styleClass="ps-bal-cell, ps-bal-sub, ps-bal-first" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                        <Label styleClass="ps-bal-text-sub" text="Ventas de mañana" />
+                        <Label styleClass="ps-bal-nota" text="08:30 a 13:00" />
+                    </HBox>
+                    <Label fx:id="lblBalManianaEf" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-sub" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <Label fx:id="lblBalManianaVi" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-sub" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                    <Label fx:id="lblBalManianaTot" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-sub, ps-bal-last" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+
+                    <HBox alignment="CENTER_LEFT" spacing="8.0" styleClass="ps-bal-cell, ps-bal-sub, ps-bal-first" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                        <Label styleClass="ps-bal-text-sub" text="Ventas de tarde" />
+                        <Label styleClass="ps-bal-nota" text="17:00 a 21:00" />
+                    </HBox>
+                    <Label fx:id="lblBalTardeEf" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-sub" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <Label fx:id="lblBalTardeVi" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-sub" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                    <Label fx:id="lblBalTardeTot" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-sub, ps-bal-last" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+
                     <!-- Egresos -->
-                    <Label maxWidth="Infinity" styleClass="ps-bal-section, ps-bal-first" text="Egresos" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="3" />
+                    <Label maxWidth="Infinity" styleClass="ps-bal-section, ps-bal-first" text="Egresos" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="5" />
 
-                    <Label maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-first" text="Gastos" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                    <Label fx:id="lblBalGastosEf" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-neg" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                    <Label fx:id="lblBalGastosVi" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-neg" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                    <Label fx:id="lblBalGastosTot" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-neg, ps-bal-last" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                    <Label maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-first" text="Gastos" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                    <Label fx:id="lblBalGastosEf" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-neg" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                    <Label fx:id="lblBalGastosVi" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-neg" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                    <Label fx:id="lblBalGastosTot" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-neg, ps-bal-last" GridPane.columnIndex="3" GridPane.rowIndex="6" />
 
-                    <HBox alignment="CENTER_LEFT" spacing="8.0" styleClass="ps-bal-cell, ps-bal-first" GridPane.columnIndex="0" GridPane.rowIndex="5">
+                    <HBox alignment="CENTER_LEFT" spacing="8.0" styleClass="ps-bal-cell, ps-bal-first" GridPane.columnIndex="0" GridPane.rowIndex="7">
                         <Label styleClass="ps-bal-text" text="Sueldos" />
                         <Label fx:id="lblSueldosNota" styleClass="ps-bal-nota" text="se pagan el sábado" />
                     </HBox>
-                    <Label fx:id="lblBalSueldosEf" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-neg" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                    <Label fx:id="lblBalSueldosVi" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-neg" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                    <Label fx:id="lblBalSueldosTot" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-neg, ps-bal-last" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                    <Label fx:id="lblBalSueldosEf" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-neg" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                    <Label fx:id="lblBalSueldosVi" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-neg" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                    <Label fx:id="lblBalSueldosTot" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-neg, ps-bal-last" GridPane.columnIndex="3" GridPane.rowIndex="7" />
 
-                    <Label maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-first" text="Adelantos" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-                    <Label fx:id="lblBalAdelEf" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-neg" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                    <Label fx:id="lblBalAdelVi" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-neg" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                    <Label fx:id="lblBalAdelTot" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-neg, ps-bal-last" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                    <Label maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-first" text="Adelantos" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+                    <Label fx:id="lblBalAdelEf" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-neg" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                    <Label fx:id="lblBalAdelVi" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-neg" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                    <Label fx:id="lblBalAdelTot" alignment="CENTER_RIGHT" maxWidth="Infinity" styleClass="ps-bal-cell, ps-bal-neg, ps-bal-last" GridPane.columnIndex="3" GridPane.rowIndex="8" />
 
                     <!-- Resultado -->
-                    <VBox alignment="CENTER_LEFT" spacing="2.0" styleClass="ps-bal-res, ps-bal-first, ps-bal-res-left" GridPane.columnIndex="0" GridPane.rowIndex="7">
+                    <VBox alignment="CENTER_LEFT" spacing="2.0" styleClass="ps-bal-res, ps-bal-first, ps-bal-res-left" GridPane.columnIndex="0" GridPane.rowIndex="9">
                         <Label styleClass="ps-bal-res-titulo" text="Resultado" />
                         <Label styleClass="ps-bal-nota" text="Lo que queda en caja" />
                     </VBox>
-                    <Label fx:id="lblBalResEf" alignment="CENTER_RIGHT" maxHeight="Infinity" maxWidth="Infinity" styleClass="ps-bal-res, ps-bal-res-monto" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                    <Label fx:id="lblBalResVi" alignment="CENTER_RIGHT" maxHeight="Infinity" maxWidth="Infinity" styleClass="ps-bal-res, ps-bal-res-monto" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                    <Label fx:id="lblBalResTot" alignment="CENTER_RIGHT" maxHeight="Infinity" maxWidth="Infinity" styleClass="ps-bal-res, ps-bal-res-total, ps-bal-last, ps-bal-res-right" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+                    <Label fx:id="lblBalResEf" alignment="CENTER_RIGHT" maxHeight="Infinity" maxWidth="Infinity" styleClass="ps-bal-res, ps-bal-res-monto" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                    <Label fx:id="lblBalResVi" alignment="CENTER_RIGHT" maxHeight="Infinity" maxWidth="Infinity" styleClass="ps-bal-res, ps-bal-res-monto" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                    <Label fx:id="lblBalResTot" alignment="CENTER_RIGHT" maxHeight="Infinity" maxWidth="Infinity" styleClass="ps-bal-res, ps-bal-res-total, ps-bal-last, ps-bal-res-right" GridPane.columnIndex="3" GridPane.rowIndex="9" />
                 </GridPane>
             </VBox>
             </ScrollPane>
